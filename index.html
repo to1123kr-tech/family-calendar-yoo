@@ -8,15 +8,14 @@
 <title>가족 일정 v3 🏠</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#faf8f5; --card:#fff; --border:#ede8e0; --text:#2d2520; --muted:#9e9488;
-  --shadow:0 2px 16px rgba(0,0,0,0.07);
-  --radius:14px;
-  --c영대:#3b82f6; --l영대:#eff6ff;
-  --c현희:#f472b6; --l현희:#fdf2f8;
-  --c제하:#34d399; --l제하:#ecfdf5;
-  --c가율:#fb923c; --l가율:#fff7ed;
-  --c가은:#a78bfa; --l가은:#f5f3ff;
+:root{
+  --bg:#faf8f5;--card:#fff;--border:#ede8e0;--text:#2d2520;--muted:#9e9488;
+  --shadow:0 2px 16px rgba(0,0,0,0.07);--radius:14px;
+  --c영대:#3b82f6;--l영대:#eff6ff;
+  --c현희:#f472b6;--l현희:#fdf2f8;
+  --c제하:#34d399;--l제하:#ecfdf5;
+  --c가율:#fb923c;--l가율:#fff7ed;
+  --c가은:#a78bfa;--l가은:#f5f3ff;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
@@ -24,30 +23,27 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 /* 헤더 */
 .app-header{background:var(--card);border-bottom:1px solid var(--border);padding:12px 14px 10px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);}
 .header-top{display:flex;align-items:center;justify-content:space-between;}
-.app-title{font-family:'Noto Sans KR',sans-serif;font-size:19px;font-weight:900;letter-spacing:-0.5px;color:var(--text);}
-.app-title span{color:var(--c영대);}
-.app-version{font-size:10px;color:var(--muted);font-weight:400;margin-left:4px;vertical-align:middle;}
-.header-actions{display:flex;gap:7px;align-items:center;}
-
-/* 헤더 버튼 3개 동일 크기/모양 */
-.hdr-btn{height:34px;border:none;border-radius:10px;padding:0 13px;font-size:12px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;transition:all 0.2s;white-space:nowrap;}
+.app-title{font-size:18px;font-weight:900;letter-spacing:-0.5px;}
+.app-version{font-size:10px;color:var(--muted);font-weight:400;margin-left:3px;}
+.header-actions{display:flex;gap:6px;align-items:center;}
+.hdr-btn{height:34px;border:none;border-radius:10px;padding:0 12px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:all 0.2s;white-space:nowrap;}
 .btn-loc{background:#ede9fe;color:#7c3aed;}
 .btn-loc:hover{background:#ddd6fe;}
-.btn-cam{background:#fff3e0;color:#e65100;font-size:15px;}
+.btn-cam{background:#fff3e0;color:#e65100;}
 .btn-cam:hover{background:#ffe0b2;}
 .btn-add-main{background:var(--c영대);color:white;}
 .btn-add-main:hover{background:#2563eb;}
 
 /* 탭 */
 .tab-nav{display:flex;background:var(--card);border-bottom:1px solid var(--border);}
-.tab-btn{flex:1;padding:11px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;}
+.tab-btn{flex:1;padding:12px;border:none;background:transparent;font-family:inherit;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;}
 .tab-btn.on{color:var(--c영대);border-bottom-color:var(--c영대);}
 
 /* 가족 필터 */
 .family-filter-wrap{background:var(--card);padding:9px 14px 8px;border-bottom:1px solid var(--border);}
 .family-filter{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;}
 .family-filter::-webkit-scrollbar{display:none;}
-.f-btn{border:2px solid transparent;border-radius:10px;padding:5px 12px;font-size:12px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;white-space:nowrap;transition:all 0.2s;opacity:0.4;}
+.f-btn{border:2px solid transparent;border-radius:10px;padding:5px 12px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;transition:all 0.2s;opacity:0.4;}
 .f-btn.all{border-color:#ccc;background:var(--bg);color:var(--muted);}
 .f-btn.all.on{opacity:1;background:var(--text);color:#fff;border-color:var(--text);}
 .f-btn[data-f="유영대"]{background:var(--l영대);color:var(--c영대);border-color:var(--c영대);}
@@ -62,8 +58,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 /* 오늘 */
 .today-box{background:var(--card);border-radius:var(--radius);padding:12px 14px;margin-bottom:12px;box-shadow:var(--shadow);border-left:4px solid var(--c영대);}
-.today-hd{display:flex;align-items:center;gap:7px;margin-bottom:8px;}
-.today-title{font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:800;}
+.today-hd{display:flex;align-items:center;gap:7px;margin-bottom:8px;font-size:14px;font-weight:800;}
 .today-badge{background:var(--c영대);color:#fff;border-radius:20px;padding:2px 9px;font-size:11px;font-weight:700;}
 .today-empty{color:var(--muted);font-size:12px;text-align:center;padding:8px 0;}
 
@@ -71,28 +66,30 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .month-nav{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:12px;}
 .mnav-btn{background:var(--card);border:1.5px solid var(--border);border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all 0.2s;}
 .mnav-btn:hover{background:var(--l영대);}
-.month-lbl{font-family:'Noto Sans KR',sans-serif;font-size:19px;font-weight:900;letter-spacing:-0.5px;}
+.month-lbl{font-size:19px;font-weight:900;letter-spacing:-0.5px;}
 
 /* 달력 */
 .cal-grid{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
 .cal-wdays{display:grid;grid-template-columns:repeat(7,1fr);background:#f5f2ed;}
 .cal-wd{text-align:center;padding:7px 0;font-size:11px;font-weight:700;color:var(--muted);}
-.cal-wd:first-child{color:#f87171;} .cal-wd:last-child{color:#60a5fa;}
+.cal-wd:first-child{color:#f87171;}.cal-wd:last-child{color:#60a5fa;}
 .cal-days{display:grid;grid-template-columns:repeat(7,1fr);}
-.cal-day{min-height:66px;border-top:1px solid var(--border);border-right:1px solid var(--border);padding:4px 3px 3px;cursor:pointer;transition:background 0.15s;user-select:none;}
+.cal-day{min-height:70px;border-top:1px solid var(--border);border-right:1px solid var(--border);padding:4px 3px 3px;cursor:pointer;transition:background 0.15s;user-select:none;position:relative;}
 .cal-day:nth-child(7n){border-right:none;}
 .cal-day:hover{background:#fafaf8;}
 .cal-day.other .dnum{color:#d1ccc5;}
 .cal-day.today .dnum{background:var(--c영대);color:#fff;border-radius:50%;}
-.cal-day.sun .dnum{color:#f87171;} .cal-day.sat .dnum{color:#60a5fa;}
+.cal-day.sun .dnum{color:#f87171;}.cal-day.sat .dnum{color:#60a5fa;}
 .cal-day.today.sun .dnum,.cal-day.today.sat .dnum{color:#fff;}
-.dnum{font-size:12px;font-weight:700;width:22px;height:22px;display:flex;align-items:center;justify-content:center;margin-bottom:2px;}
+.cal-day.holiday-day{background:#fff8f8;}
+.dnum{font-size:12px;font-weight:700;width:22px;height:22px;display:flex;align-items:center;justify-content:center;margin-bottom:1px;}
+.holiday-name{font-size:9px;color:#ef4444;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;line-height:1.2;}
 .day-evs{display:flex;flex-direction:column;gap:2px;}
-.d-chip{border-radius:5px;padding:2px 4px;font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;}
+.d-chip{border-radius:4px;padding:2px 4px;font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.3;}
 .d-more{font-size:9px;color:var(--muted);padding-left:3px;}
 
 /* 이벤트 카드 */
-.ev-card{background:var(--card);border-radius:12px;padding:10px 12px;box-shadow:var(--shadow);border-left:4px solid var(--border);cursor:pointer;transition:all 0.2s;display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;user-select:none;}
+.ev-card{background:var(--card);border-radius:11px;padding:10px 12px;box-shadow:var(--shadow);border-left:4px solid var(--border);cursor:pointer;transition:all 0.2s;display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;user-select:none;}
 .ev-card:active{transform:scale(0.99);}
 .ev-card.copied{outline:2px solid #fbbf24;background:#fffbeb;}
 .ev-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0;}
@@ -105,10 +102,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .ev-date-lbl{font-size:11px;color:var(--muted);margin-top:2px;font-weight:600;}
 .date-lbl{font-size:11px;font-weight:700;color:var(--muted);margin:12px 0 5px 2px;letter-spacing:0.3px;}
 
-/* 검색탭 */
+/* 검색 */
 .search-area{display:flex;flex-direction:column;gap:10px;}
 .search-filter{display:flex;gap:6px;flex-wrap:wrap;}
-.sf-btn{border:2px solid transparent;border-radius:10px;padding:5px 12px;font-size:12px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;white-space:nowrap;transition:all 0.2s;opacity:0.4;}
+.sf-btn{border:2px solid transparent;border-radius:10px;padding:5px 12px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;transition:all 0.2s;opacity:0.4;}
 .sf-btn.all{border-color:#ccc;background:var(--bg);color:var(--muted);}
 .sf-btn.all.on{opacity:1;background:var(--text);color:#fff;border-color:var(--text);}
 .sf-btn[data-sf="유영대"]{background:var(--l영대);color:var(--c영대);border-color:var(--c영대);}
@@ -131,7 +128,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .modal-sheet{background:var(--card);border-radius:22px 22px 0 0;width:100%;max-width:600px;max-height:92vh;overflow-y:auto;padding:16px 16px 44px;transform:translateY(100%);transition:transform 0.32s cubic-bezier(0.34,1.2,0.64,1);}
 .modal-overlay.open .modal-sheet{transform:translateY(0);}
 .modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
-.modal-title{font-family:'Noto Sans KR',sans-serif;font-size:17px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.modal-title{font-size:17px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
 .modal-close{background:var(--bg);border:none;border-radius:50%;width:28px;height:28px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);}
 
 /* 폼 */
@@ -141,8 +138,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .fi:focus,.ft:focus{border-color:var(--c영대);background:#fff;}
 .ft{resize:vertical;min-height:85px;}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
-
-/* 구성원 선택 */
 .who-sel{display:flex;flex-wrap:wrap;gap:6px;}
 .who-btn{border:2px solid transparent;border-radius:10px;padding:6px 12px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;transition:all 0.2s;opacity:0.45;}
 .who-btn[data-w="유영대"]{background:var(--l영대);color:var(--c영대);border-color:var(--c영대);}
@@ -151,14 +146,13 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .who-btn[data-w="유가율"]{background:var(--l가율);color:var(--c가율);border-color:var(--c가율);}
 .who-btn[data-w="유가은"]{background:var(--l가은);color:var(--c가은);border-color:var(--c가은);}
 .who-btn.on{opacity:1;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
-
-.btn-save{background:linear-gradient(135deg,var(--c영대),#6366f1);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:6px;box-shadow:0 3px 10px rgba(59,130,246,0.3);}
+.btn-save{background:var(--c영대);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:6px;}
 .btn-del{background:#fef2f2;color:#ef4444;border:none;border-radius:12px;padding:11px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:8px;}
 
 /* 상세 */
 .det-badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
 .det-badge{border-radius:8px;padding:3px 11px;font-size:12px;font-weight:700;}
-.det-title{font-family:'Noto Sans KR',sans-serif;font-size:20px;font-weight:900;margin-bottom:13px;}
+.det-title{font-size:20px;font-weight:900;margin-bottom:13px;}
 .det-field{margin-bottom:9px;}
 .det-lbl{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.3px;margin-bottom:3px;}
 .det-val{font-size:13px;font-weight:500;}
@@ -177,27 +171,25 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .gemini-status{font-size:12px;color:var(--muted);text-align:center;padding:16px 0;}
 .btn-gemini-file{background:var(--card);border:1.5px dashed var(--border);border-radius:10px;padding:10px;font-size:12px;font-family:inherit;color:var(--muted);cursor:pointer;text-align:center;transition:all 0.2s;flex:1;}
 .btn-gemini-file:hover{border-color:var(--c영대);color:var(--c영대);}
-.btn-gemini-add{background:linear-gradient(135deg,var(--c영대),#6366f1);color:#fff;border:none;border-radius:12px;padding:12px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:8px;}
+.btn-gemini-add{background:var(--c영대);color:#fff;border:none;border-radius:12px;padding:12px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:8px;}
 
 /* 로딩/토스트 */
 .loading-overlay{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:14px;}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--c영대);border-radius:50%;animation:spin 0.8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.loading-txt{font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:600;color:var(--muted);}
 .toast{position:fixed;bottom:65px;left:50%;transform:translateX(-50%) translateY(10px);background:#2d2520;color:#fff;border-radius:20px;padding:8px 16px;font-size:12px;font-weight:600;opacity:0;transition:all 0.3s;z-index:999;white-space:nowrap;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .empty-msg{text-align:center;padding:36px 16px;color:var(--muted);font-size:13px;}
-@media(min-width:600px){.main{padding:16px;}.cal-day{min-height:80px;}.d-chip{font-size:11px;}}
+@media(min-width:600px){.main{padding:16px;}.cal-day{min-height:82px;}.d-chip{font-size:11px;}}
 </style>
 </head>
 <body>
 
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
-  <div class="loading-txt">가족 일정 불러오는 중... 🏠</div>
+  <div style="font-size:13px;color:#9e9488;font-weight:600;">가족 일정 불러오는 중... 🏠</div>
 </div>
 <div class="toast" id="toast"></div>
-
 <div class="copy-bar" id="copyBar">
   <span>📋 복사됨 — 붙여넣을 날짜를 길게 누르세요</span>
   <button class="copy-cancel" onclick="cancelCopy()">취소</button>
@@ -215,14 +207,12 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   </div>
 </header>
 
-<!-- 탭 -->
 <div class="tab-nav">
   <button class="tab-btn on" onclick="switchTab('cal',this)">📅 달력</button>
   <button class="tab-btn" onclick="switchTab('list',this)">📋 목록</button>
   <button class="tab-btn" onclick="switchTab('search',this)">🔍 검색</button>
 </div>
 
-<!-- 가족 필터 (달력·목록탭 공용) -->
 <div class="family-filter-wrap" id="filterWrap">
   <div class="family-filter">
     <button class="f-btn all on" onclick="setFilter('all',this)">전체</button>
@@ -235,16 +225,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 </div>
 
 <main class="main">
-  <!-- 오늘 (달력·목록탭에만 표시) -->
   <div class="today-box" id="todayBox">
-    <div class="today-hd">
-      <span class="today-title">☀️ 오늘</span>
-      <span class="today-badge" id="todayBadge"></span>
-    </div>
+    <div class="today-hd">☀️ 오늘 <span class="today-badge" id="todayBadge"></span></div>
     <div id="todayEvs"><div class="today-empty">오늘 일정 없음 🎉</div></div>
   </div>
 
-  <!-- 달력 탭 -->
   <div id="calTab">
     <div class="month-nav">
       <button class="mnav-btn" onclick="changeMonth(-1)">◀</button>
@@ -260,12 +245,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     </div>
   </div>
 
-  <!-- 목록 탭 -->
-  <div id="listTab" style="display:none;">
-    <div id="schedList"></div>
-  </div>
+  <div id="listTab" style="display:none;"><div id="schedList"></div></div>
 
-  <!-- 검색 탭 -->
   <div id="searchTab" style="display:none;">
     <div class="search-area">
       <div class="search-filter">
@@ -288,10 +269,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div class="modal-overlay" id="editModal" onclick="bgClose(event,'editModal')">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
-    <div class="modal-title">
-      <span id="editModalTxt">일정 추가 ✏️</span>
-      <button class="modal-close" onclick="closeModal('editModal')">✕</button>
-    </div>
+    <div class="modal-title"><span id="editModalTxt">일정 추가</span><button class="modal-close" onclick="closeModal('editModal')">✕</button></div>
     <div class="fg">
       <label class="fl">👥 구성원 * (복수 선택 가능)</label>
       <div class="who-sel">
@@ -306,7 +284,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       <div class="fg"><label class="fl">📅 날짜 *</label><input type="date" class="fi" id="f_date"></div>
       <div class="fg"><label class="fl">⏰ 시간</label><input type="time" class="fi" id="f_time"></div>
     </div>
-    <div class="fg"><label class="fl">📌 제목 *</label><input type="text" class="fi" id="f_title" placeholder="일정 제목을 입력하세요"></div>
+    <div class="fg"><label class="fl">📌 제목 *</label><input type="text" class="fi" id="f_title" placeholder="일정 제목"></div>
     <div class="fg"><label class="fl">📝 내용</label><textarea class="ft" id="f_body" placeholder="내용을 자유롭게 적어주세요..."></textarea></div>
     <button class="btn-save" onclick="saveEvent()">💾 저장하기</button>
     <button class="btn-del" id="btnDel" style="display:none" onclick="deleteEvent()">🗑️ 삭제</button>
@@ -317,7 +295,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div class="modal-overlay" id="detailModal" onclick="bgClose(event,'detailModal')">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
-    <div class="modal-title"><span>일정 상세 📋</span><button class="modal-close" onclick="closeModal('detailModal')">✕</button></div>
+    <div class="modal-title"><span>일정 상세</span><button class="modal-close" onclick="closeModal('detailModal')">✕</button></div>
     <div id="detailContent"></div>
     <button class="btn-edit-det" onclick="editFromDetail()">✏️ 수정하기</button>
   </div>
@@ -368,7 +346,10 @@ import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot
 
 const FB={apiKey:"AIzaSyBk1bMw7zutUQXxCWs_fY8Jh5XAYd-M7Zs",authDomain:"family-calendar-yoo.firebaseapp.com",projectId:"family-calendar-yoo",storageBucket:"family-calendar-yoo.firebasestorage.app",messagingSenderId:"29463720385",appId:"1:29463720385:web:995328e6ee09e81daaff40"};
 const GEMINI_KEY="AIzaSyDaWqZCQfYSmgLPK52vOyd7RtB0x0s6sA8";
-const app=initializeApp(FB); const db=getFirestore(app);
+const HOLIDAY_KEY="09b819905e0a70316749fb91c03a216633ad3e75196a6aa25e6a9f273d9116f8";
+
+const app=initializeApp(FB);
+const db=getFirestore(app);
 
 const CC={'유영대':'#3b82f6','이현희':'#f472b6','유제하':'#34d399','유가율':'#fb923c','유가은':'#a78bfa'};
 const CL={'유영대':'#eff6ff','이현희':'#fdf2f8','유제하':'#ecfdf5','유가율':'#fff7ed','유가은':'#f5f3ff'};
@@ -376,7 +357,45 @@ const CL={'유영대':'#eff6ff','이현희':'#fdf2f8','유제하':'#ecfdf5','유
 let events=[],curMonth=new Date(),filters=[],editId=null;
 let selWho=[],gSelWho=[],copiedEvent=null,sFilter='all',detailEv=null;
 let longPressTimer=null;
+const holidayCache={};   // { '2026': {'2026-01-01':'신정', ...} }
 
+// ── 공휴일 API (연도별 캐시) ──────────────────────────────
+async function getHolidays(year){
+  if(holidayCache[year]) return holidayCache[year];
+  const map={};
+  try{
+    const months=['01','02','03','04','05','06','07','08','09','10','11','12'];
+    await Promise.all(months.map(async mo=>{
+      // CORS 우회: Oracle 서버 프록시 없이 직접 호출 (공공데이터 API는 CORS 허용)
+      const url=`https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo?solYear=${year}&solMonth=${mo}&ServiceKey=${HOLIDAY_KEY}&numOfRows=30&_type=json`;
+      const res=await fetch(url);
+      const data=await res.json();
+      const items=data?.response?.body?.items?.item;
+      if(!items) return;
+      const list=Array.isArray(items)?items:[items];
+      list.forEach(item=>{
+        const ds=String(item.locdate);
+        const key=`${ds.slice(0,4)}-${ds.slice(4,6)}-${ds.slice(6,8)}`;
+        // 같은 날 여러개면 앞 것 유지
+        if(!map[key]) map[key]=item.dateName;
+      });
+    }));
+  }catch(e){
+    console.warn('공휴일 API 오류',e);
+  }
+  holidayCache[year]=map;
+  return map;
+}
+
+// 현재 달 공휴일 미리 로드
+async function preloadHolidays(year){
+  await getHolidays(year);
+  // 인접 연도도 미리 로드
+  await getHolidays(year-1);
+  await getHolidays(year+1);
+}
+
+// ── Firebase ─────────────────────────────────────────────
 const q=query(collection(db,"events"),orderBy("date","asc"));
 onSnapshot(q,snap=>{
   events=[];
@@ -388,6 +407,10 @@ onSnapshot(q,snap=>{
   showToast('⚠️ 연결 실패: '+err.message);
 });
 
+// 앱 시작 시 공휴일 미리 로드
+preloadHolidays(new Date().getFullYear());
+
+// ── 반복 일정 펼치기 ─────────────────────────────────────
 function expand(evs){
   const res=[],now=new Date();
   const s=new Date(now.getFullYear(),now.getMonth()-3,1);
@@ -415,6 +438,7 @@ function applyFilter(evs){
 
 function renderAll(){renderToday();renderCal();renderList();doSearch();}
 
+// ── 오늘 ─────────────────────────────────────────────────
 function renderToday(){
   const ts=new Date().toISOString().slice(0,10);
   const d=new Date();
@@ -445,49 +469,68 @@ function evCardHtml(ev,showDate=false){
   </div>`;
 }
 
-function renderCal(){
+// ── 달력 (공휴일 포함) ───────────────────────────────────
+async function renderCal(){
   const yr=curMonth.getFullYear(),mo=curMonth.getMonth();
   document.getElementById('monthLbl').textContent=`${yr}년 ${mo+1}월`;
   const today=new Date().toISOString().slice(0,10);
   const expanded=applyFilter(expand(events));
+
+  // 공휴일 로드 (캐시 있으면 즉시)
+  const holidays=await getHolidays(yr);
+
   const firstDow=new Date(yr,mo,1).getDay();
   const lastDate=new Date(yr,mo+1,0).getDate();
   const prevLast=new Date(yr,mo,0).getDate();
   let html='';
+
   for(let i=firstDow-1;i>=0;i--)
     html+=`<div class="cal-day other"><div class="dnum">${prevLast-i}</div></div>`;
+
   for(let d=1;d<=lastDate;d++){
     const ds=`${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const dow=new Date(yr,mo,d).getDay();
+    const holidayName=holidays[ds]||'';
+    const isHoliday=!!(holidayName);
     let cls='cal-day';
     if(ds===today) cls+=' today';
-    if(dow===0) cls+=' sun'; if(dow===6) cls+=' sat';
+    if(dow===0) cls+=' sun';
+    if(dow===6) cls+=' sat';
+    if(isHoliday) cls+=' holiday-day';
+
     const dayEvs=expanded.filter(ev=>ev.date===ds).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
-    const chips=dayEvs.slice(0,3).map(ev=>{
+    const chips=dayEvs.slice(0,2).map(ev=>{
       const who=Array.isArray(ev.who)?ev.who:[ev.who];
       const c=CC[who[0]]||'#888',l=CL[who[0]]||'#eee';
       const id=ev._v?ev._oid:ev.id;
       return `<div class="d-chip" style="background:${l};color:${c}" onclick="event.stopPropagation();openDetail('${id}','${ds}')">${ev.time?ev.time.slice(0,5)+' ':''}${ev.title}</div>`;
     }).join('');
-    const more=dayEvs.length>3?`<div class="d-more">+${dayEvs.length-3}</div>`:'';
+    const more=dayEvs.length>2?`<div class="d-more">+${dayEvs.length-2}</div>`:'';
+
+    // 날짜 숫자 색: 공휴일이면 빨간색 (토/일 아니어도)
+    const dnumStyle=isHoliday&&dow!==0&&dow!==6?'style="color:#ef4444"':'';
+
     html+=`<div class="${cls}" data-date="${ds}" onclick="handleDayClick('${ds}')" oncontextmenu="event.preventDefault()">
-      <div class="dnum">${d}</div>
+      <div class="dnum" ${dnumStyle}>${d}</div>
+      ${holidayName?`<div class="holiday-name">🎌 ${holidayName}</div>`:''}
       <div class="day-evs">${chips}${more}</div>
     </div>`;
   }
+
   const total=firstDow+lastDate;
   const next=total%7===0?0:7-(total%7);
   for(let i=1;i<=next;i++)
     html+=`<div class="cal-day other"><div class="dnum">${i}</div></div>`;
+
   document.getElementById('calDays').innerHTML=html;
   bindCalLongPress();
   bindCardLongPress();
 }
 
-// 목록 - 최신순(날짜 내림차순)
+// ── 목록 (최신순) ────────────────────────────────────────
 function renderList(){
   const evs=applyFilter(expand(events)).sort((a,b)=>{
-    if(a.date!==b.date) return b.date.localeCompare(a.date); // ← 최신순
+    if(a.date!==b.date) return b.date.localeCompare(a.date);
     return (b.time||'').localeCompare(a.time||'');
   });
   const groups={};
@@ -503,6 +546,7 @@ function renderList(){
   bindCardLongPress();
 }
 
+// ── 검색 ─────────────────────────────────────────────────
 window.doSearch=function(){
   const q=document.getElementById('searchInput').value.trim().toLowerCase();
   const el=document.getElementById('searchResults');
@@ -510,12 +554,11 @@ window.doSearch=function(){
   let evs=expand(events);
   if(sFilter!=='all') evs=evs.filter(ev=>{const w=Array.isArray(ev.who)?ev.who:[ev.who];return w.includes(sFilter);});
   if(q) evs=evs.filter(ev=>(ev.title||'').toLowerCase().includes(q)||(ev.body||'').toLowerCase().includes(q));
-  evs.sort((a,b)=>b.date.localeCompare(a.date)); // 최신순
+  evs.sort((a,b)=>b.date.localeCompare(a.date));
   if(!evs.length){el.innerHTML='<div class="search-empty">검색 결과가 없어요 🔍</div>';return;}
   el.innerHTML=evs.map(ev=>evCardHtml(ev,true)).join('');
   bindCardLongPress();
 }
-
 window.setSFilter=function(f,btn){
   sFilter=f;
   document.querySelectorAll('.sf-btn').forEach(b=>b.classList.remove('on'));
@@ -523,7 +566,7 @@ window.setSFilter=function(f,btn){
   doSearch();
 }
 
-// 필터 복수선택
+// ── 필터 ─────────────────────────────────────────────────
 window.setFilter=function(f,btn){
   if(f==='all'){
     filters=[];
@@ -543,7 +586,7 @@ window.setFilter=function(f,btn){
   renderAll();
 }
 
-// 복사/붙여넣기
+// ── 복사/붙여넣기 ────────────────────────────────────────
 function bindCardLongPress(){
   document.querySelectorAll('.ev-card').forEach(card=>{
     card.addEventListener('touchstart',e=>{
@@ -557,7 +600,6 @@ function bindCardLongPress(){
     card.addEventListener('touchmove',()=>clearTimeout(longPressTimer),{passive:true});
   });
 }
-
 function bindCalLongPress(){
   document.querySelectorAll('.cal-day:not(.other)').forEach(day=>{
     day.addEventListener('touchstart',e=>{
@@ -571,19 +613,24 @@ function bindCalLongPress(){
     day.addEventListener('touchmove',()=>clearTimeout(longPressTimer),{passive:true});
   });
 }
-
 async function pasteEvent(ds){
   if(!copiedEvent) return;
   const data={...copiedEvent,date:ds};
-  delete data.id; delete data._v; delete data._oid;
+  delete data.id;delete data._v;delete data._oid;
   try{await addDoc(collection(db,"events"),data);showToast(`✅ ${ds}에 붙여넣기 완료!`);cancelCopy();}
   catch(e){showToast('⚠️ 붙여넣기 실패');}
 }
 function showCopyBar(){document.getElementById('copyBar').classList.add('show');}
 window.cancelCopy=function(){copiedEvent=null;document.getElementById('copyBar').classList.remove('show');renderAll();}
 window.handleDayClick=function(ds){if(copiedEvent)pasteEvent(ds);else openAdd(ds);}
+window.changeMonth=function(d){
+  curMonth.setMonth(curMonth.getMonth()+d);
+  // 이동한 연도 공휴일 미리 로드
+  preloadHolidays(curMonth.getFullYear());
+  renderCal();
+}
 
-// CRUD
+// ── CRUD ─────────────────────────────────────────────────
 window.saveEvent=async function(){
   const title=document.getElementById('f_title').value.trim();
   const date=document.getElementById('f_date').value;
@@ -599,13 +646,11 @@ window.saveEvent=async function(){
     closeModal('editModal');
   }catch(e){showToast('⚠️ 저장 실패: '+e.message);}
 }
-
 window.deleteEvent=async function(){
   if(!editId||!confirm('이 일정을 삭제할까요?')) return;
   try{await deleteDoc(doc(db,"events",editId));showToast('🗑️ 삭제됐어요');closeModal('editModal');}
   catch(e){showToast('⚠️ 삭제 실패');}
 }
-
 window.openDetail=function(id,dateStr){
   const ev=events.find(e=>e.id===id);
   if(!ev) return;
@@ -619,14 +664,13 @@ window.openDetail=function(id,dateStr){
   `;
   openModal('detailModal');
 }
-
 window.editFromDetail=function(){
   if(!detailEv) return;
   closeModal('detailModal');
   setTimeout(()=>openAdd(null,detailEv.id),300);
 }
 
-// Gemini
+// ── Gemini ───────────────────────────────────────────────
 window.openGemini=function(){
   document.getElementById('imgPreviewWrap').innerHTML='<div class="img-placeholder">📷<br>아래 버튼으로<br>사진을 선택하세요</div>';
   document.getElementById('geminiStatus').textContent='사진을 선택하면 AI가 일정을 읽어드려요 🤖';
@@ -637,19 +681,17 @@ window.openGemini=function(){
   gSelWho=[];
   openModal('geminiModal');
 }
-
 window.handleImg=function(input){
   const file=input.files[0]; if(!file) return;
   const reader=new FileReader();
   reader.onload=e=>{
     document.getElementById('imgPreviewWrap').innerHTML=`<img class="img-preview" src="${e.target.result}">`;
-    document.getElementById('geminiStatus').innerHTML='<div class="spinner" style="margin:0 auto 6px"></div>AI가 읽는 중... 🤖';
+    document.getElementById('geminiStatus').innerHTML='<div class="spinner" style="margin:0 auto 6px"></div>AI가 읽는 중...';
     document.getElementById('geminiStatus').style.display='block';
     analyzeWithGemini(e.target.result);
   };
   reader.readAsDataURL(file);
 }
-
 async function analyzeWithGemini(base64){
   const b64=base64.split(',')[1],mime=base64.split(';')[0].split(':')[1];
   const prompt=`이 사진은 다이어리나 메모입니다. 일정 정보를 추출해서 아래 JSON 형식으로만 답하세요. 다른 말 금지.
@@ -677,13 +719,11 @@ async function analyzeWithGemini(base64){
     document.getElementById('btnGeminiSave').style.display='block';
   }
 }
-
 window.toggleGWho=function(btn){
   const w=btn.dataset.w;
   if(btn.classList.contains('on')){btn.classList.remove('on');gSelWho=gSelWho.filter(x=>x!==w);}
   else{btn.classList.add('on');gSelWho.push(w);}
 }
-
 window.saveGeminiEvent=async function(){
   const title=document.getElementById('g_title').value.trim();
   const date=document.getElementById('g_date').value;
@@ -699,19 +739,20 @@ window.saveGeminiEvent=async function(){
   }catch(e){showToast('⚠️ 저장 실패');}
 }
 
+// ── 공통 ─────────────────────────────────────────────────
 window.openAdd=function(dateStr,eid){
-  editId=eid||null; selWho=[];
+  editId=eid||null;selWho=[];
   document.getElementById('f_title').value='';
   document.getElementById('f_date').value=dateStr||new Date().toISOString().slice(0,10);
   document.getElementById('f_time').value='';
   document.getElementById('f_body').value='';
   document.querySelectorAll('.who-btn').forEach(b=>b.classList.remove('on'));
   document.getElementById('btnDel').style.display='none';
-  document.getElementById('editModalTxt').textContent='일정 추가 ✏️';
+  document.getElementById('editModalTxt').textContent='일정 추가';
   if(eid){
     const ev=events.find(e=>e.id===eid);
     if(ev){
-      document.getElementById('editModalTxt').textContent='일정 수정 ✏️';
+      document.getElementById('editModalTxt').textContent='일정 수정';
       document.getElementById('f_title').value=ev.title||'';
       document.getElementById('f_date').value=ev.date||'';
       document.getElementById('f_time').value=ev.time||'';
@@ -723,15 +764,11 @@ window.openAdd=function(dateStr,eid){
   }
   openModal('editModal');
 }
-
 window.toggleWho=function(btn){
   const w=btn.dataset.w;
   if(btn.classList.contains('on')){btn.classList.remove('on');selWho=selWho.filter(x=>x!==w);}
   else{btn.classList.add('on');selWho.push(w);}
 }
-
-window.changeMonth=function(d){curMonth.setMonth(curMonth.getMonth()+d);renderCal();}
-
 window.switchTab=function(tab,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
@@ -742,13 +779,12 @@ window.switchTab=function(tab,btn){
   document.getElementById('todayBox').style.display=tab==='search'?'none':'';
   if(tab==='search') setTimeout(()=>document.getElementById('searchInput').focus(),300);
 }
-
 window.openModal=function(id){document.getElementById(id).classList.add('open');}
 window.closeModal=function(id){document.getElementById(id).classList.remove('open');}
 window.bgClose=function(e,id){if(e.target===document.getElementById(id))closeModal(id);}
 window.showToast=function(msg){
   const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
+  t.textContent=msg;t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2500);
 }
 </script>
