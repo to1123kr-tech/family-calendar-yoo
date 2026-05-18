@@ -16,179 +16,186 @@
   --c제하:#16a34a; --l제하:#dcfce7;
   --c가율:#ea580c; --l가율:#ffedd5;
   --c가은:#7c3aed; --l가은:#ede9fe;
-  --primary:#2563eb;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overscroll-behavior:none;}
-a{text-decoration:none;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
 /* 헤더 */
-.app-header{background:var(--card);border-bottom:1px solid var(--border);padding:14px 16px 10px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);}
-.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.app-title{font-size:19px;font-weight:900;letter-spacing:-0.5px;}
-.header-actions{display:flex;gap:8px;align-items:center;}
-.btn-cam{background:var(--bg);border:1.5px solid var(--border);border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
-.btn-cam:hover{background:var(--l영대);}
-.btn-add-main{background:var(--primary);color:white;border:none;border-radius:50px;padding:7px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;}
-
-/* 가족 필터 */
-.family-filter{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;}
-.family-filter::-webkit-scrollbar{display:none;}
-.f-btn{border:2px solid var(--border);border-radius:50px;padding:4px 13px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;background:var(--bg);color:var(--muted);transition:all 0.2s;}
-.f-btn.all.on{background:var(--text);color:#fff;border-color:var(--text);}
-.f-btn[data-f="유영대"].on{background:var(--c영대);color:#fff;border-color:var(--c영대);}
-.f-btn[data-f="이현희"].on{background:var(--c현희);color:#fff;border-color:var(--c현희);}
-.f-btn[data-f="유제하"].on{background:var(--c제하);color:#fff;border-color:var(--c제하);}
-.f-btn[data-f="유가율"].on{background:var(--c가율);color:#fff;border-color:var(--c가율);}
-.f-btn[data-f="유가은"].on{background:var(--c가은);color:#fff;border-color:var(--c가은);}
+.app-header{background:var(--card);border-bottom:1px solid var(--border);padding:12px 14px 10px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0;}
+.app-title{font-size:18px;font-weight:900;letter-spacing:-0.5px;}
+.header-actions{display:flex;gap:6px;align-items:center;}
+.btn-loc{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;transition:all 0.2s;color:var(--text);}
+.btn-loc:hover{background:#fff3cd;}
+.btn-loc.garate{border-color:var(--c가율);color:var(--c가율);}
+.btn-loc.garate:hover{background:var(--l가율);}
+.btn-loc.gaeun{border-color:var(--c가은);color:var(--c가은);}
+.btn-loc.gaeun:hover{background:var(--l가은);}
+.btn-cam{background:var(--bg);border:1.5px solid var(--border);border-radius:50%;width:34px;height:34px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.btn-add-main{background:var(--c영대);color:white;border:none;border-radius:50px;padding:7px 14px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;}
 
 /* 탭 */
 .tab-nav{display:flex;background:var(--card);border-bottom:1px solid var(--border);}
-.tab-btn{flex:1;padding:11px;border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;}
-.tab-btn.on{color:var(--primary);border-bottom-color:var(--primary);}
+.tab-btn{flex:1;padding:10px;border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;}
+.tab-btn.on{color:var(--c영대);border-bottom-color:var(--c영대);}
 
-.main{padding:14px;max-width:760px;margin:0 auto;}
+/* 가족 필터 - 달력탭 안 */
+.family-filter-wrap{background:var(--card);padding:10px 14px 8px;border-bottom:1px solid var(--border);}
+.family-filter{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;}
+.family-filter::-webkit-scrollbar{display:none;}
+
+/* 구성원 버튼 - 항상 색상 표시 */
+.f-btn{border:2.5px solid transparent;border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;transition:all 0.2s;opacity:0.45;}
+.f-btn.all{border-color:#ccc;background:var(--bg);color:var(--muted);}
+.f-btn.all.on{opacity:1;background:var(--text);color:#fff;border-color:var(--text);}
+.f-btn[data-f="유영대"]{background:var(--l영대);color:var(--c영대);border-color:var(--c영대);}
+.f-btn[data-f="이현희"]{background:var(--l현희);color:var(--c현희);border-color:var(--c현희);}
+.f-btn[data-f="유제하"]{background:var(--l제하);color:var(--c제하);border-color:var(--c제하);}
+.f-btn[data-f="유가율"]{background:var(--l가율);color:var(--c가율);border-color:var(--c가율);}
+.f-btn[data-f="유가은"]{background:var(--l가은);color:var(--c가은);border-color:var(--c가은);}
+.f-btn[data-f].on{opacity:1;box-shadow:0 0 0 2px rgba(0,0,0,0.15);}
+/* 선택 안된 전체 버튼은 흐리게 */
+.f-btn.all:not(.on){opacity:0.45;}
+
+.main{padding:12px 14px;max-width:760px;margin:0 auto;}
 
 /* 오늘 */
-.today-box{background:var(--card);border-radius:14px;padding:14px;margin-bottom:14px;box-shadow:var(--shadow);border-left:4px solid var(--primary);}
-.today-hd{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:14px;font-weight:800;}
-.today-badge{background:var(--primary);color:#fff;border-radius:50px;padding:2px 10px;font-size:11px;font-weight:700;}
-.today-empty{color:var(--muted);font-size:13px;text-align:center;padding:10px 0;}
+.today-box{background:var(--card);border-radius:12px;padding:12px 14px;margin-bottom:12px;box-shadow:var(--shadow);border-left:4px solid var(--c영대);}
+.today-hd{display:flex;align-items:center;gap:7px;margin-bottom:8px;font-size:13px;font-weight:800;}
+.today-badge{background:var(--c영대);color:#fff;border-radius:50px;padding:2px 9px;font-size:11px;font-weight:700;}
+.today-empty{color:var(--muted);font-size:12px;text-align:center;padding:8px 0;}
 
 /* 월 이동 */
-.month-nav{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:14px;}
-.mnav-btn{background:var(--card);border:1px solid var(--border);border-radius:50%;width:34px;height:34px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);}
-.month-lbl{font-size:19px;font-weight:900;letter-spacing:-0.5px;}
+.month-nav{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:12px;}
+.mnav-btn{background:var(--card);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);}
+.month-lbl{font-size:18px;font-weight:900;letter-spacing:-0.5px;}
 
 /* 달력 */
-.cal-grid{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
+.cal-grid{background:var(--card);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);}
 .cal-wdays{display:grid;grid-template-columns:repeat(7,1fr);background:#f0ede8;}
-.cal-wd{text-align:center;padding:8px 0;font-size:11px;font-weight:700;color:var(--muted);}
+.cal-wd{text-align:center;padding:7px 0;font-size:11px;font-weight:700;color:var(--muted);}
 .cal-wd:first-child{color:#dc2626;} .cal-wd:last-child{color:#2563eb;}
 .cal-days{display:grid;grid-template-columns:repeat(7,1fr);}
-.cal-day{min-height:68px;border-top:1px solid var(--border);border-right:1px solid var(--border);padding:5px 3px 3px;cursor:pointer;transition:background 0.15s;user-select:none;}
+.cal-day{min-height:66px;border-top:1px solid var(--border);border-right:1px solid var(--border);padding:4px 3px 3px;cursor:pointer;transition:background 0.15s;user-select:none;}
 .cal-day:nth-child(7n){border-right:none;}
 .cal-day:hover{background:#fafaf8;}
 .cal-day.other .dnum{color:#ccc;}
-.cal-day.today .dnum{background:var(--primary);color:#fff;border-radius:50%;}
+.cal-day.today .dnum{background:var(--c영대);color:#fff;border-radius:50%;}
 .cal-day.sun .dnum{color:#dc2626;} .cal-day.sat .dnum{color:#2563eb;}
 .cal-day.today.sun .dnum,.cal-day.today.sat .dnum{color:#fff;}
-.cal-day.copy-target{background:#fffbeb;outline:2px dashed #f59e0b;}
 .dnum{font-size:12px;font-weight:700;width:22px;height:22px;display:flex;align-items:center;justify-content:center;margin-bottom:2px;}
 .day-evs{display:flex;flex-direction:column;gap:2px;}
 .d-chip{border-radius:3px;padding:1px 4px;font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;}
 .d-more{font-size:9px;color:var(--muted);padding-left:3px;}
 
 /* 이벤트 카드 */
-.ev-card{background:var(--card);border-radius:11px;padding:11px 13px;box-shadow:var(--shadow);border-left:4px solid var(--border);cursor:pointer;transition:all 0.2s;display:flex;align-items:flex-start;gap:9px;margin-bottom:5px;user-select:none;}
+.ev-card{background:var(--card);border-radius:10px;padding:10px 12px;box-shadow:var(--shadow);border-left:4px solid var(--border);cursor:pointer;transition:all 0.2s;display:flex;align-items:flex-start;gap:8px;margin-bottom:5px;user-select:none;}
 .ev-card:hover{transform:translateX(2px);}
 .ev-card.copied{outline:2px solid #f59e0b;background:#fffbeb;}
-.ev-dot{width:9px;height:9px;border-radius:50%;margin-top:4px;flex-shrink:0;}
+.ev-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0;}
 .ev-info{flex:1;min-width:0;}
 .ev-title{font-size:13px;font-weight:700;margin-bottom:2px;}
-.ev-meta{display:flex;flex-wrap:wrap;gap:5px;align-items:center;}
+.ev-meta{display:flex;flex-wrap:wrap;gap:4px;align-items:center;}
 .ev-time{font-size:11px;color:var(--muted);}
-.who-tag{font-size:10px;font-weight:700;border-radius:50px;padding:1px 7px;}
-.ev-body{font-size:12px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.date-lbl{font-size:11px;font-weight:700;color:var(--muted);margin:12px 0 5px 3px;letter-spacing:0.5px;}
+.who-tag{font-size:10px;font-weight:700;border-radius:4px;padding:1px 6px;}
+.ev-body{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ev-date-lbl{font-size:11px;color:var(--muted);margin-top:2px;}
+.date-lbl{font-size:11px;font-weight:700;color:var(--muted);margin:10px 0 4px 2px;letter-spacing:0.5px;}
 
 /* 검색 */
-.search-box{background:var(--card);border-radius:14px;padding:14px;margin-bottom:14px;box-shadow:var(--shadow);}
-.search-input-wrap{position:relative;margin-bottom:12px;}
-.search-input{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 40px 10px 12px;font-size:14px;font-family:inherit;background:var(--bg);outline:none;transition:border-color 0.2s;}
-.search-input:focus{border-color:var(--primary);background:#fff;}
-.search-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--muted);}
-.search-filter{display:flex;gap:6px;flex-wrap:wrap;}
-.sf-btn{border:2px solid var(--border);border-radius:50px;padding:4px 12px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;background:var(--bg);color:var(--muted);transition:all 0.2s;}
-.sf-btn.all.on{background:var(--text);color:#fff;border-color:var(--text);}
-.sf-btn[data-sf="유영대"].on{background:var(--c영대);color:#fff;border-color:var(--c영대);}
-.sf-btn[data-sf="이현희"].on{background:var(--c현희);color:#fff;border-color:var(--c현희);}
-.sf-btn[data-sf="유제하"].on{background:var(--c제하);color:#fff;border-color:var(--c제하);}
-.sf-btn[data-sf="유가율"].on{background:var(--c가율);color:#fff;border-color:var(--c가율);}
-.sf-btn[data-sf="유가은"].on{background:var(--c가은);color:#fff;border-color:var(--c가은);}
-.search-results{margin-top:12px;}
-.search-empty{text-align:center;padding:30px;color:var(--muted);font-size:13px;}
+.search-area{background:var(--card);border-radius:12px;padding:12px;margin-bottom:0;box-shadow:var(--shadow);}
+.search-input-wrap{position:relative;margin-bottom:10px;}
+.search-input{width:100%;border:1.5px solid var(--border);border-radius:9px;padding:9px 36px 9px 11px;font-size:13px;font-family:inherit;background:var(--bg);outline:none;transition:border-color 0.2s;}
+.search-input:focus{border-color:var(--c영대);background:#fff;}
+.search-icon{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:15px;color:var(--muted);}
+.search-filter{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+.sf-btn{border:2.5px solid transparent;border-radius:8px;padding:4px 11px;font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;transition:all 0.2s;opacity:0.45;}
+.sf-btn.all{border-color:#ccc;background:var(--bg);color:var(--muted);}
+.sf-btn.all.on{opacity:1;background:var(--text);color:#fff;border-color:var(--text);}
+.sf-btn[data-sf="유영대"]{background:var(--l영대);color:var(--c영대);border-color:var(--c영대);}
+.sf-btn[data-sf="이현희"]{background:var(--l현희);color:var(--c현희);border-color:var(--c현희);}
+.sf-btn[data-sf="유제하"]{background:var(--l제하);color:var(--c제하);border-color:var(--c제하);}
+.sf-btn[data-sf="유가율"]{background:var(--l가율);color:var(--c가율);border-color:var(--c가율);}
+.sf-btn[data-sf="유가은"]{background:var(--l가은);color:var(--c가은);border-color:var(--c가은);}
+.sf-btn[data-sf].on{opacity:1;box-shadow:0 0 0 2px rgba(0,0,0,0.12);}
+.sf-btn.all:not(.on){opacity:0.45;}
+.search-results{display:flex;flex-direction:column;gap:0;}
+.search-empty{text-align:center;padding:24px;color:var(--muted);font-size:13px;}
 
 /* 모달 */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;}
 .modal-overlay.open{opacity:1;pointer-events:all;}
-.modal-sheet{background:var(--card);border-radius:22px 22px 0 0;width:100%;max-width:600px;max-height:92vh;overflow-y:auto;padding:18px 18px 40px;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.34,1.2,0.64,1);}
+.modal-sheet{background:var(--card);border-radius:20px 20px 0 0;width:100%;max-width:600px;max-height:92vh;overflow-y:auto;padding:16px 16px 40px;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.34,1.2,0.64,1);}
 .modal-overlay.open .modal-sheet{transform:translateY(0);}
-.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 18px;}
-.modal-title{font-size:17px;font-weight:900;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;}
-.modal-close{background:var(--bg);border:none;border-radius:50%;width:30px;height:30px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.modal-handle{width:34px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
+.modal-title{font-size:16px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.modal-close{background:var(--bg);border:none;border-radius:50%;width:28px;height:28px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 
-/* 폼 */
-.fg{margin-bottom:14px;}
+.fg{margin-bottom:13px;}
 .fl{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;display:block;letter-spacing:0.5px;}
-.fi,.ft{width:100%;border:1.5px solid var(--border);border-radius:9px;padding:10px 11px;font-size:14px;font-family:inherit;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.2s;}
-.fi:focus,.ft:focus{border-color:var(--primary);background:#fff;}
-.ft{resize:vertical;min-height:90px;}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.fi,.ft{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:9px 10px;font-size:13px;font-family:inherit;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.2s;}
+.fi:focus,.ft:focus{border-color:var(--c영대);background:#fff;}
+.ft{resize:vertical;min-height:85px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
 
-/* 구성원 선택 */
-.who-sel{display:flex;flex-wrap:wrap;gap:7px;}
-.who-btn{border:2px solid var(--border);border-radius:50px;padding:6px 13px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;background:transparent;color:var(--muted);transition:all 0.2s;}
-.who-btn[data-w="유영대"].on{background:var(--c영대);border-color:var(--c영대);color:#fff;}
-.who-btn[data-w="이현희"].on{background:var(--c현희);border-color:var(--c현희);color:#fff;}
-.who-btn[data-w="유제하"].on{background:var(--c제하);border-color:var(--c제하);color:#fff;}
-.who-btn[data-w="유가율"].on{background:var(--c가율);border-color:var(--c가율);color:#fff;}
-.who-btn[data-w="유가은"].on{background:var(--c가은);border-color:var(--c가은);color:#fff;}
+/* 구성원 선택 - 폼 안 */
+.who-sel{display:flex;flex-wrap:wrap;gap:6px;}
+.who-btn{border:2.5px solid transparent;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;transition:all 0.2s;opacity:0.5;}
+.who-btn[data-w="유영대"]{background:var(--l영대);color:var(--c영대);border-color:var(--c영대);}
+.who-btn[data-w="이현희"]{background:var(--l현희);color:var(--c현희);border-color:var(--c현희);}
+.who-btn[data-w="유제하"]{background:var(--l제하);color:var(--c제하);border-color:var(--c제하);}
+.who-btn[data-w="유가율"]{background:var(--l가율);color:var(--c가율);border-color:var(--c가율);}
+.who-btn[data-w="유가은"]{background:var(--l가은);color:var(--c가은);border-color:var(--c가은);}
+.who-btn.on{opacity:1;box-shadow:0 0 0 2px rgba(0,0,0,0.15);}
 
-.btn-save{background:var(--primary);color:#fff;border:none;border-radius:11px;padding:13px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:6px;}
-.btn-del{background:#fee2e2;color:#dc2626;border:none;border-radius:11px;padding:11px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:8px;}
+.btn-save{background:var(--c영대);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:6px;}
+.btn-del{background:#fee2e2;color:#dc2626;border:none;border-radius:10px;padding:10px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:7px;}
 
 /* 상세 */
-.det-badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
-.det-badge{border-radius:50px;padding:3px 12px;font-size:12px;font-weight:700;}
-.det-title{font-size:20px;font-weight:900;margin-bottom:14px;}
-.det-field{margin-bottom:10px;}
+.det-badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px;}
+.det-badge{border-radius:6px;padding:3px 10px;font-size:12px;font-weight:700;}
+.det-title{font-size:19px;font-weight:900;margin-bottom:12px;}
+.det-field{margin-bottom:9px;}
 .det-lbl{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.5px;margin-bottom:3px;}
 .det-val{font-size:13px;font-weight:500;}
-.btn-edit-det{background:var(--bg);color:var(--text);border:none;border-radius:11px;padding:11px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:10px;}
+.btn-edit-det{background:var(--bg);color:var(--text);border:none;border-radius:10px;padding:10px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:10px;}
 
-/* 복사 토스트 */
-.copy-bar{position:fixed;bottom:0;left:0;right:0;background:#1a1614;color:#fff;padding:14px 20px;z-index:150;display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform 0.3s;font-size:13px;font-weight:600;}
+/* 복사 바 */
+.copy-bar{position:fixed;bottom:0;left:0;right:0;background:#1a1614;color:#fff;padding:13px 16px;z-index:150;display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform 0.3s;font-size:12px;font-weight:600;}
 .copy-bar.show{transform:translateY(0);}
-.copy-bar-cancel{background:rgba(255,255,255,0.15);border:none;color:#fff;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
+.copy-cancel{background:rgba(255,255,255,0.15);border:none;color:#fff;border-radius:7px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;}
 
-/* Gemini 모달 */
-.gemini-split{display:flex;flex-direction:column;gap:12px;}
-.img-preview-wrap{position:relative;background:#000;border-radius:12px;overflow:hidden;height:240px;display:flex;align-items:center;justify-content:center;}
+/* Gemini */
+.img-preview-wrap{background:#000;border-radius:10px;overflow:hidden;height:220px;display:flex;align-items:center;justify-content:center;}
 .img-preview{max-width:100%;max-height:100%;object-fit:contain;touch-action:pinch-zoom;}
-.img-placeholder{color:#666;font-size:14px;text-align:center;}
-.gemini-result-box{background:var(--bg);border-radius:12px;padding:12px;}
-.gemini-status{font-size:13px;color:var(--muted);text-align:center;padding:20px 0;}
-.gemini-fields{display:flex;flex-direction:column;gap:8px;}
-.gf-item{display:flex;align-items:flex-start;gap:8px;background:#fff;border-radius:8px;padding:8px 10px;}
-.gf-lbl{font-size:11px;font-weight:700;color:var(--muted);min-width:36px;margin-top:2px;}
-.gf-val{font-size:13px;flex:1;}
-.btn-gemini-add{background:var(--primary);color:#fff;border:none;border-radius:11px;padding:12px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:8px;}
-.btn-gemini-file{background:var(--bg);border:1.5px dashed var(--border);border-radius:10px;padding:12px;width:100%;font-size:13px;font-family:inherit;color:var(--muted);cursor:pointer;text-align:center;transition:all 0.2s;}
-.btn-gemini-file:hover{border-color:var(--primary);color:var(--primary);}
+.img-placeholder{color:#666;font-size:13px;text-align:center;}
+.gemini-result-box{background:var(--bg);border-radius:10px;padding:11px;margin-top:10px;}
+.gemini-status{font-size:12px;color:var(--muted);text-align:center;padding:16px 0;}
+.btn-gemini-file{background:var(--bg);border:1.5px dashed var(--border);border-radius:8px;padding:10px;width:100%;font-size:12px;font-family:inherit;color:var(--muted);cursor:pointer;text-align:center;transition:all 0.2s;flex:1;}
+.btn-gemini-file:hover{border-color:var(--c영대);color:var(--c영대);}
+.btn-gemini-add{background:var(--c영대);color:#fff;border:none;border-radius:10px;padding:11px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:8px;}
 
-/* 로딩 */
-.loading-overlay{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:14px;}
-.spinner{width:38px;height:38px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;}
+/* 로딩/토스트 */
+.loading-overlay{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:12px;}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--c영대);border-radius:50%;animation:spin 0.8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%) translateY(10px);background:#1a1614;color:#fff;border-radius:50px;padding:9px 18px;font-size:12px;font-weight:600;opacity:0;transition:all 0.3s;z-index:999;white-space:nowrap;pointer-events:none;}
+.toast{position:fixed;bottom:65px;left:50%;transform:translateX(-50%) translateY(10px);background:#1a1614;color:#fff;border-radius:50px;padding:8px 16px;font-size:12px;font-weight:600;opacity:0;transition:all 0.3s;z-index:999;white-space:nowrap;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.empty-msg{text-align:center;padding:36px 20px;color:var(--muted);font-size:13px;}
-@media(min-width:600px){.main{padding:18px;}.cal-day{min-height:82px;}.d-chip{font-size:11px;}}
+.empty-msg{text-align:center;padding:32px 16px;color:var(--muted);font-size:13px;}
+@media(min-width:600px){.main{padding:16px;}.cal-day{min-height:80px;}.d-chip{font-size:11px;}}
 </style>
 </head>
 <body>
 
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
-  <div style="font-size:13px;color:#8a8078;font-weight:600;">가족 일정 불러오는 중...</div>
+  <div style="font-size:12px;color:#8a8078;font-weight:600;">가족 일정 불러오는 중...</div>
 </div>
 <div class="toast" id="toast"></div>
 
-<!-- 복사 모드 바 -->
 <div class="copy-bar" id="copyBar">
-  <span id="copyBarTxt">📋 일정 복사됨 — 붙여넣을 날짜를 길게 누르세요</span>
-  <button class="copy-bar-cancel" onclick="cancelCopy()">취소</button>
+  <span id="copyBarTxt">📋 복사됨 — 붙여넣을 날짜를 길게 누르세요</span>
+  <button class="copy-cancel" onclick="cancelCopy()">취소</button>
 </div>
 
 <!-- 헤더 -->
@@ -196,10 +203,23 @@ a{text-decoration:none;}
   <div class="header-top">
     <div class="app-title">🏠 가족 일정</div>
     <div class="header-actions">
-      <button class="btn-cam" onclick="openGemini()" title="사진으로 일정 추가">📸</button>
+      <button class="btn-loc garate" onclick="window.open('https://family-tracker-yoo.web.app','_blank')" title="가율 위치확인">📍 가율</button>
+      <button class="btn-loc gaeun" onclick="window.open('https://family-tracker-yoo.web.app','_blank')" title="가은 위치확인">📍 가은</button>
+      <button class="btn-cam" onclick="openGemini()">📸</button>
       <button class="btn-add-main" onclick="openAdd()">＋ 추가</button>
     </div>
   </div>
+</header>
+
+<!-- 탭 -->
+<div class="tab-nav">
+  <button class="tab-btn on" onclick="switchTab('cal',this)">📅 달력</button>
+  <button class="tab-btn" onclick="switchTab('list',this)">📋 목록</button>
+  <button class="tab-btn" onclick="switchTab('search',this)">🔍 검색</button>
+</div>
+
+<!-- 가족 필터 (달력/목록 탭 공통, 검색탭에선 숨김) -->
+<div class="family-filter-wrap" id="filterWrap">
   <div class="family-filter">
     <button class="f-btn all on" onclick="setFilter('all',this)">전체</button>
     <button class="f-btn" data-f="유영대" onclick="setFilter('유영대',this)">👨 영대</button>
@@ -208,12 +228,6 @@ a{text-decoration:none;}
     <button class="f-btn" data-f="유가율" onclick="setFilter('유가율',this)">👧 가율</button>
     <button class="f-btn" data-f="유가은" onclick="setFilter('유가은',this)">👶 가은</button>
   </div>
-</header>
-
-<div class="tab-nav">
-  <button class="tab-btn on" onclick="switchTab('cal',this)">📅 달력</button>
-  <button class="tab-btn" onclick="switchTab('list',this)">📋 목록</button>
-  <button class="tab-btn" onclick="switchTab('search',this)">🔍 검색</button>
 </div>
 
 <main class="main">
@@ -246,7 +260,7 @@ a{text-decoration:none;}
 
   <!-- 검색 탭 -->
   <div id="searchTab" style="display:none;">
-    <div class="search-box">
+    <div class="search-area">
       <div class="search-input-wrap">
         <input type="text" class="search-input" id="searchInput" placeholder="일정 검색..." oninput="doSearch()">
         <span class="search-icon">🔍</span>
@@ -264,7 +278,7 @@ a{text-decoration:none;}
   </div>
 </main>
 
-<!-- 일정 추가/수정 모달 -->
+<!-- 추가/수정 모달 -->
 <div class="modal-overlay" id="editModal" onclick="bgClose(event,'editModal')">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -273,7 +287,7 @@ a{text-decoration:none;}
       <button class="modal-close" onclick="closeModal('editModal')">✕</button>
     </div>
     <div class="fg">
-      <label class="fl">👥 구성원 *</label>
+      <label class="fl">👥 구성원 * (복수 선택 가능)</label>
       <div class="who-sel">
         <button class="who-btn" data-w="유영대" onclick="toggleWho(this)">👨 영대</button>
         <button class="who-btn" data-w="이현희" onclick="toggleWho(this)">👩 현희</button>
@@ -283,23 +297,11 @@ a{text-decoration:none;}
       </div>
     </div>
     <div class="frow">
-      <div class="fg">
-        <label class="fl">📅 날짜 *</label>
-        <input type="date" class="fi" id="f_date">
-      </div>
-      <div class="fg">
-        <label class="fl">⏰ 시간</label>
-        <input type="time" class="fi" id="f_time">
-      </div>
+      <div class="fg"><label class="fl">📅 날짜 *</label><input type="date" class="fi" id="f_date"></div>
+      <div class="fg"><label class="fl">⏰ 시간</label><input type="time" class="fi" id="f_time"></div>
     </div>
-    <div class="fg">
-      <label class="fl">📌 제목 *</label>
-      <input type="text" class="fi" id="f_title" placeholder="일정 제목">
-    </div>
-    <div class="fg">
-      <label class="fl">📝 내용</label>
-      <textarea class="ft" id="f_body" placeholder="내용을 자유롭게 적어주세요..."></textarea>
-    </div>
+    <div class="fg"><label class="fl">📌 제목 *</label><input type="text" class="fi" id="f_title" placeholder="일정 제목"></div>
+    <div class="fg"><label class="fl">📝 내용</label><textarea class="ft" id="f_body" placeholder="내용을 자유롭게 적어주세요..."></textarea></div>
     <button class="btn-save" onclick="saveEvent()">💾 저장</button>
     <button class="btn-del" id="btnDel" style="display:none" onclick="deleteEvent()">🗑️ 삭제</button>
   </div>
@@ -309,71 +311,47 @@ a{text-decoration:none;}
 <div class="modal-overlay" id="detailModal" onclick="bgClose(event,'detailModal')">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
-    <div class="modal-title">
-      <span>일정 상세</span>
-      <button class="modal-close" onclick="closeModal('detailModal')">✕</button>
-    </div>
+    <div class="modal-title"><span>일정 상세</span><button class="modal-close" onclick="closeModal('detailModal')">✕</button></div>
     <div id="detailContent"></div>
     <button class="btn-edit-det" onclick="editFromDetail()">✏️ 수정하기</button>
   </div>
 </div>
 
-<!-- Gemini 사진 모달 -->
+<!-- Gemini 모달 -->
 <div class="modal-overlay" id="geminiModal" onclick="bgClose(event,'geminiModal')">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
-    <div class="modal-title">
-      <span>📸 사진으로 일정 추가</span>
-      <button class="modal-close" onclick="closeModal('geminiModal')">✕</button>
+    <div class="modal-title"><span>📸 사진으로 일정 추가</span><button class="modal-close" onclick="closeModal('geminiModal')">✕</button></div>
+    <div class="img-preview-wrap" id="imgPreviewWrap">
+      <div class="img-placeholder">📷 아래 버튼으로 사진을 선택하세요</div>
     </div>
-    <div class="gemini-split">
-      <!-- 상: 사진 -->
-      <div>
-        <div class="img-preview-wrap" id="imgPreviewWrap">
-          <div class="img-placeholder">📷 사진을 선택하세요</div>
+    <div style="display:flex;gap:8px;margin-top:8px;">
+      <button class="btn-gemini-file" onclick="document.getElementById('camInput').click()">📷 카메라</button>
+      <button class="btn-gemini-file" onclick="document.getElementById('gallInput').click()">🖼️ 사진첩</button>
+    </div>
+    <input type="file" id="camInput" accept="image/*" capture="environment" style="display:none" onchange="handleImg(this)">
+    <input type="file" id="gallInput" accept="image/*" style="display:none" onchange="handleImg(this)">
+    <div class="gemini-result-box">
+      <div class="gemini-status" id="geminiStatus">사진을 선택하면 AI가 일정을 읽어드려요</div>
+      <div id="geminiFields" style="display:none">
+        <div class="fg" style="margin-bottom:10px">
+          <label class="fl">👥 구성원 선택</label>
+          <div class="who-sel" id="gWhoSel">
+            <button class="who-btn" data-w="유영대" onclick="toggleGWho(this)">👨 영대</button>
+            <button class="who-btn" data-w="이현희" onclick="toggleGWho(this)">👩 현희</button>
+            <button class="who-btn" data-w="유제하" onclick="toggleGWho(this)">🧑 제하</button>
+            <button class="who-btn" data-w="유가율" onclick="toggleGWho(this)">👧 가율</button>
+            <button class="who-btn" data-w="유가은" onclick="toggleGWho(this)">👶 가은</button>
+          </div>
         </div>
-        <div style="display:flex;gap:8px;margin-top:8px;">
-          <button class="btn-gemini-file" onclick="document.getElementById('camInput').click()" style="flex:1">📷 카메라</button>
-          <button class="btn-gemini-file" onclick="document.getElementById('gallInput').click()" style="flex:1">🖼️ 사진첩</button>
+        <div class="frow" style="margin-bottom:10px">
+          <div class="fg" style="margin:0"><label class="fl">📅 날짜</label><input type="date" class="fi" id="g_date"></div>
+          <div class="fg" style="margin:0"><label class="fl">⏰ 시간</label><input type="time" class="fi" id="g_time"></div>
         </div>
-        <input type="file" id="camInput" accept="image/*" capture="environment" style="display:none" onchange="handleImg(this)">
-        <input type="file" id="gallInput" accept="image/*" style="display:none" onchange="handleImg(this)">
+        <div class="fg" style="margin-bottom:8px"><label class="fl">📌 제목</label><input type="text" class="fi" id="g_title"></div>
+        <div class="fg" style="margin-bottom:0"><label class="fl">📝 내용</label><textarea class="ft" id="g_body" style="min-height:65px"></textarea></div>
       </div>
-      <!-- 하: 인식 결과 -->
-      <div class="gemini-result-box">
-        <div class="gemini-status" id="geminiStatus">사진을 선택하면 AI가 일정을 읽어드려요</div>
-        <div class="gemini-fields" id="geminiFields" style="display:none">
-          <div class="fg" style="margin:0">
-            <label class="fl">👥 구성원</label>
-            <div class="who-sel" id="gWhoSel">
-              <button class="who-btn" data-w="유영대" onclick="toggleGWho(this)">👨 영대</button>
-              <button class="who-btn" data-w="이현희" onclick="toggleGWho(this)">👩 현희</button>
-              <button class="who-btn" data-w="유제하" onclick="toggleGWho(this)">🧑 제하</button>
-              <button class="who-btn" data-w="유가율" onclick="toggleGWho(this)">👧 가율</button>
-              <button class="who-btn" data-w="유가은" onclick="toggleGWho(this)">👶 가은</button>
-            </div>
-          </div>
-          <div class="frow" style="margin-top:8px">
-            <div class="fg" style="margin:0">
-              <label class="fl">📅 날짜</label>
-              <input type="date" class="fi" id="g_date">
-            </div>
-            <div class="fg" style="margin:0">
-              <label class="fl">⏰ 시간</label>
-              <input type="time" class="fi" id="g_time">
-            </div>
-          </div>
-          <div class="fg" style="margin-top:8px;margin-bottom:0">
-            <label class="fl">📌 제목</label>
-            <input type="text" class="fi" id="g_title">
-          </div>
-          <div class="fg" style="margin-top:8px;margin-bottom:0">
-            <label class="fl">📝 내용</label>
-            <textarea class="ft" id="g_body" style="min-height:70px"></textarea>
-          </div>
-        </div>
-        <button class="btn-gemini-add" id="btnGeminiSave" style="display:none" onclick="saveGeminiEvent()">📅 일정으로 등록</button>
-      </div>
+      <button class="btn-gemini-add" id="btnGeminiSave" style="display:none" onclick="saveGeminiEvent()">📅 일정으로 등록</button>
     </div>
   </div>
 </div>
@@ -382,48 +360,38 @@ a{text-decoration:none;}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const FB = {
-  apiKey:"AIzaSyBk1bMw7zutUQXxCWs_fY8Jh5XAYd-M7Zs",
-  authDomain:"family-calendar-yoo.firebaseapp.com",
-  projectId:"family-calendar-yoo",
-  storageBucket:"family-calendar-yoo.firebasestorage.app",
-  messagingSenderId:"29463720385",
-  appId:"1:29463720385:web:995328e6ee09e81daaff40"
-};
-const GEMINI_KEY = "AIzaSyDaWqZCQfYSmgLPK52vOyd7RtB0x0s6sA8";
-
-const app = initializeApp(FB);
-const db = getFirestore(app);
+const FB={apiKey:"AIzaSyBk1bMw7zutUQXxCWs_fY8Jh5XAYd-M7Zs",authDomain:"family-calendar-yoo.firebaseapp.com",projectId:"family-calendar-yoo",storageBucket:"family-calendar-yoo.firebasestorage.app",messagingSenderId:"29463720385",appId:"1:29463720385:web:995328e6ee09e81daaff40"};
+const GEMINI_KEY="AIzaSyDaWqZCQfYSmgLPK52vOyd7RtB0x0s6sA8";
+const app=initializeApp(FB);
+const db=getFirestore(app);
 
 const CC={'유영대':'#2563eb','이현희':'#e91e8c','유제하':'#16a34a','유가율':'#ea580c','유가은':'#7c3aed'};
 const CL={'유영대':'#dbeafe','이현희':'#fce4f3','유제하':'#dcfce7','유가율':'#ffedd5','유가은':'#ede9fe'};
 
-let events=[], curMonth=new Date(), filter='all', editId=null;
-let selWho=[], gSelWho=[];
-let copiedEvent=null, sFilter='all';
-let detailEv=null;
+// 복수 필터 (배열)
+let events=[], curMonth=new Date(), filters=[], editId=null;
+let selWho=[], gSelWho=[], copiedEvent=null, sFilter='all', detailEv=null;
 let longPressTimer=null;
 
-// Firestore 구독
+// Firestore
 const q=query(collection(db,"events"),orderBy("date","asc"));
-onSnapshot(q, snap=>{
+onSnapshot(q,snap=>{
   events=[];
   snap.forEach(d=>events.push({id:d.id,...d.data()}));
   renderAll();
   document.getElementById('loadingOverlay').style.display='none';
-}, err=>{
+},err=>{
   document.getElementById('loadingOverlay').style.display='none';
-  showToast('⚠️ 연결 실패');
+  showToast('⚠️ 연결 실패: '+err.message);
 });
 
-// 반복 펼치기
 function expand(evs){
-  const res=[], now=new Date();
+  const res=[],now=new Date();
   const s=new Date(now.getFullYear(),now.getMonth()-3,1);
   const e=new Date(now.getFullYear(),now.getMonth()+9,0);
   evs.forEach(ev=>{
     if(!ev.repeat||ev.repeat==='none'){res.push(ev);return;}
-    let d=new Date(ev.date+'T00:00:00'), cnt=0;
+    let d=new Date(ev.date+'T00:00:00'),cnt=0;
     while(d<=e&&cnt<500){
       if(d>=s) res.push({...ev,date:d.toISOString().slice(0,10),_v:true,_oid:ev.id});
       cnt++;
@@ -437,9 +405,13 @@ function expand(evs){
   return res;
 }
 
-function filtered(evs){
-  if(filter==='all') return evs;
-  return evs.filter(ev=>{const w=Array.isArray(ev.who)?ev.who:[ev.who];return w.includes(filter);});
+// 복수 필터 적용
+function applyFilter(evs){
+  if(!filters.length) return evs;
+  return evs.filter(ev=>{
+    const w=Array.isArray(ev.who)?ev.who:[ev.who];
+    return filters.some(f=>w.includes(f));
+  });
 }
 
 function renderAll(){renderToday();renderCal();renderList();doSearch();}
@@ -449,37 +421,41 @@ function renderToday(){
   const ts=new Date().toISOString().slice(0,10);
   const d=new Date();
   document.getElementById('todayBadge').textContent=`${d.getMonth()+1}월 ${d.getDate()}일`;
-  const evs=filtered(expand(events)).filter(ev=>ev.date===ts).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
+  const evs=applyFilter(expand(events)).filter(ev=>ev.date===ts).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
   const el=document.getElementById('todayEvs');
   if(!evs.length){el.innerHTML='<div class="today-empty">오늘 일정 없음 🎉</div>';return;}
-  el.innerHTML=evs.map(ev=>evCardHtml(ev)).join('');
-  bindLongPress();
+  el.innerHTML=evs.map(ev=>evCardHtml(ev,false)).join('');
+  bindCardLongPress();
 }
 
-function evCardHtml(ev){
+// 이벤트 카드 HTML - 복수 구성원 모두 색 표시
+function evCardHtml(ev, showDate=false){
   const who=Array.isArray(ev.who)?ev.who:[ev.who];
-  const color=CC[who[0]]||'#888', light=CL[who[0]]||'#eee';
+  // 첫번째 사람 색으로 카드 왼쪽 border
+  const color=CC[who[0]]||'#888';
   const id=ev._v?ev._oid:ev.id;
-  const isCopied=copiedEvent&&copiedEvent.id===id;
+  const isCopied=copiedEvent&&(copiedEvent.id===id);
+  const dateStr=showDate?`<div class="ev-date-lbl">📅 ${ev.date}${ev.time?' '+ev.time:''}</div>`:'';
   return `<div class="ev-card${isCopied?' copied':''}" style="border-left-color:${color}" data-id="${id}" data-date="${ev.date}" onclick="openDetail('${id}','${ev.date}')">
     <div class="ev-dot" style="background:${color}"></div>
     <div class="ev-info">
       <div class="ev-title">${ev.title}${ev.repeat&&ev.repeat!=='none'?' 🔁':''}</div>
       <div class="ev-meta">
-        ${ev.time?`<span class="ev-time">⏰ ${ev.time}</span>`:''}
+        ${ev.time&&!showDate?`<span class="ev-time">⏰ ${ev.time}</span>`:''}
         ${who.map(w=>`<span class="who-tag" style="background:${CL[w]||'#eee'};color:${CC[w]||'#333'}">${w.slice(1)}</span>`).join('')}
       </div>
       ${ev.body?`<div class="ev-body">📝 ${ev.body}</div>`:''}
+      ${dateStr}
     </div>
   </div>`;
 }
 
 // 달력
 function renderCal(){
-  const yr=curMonth.getFullYear(), mo=curMonth.getMonth();
+  const yr=curMonth.getFullYear(),mo=curMonth.getMonth();
   document.getElementById('monthLbl').textContent=`${yr}년 ${mo+1}월`;
   const today=new Date().toISOString().slice(0,10);
-  const expanded=filtered(expand(events));
+  const expanded=applyFilter(expand(events));
   const firstDow=new Date(yr,mo,1).getDay();
   const lastDate=new Date(yr,mo+1,0).getDate();
   const prevLast=new Date(yr,mo,0).getDate();
@@ -493,10 +469,14 @@ function renderCal(){
     if(ds===today) cls+=' today';
     if(dow===0) cls+=' sun'; if(dow===6) cls+=' sat';
     const dayEvs=expanded.filter(ev=>ev.date===ds).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
+    // 달력 칩: 구성원 여러명이면 여러 색 표시
     const chips=dayEvs.slice(0,3).map(ev=>{
       const who=Array.isArray(ev.who)?ev.who:[ev.who];
-      const c=CC[who[0]]||'#888', l=CL[who[0]]||'#eee';
+      // 첫번째 사람 색
+      const c=CC[who[0]]||'#888',l=CL[who[0]]||'#eee';
       const id=ev._v?ev._oid:ev.id;
+      // 복수 구성원이면 이름 태그 표시
+      const whoStr=who.length>1?who.map(w=>w.slice(1)).join('·'):who[0].slice(1);
       return `<div class="d-chip" style="background:${l};color:${c}" onclick="event.stopPropagation();openDetail('${id}','${ds}')">${ev.time?ev.time.slice(0,5)+' ':''}${ev.title}</div>`;
     }).join('');
     const more=dayEvs.length>3?`<div class="d-more">+${dayEvs.length-3}</div>`:'';
@@ -516,7 +496,7 @@ function renderCal(){
 
 // 목록
 function renderList(){
-  const evs=filtered(expand(events)).sort((a,b)=>{
+  const evs=applyFilter(expand(events)).sort((a,b)=>{
     if(a.date!==b.date) return a.date.localeCompare(b.date);
     return (a.time||'').localeCompare(b.time||'');
   });
@@ -528,8 +508,7 @@ function renderList(){
   el.innerHTML=Object.entries(groups).map(([date,evs])=>{
     const d=new Date(date+'T00:00:00');
     const dow=['일','월','화','수','목','금','토'][d.getDay()];
-    return `<div class="date-lbl">${d.getMonth()+1}월 ${d.getDate()}일 (${dow})${date===today?' ☀️':''}</div>
-    ${evs.map(ev=>evCardHtml(ev)).join('')}`;
+    return `<div class="date-lbl">${d.getMonth()+1}월 ${d.getDate()}일 (${dow})${date===today?' ☀️':''}</div>${evs.map(ev=>evCardHtml(ev,false)).join('')}`;
   }).join('');
   bindCardLongPress();
 }
@@ -544,7 +523,7 @@ window.doSearch=function(){
   if(q) evs=evs.filter(ev=>(ev.title||'').toLowerCase().includes(q)||(ev.body||'').toLowerCase().includes(q));
   evs.sort((a,b)=>a.date.localeCompare(b.date));
   if(!evs.length){el.innerHTML='<div class="search-empty">검색 결과 없음</div>';return;}
-  el.innerHTML=evs.map(ev=>evCardHtml(ev)).join('');
+  el.innerHTML=evs.map(ev=>evCardHtml(ev,true)).join('');
   bindCardLongPress();
 }
 
@@ -555,10 +534,33 @@ window.setSFilter=function(f,btn){
   doSearch();
 }
 
-// 복사 기능 - 카드 길게 누르기
+// 필터 - 복수 선택
+window.setFilter=function(f,btn){
+  if(f==='all'){
+    filters=[];
+    document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+  } else {
+    // 전체 버튼 off
+    document.querySelector('.f-btn.all').classList.remove('on');
+    if(btn.classList.contains('on')){
+      btn.classList.remove('on');
+      filters=filters.filter(x=>x!==f);
+      if(!filters.length){
+        document.querySelector('.f-btn.all').classList.add('on');
+      }
+    } else {
+      btn.classList.add('on');
+      filters.push(f);
+    }
+  }
+  renderAll();
+}
+
+// 복사/붙여넣기
 function bindCardLongPress(){
   document.querySelectorAll('.ev-card').forEach(card=>{
-    card.addEventListener('touchstart', e=>{
+    card.addEventListener('touchstart',e=>{
       const id=card.dataset.id;
       if(!id) return;
       longPressTimer=setTimeout(()=>{
@@ -566,29 +568,24 @@ function bindCardLongPress(){
         if(ev){
           copiedEvent={...ev};
           showCopyBar();
-          navigator.vibrate&&navigator.vibrate(50);
+          navigator.vibrate&&navigator.vibrate(60);
           showToast('📋 복사됨! 붙여넣을 날짜를 길게 누르세요');
           renderAll();
         }
       },600);
     },{passive:true});
-    card.addEventListener('touchend',()=>{clearTimeout(longPressTimer);},{passive:true});
-    card.addEventListener('touchmove',()=>{clearTimeout(longPressTimer);},{passive:true});
+    card.addEventListener('touchend',()=>clearTimeout(longPressTimer),{passive:true});
+    card.addEventListener('touchmove',()=>clearTimeout(longPressTimer),{passive:true});
   });
 }
 
-// 달력 날짜 길게 누르기 → 붙여넣기
 function bindCalLongPress(){
   document.querySelectorAll('.cal-day:not(.other)').forEach(day=>{
     day.addEventListener('touchstart',e=>{
       const ds=day.dataset.date;
       longPressTimer=setTimeout(()=>{
-        if(copiedEvent){
-          pasteEvent(ds);
-          navigator.vibrate&&navigator.vibrate([50,30,50]);
-        } else {
-          openAdd(ds);
-        }
+        if(copiedEvent){pasteEvent(ds);navigator.vibrate&&navigator.vibrate([50,30,50]);}
+        else openAdd(ds);
       },600);
     },{passive:true});
     day.addEventListener('touchend',()=>clearTimeout(longPressTimer),{passive:true});
@@ -596,32 +593,19 @@ function bindCalLongPress(){
   });
 }
 
-function bindLongPress(){bindCardLongPress();}
-
-async function pasteEvent(dateStr){
+async function pasteEvent(ds){
   if(!copiedEvent) return;
-  const data={...copiedEvent,date:dateStr};
+  const data={...copiedEvent,date:ds};
   delete data.id; delete data._v; delete data._oid;
-  try{
-    await addDoc(collection(db,"events"),data);
-    showToast(`✅ ${dateStr}에 붙여넣기 완료!`);
-    cancelCopy();
-  }catch(e){showToast('⚠️ 붙여넣기 실패');}
+  try{await addDoc(collection(db,"events"),data);showToast(`✅ ${ds}에 붙여넣기 완료!`);cancelCopy();}
+  catch(e){showToast('⚠️ 붙여넣기 실패');}
 }
 
 function showCopyBar(){document.getElementById('copyBar').classList.add('show');}
 window.cancelCopy=function(){copiedEvent=null;document.getElementById('copyBar').classList.remove('show');renderAll();}
+window.handleDayClick=function(ds){if(copiedEvent)pasteEvent(ds);else openAdd(ds);}
 
-// 날짜 클릭
-window.handleDayClick=function(ds){
-  if(copiedEvent){
-    pasteEvent(ds);
-  } else {
-    openAdd(ds);
-  }
-}
-
-// 저장
+// CRUD
 window.saveEvent=async function(){
   const title=document.getElementById('f_title').value.trim();
   const date=document.getElementById('f_date').value;
@@ -666,8 +650,9 @@ window.editFromDetail=function(){
 
 // Gemini
 window.openGemini=function(){
-  document.getElementById('imgPreviewWrap').innerHTML='<div class="img-placeholder">📷 사진을 선택하세요</div>';
+  document.getElementById('imgPreviewWrap').innerHTML='<div class="img-placeholder">📷 아래 버튼으로 사진을 선택하세요</div>';
   document.getElementById('geminiStatus').textContent='사진을 선택하면 AI가 일정을 읽어드려요';
+  document.getElementById('geminiStatus').style.display='block';
   document.getElementById('geminiFields').style.display='none';
   document.getElementById('btnGeminiSave').style.display='none';
   document.querySelectorAll('#gWhoSel .who-btn').forEach(b=>b.classList.remove('on'));
@@ -680,46 +665,39 @@ window.handleImg=function(input){
   if(!file) return;
   const reader=new FileReader();
   reader.onload=e=>{
-    document.getElementById('imgPreviewWrap').innerHTML=`<img class="img-preview" src="${e.target.result}" id="previewImg">`;
-    document.getElementById('geminiStatus').innerHTML='<div class="spinner" style="margin:0 auto 8px"></div>AI가 읽는 중...';
+    document.getElementById('imgPreviewWrap').innerHTML=`<img class="img-preview" src="${e.target.result}">`;
+    document.getElementById('geminiStatus').innerHTML='<div class="spinner" style="margin:0 auto 6px"></div>AI가 읽는 중...';
+    document.getElementById('geminiStatus').style.display='block';
     analyzeWithGemini(e.target.result);
   };
   reader.readAsDataURL(file);
 }
 
 async function analyzeWithGemini(base64){
-  const b64=base64.split(',')[1];
-  const mime=base64.split(';')[0].split(':')[1];
-  const prompt=`이 사진은 다이어리나 메모입니다. 일정 정보를 추출해서 아래 JSON 형식으로만 답해주세요. 다른 말은 하지 마세요.
-{
-  "title": "일정 제목",
-  "date": "YYYY-MM-DD 형식 (년도 불확실시 2026 사용)",
-  "time": "HH:MM 형식 (없으면 빈 문자열)",
-  "body": "기타 내용 (장소, 준비물 등)"
-}`;
+  const b64=base64.split(',')[1],mime=base64.split(';')[0].split(':')[1];
+  const prompt=`이 사진은 다이어리나 메모입니다. 일정 정보를 추출해서 아래 JSON 형식으로만 답하세요. 다른 말 금지.
+{"title":"일정 제목","date":"YYYY-MM-DD (연도 불명시 2026)","time":"HH:MM (없으면 빈문자열)","body":"기타내용"}`;
   try{
     const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
+      method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({contents:[{parts:[{inline_data:{mime_type:mime,data:b64}},{text:prompt}]}]})
     });
     const data=await res.json();
     const text=data.candidates?.[0]?.content?.parts?.[0]?.text||'';
-    const clean=text.replace(/```json|```/g,'').trim();
-    const parsed=JSON.parse(clean);
+    const parsed=JSON.parse(text.replace(/```json|```/g,'').trim());
     document.getElementById('geminiStatus').style.display='none';
-    document.getElementById('geminiFields').style.display='flex';
+    document.getElementById('geminiFields').style.display='block';
     document.getElementById('g_title').value=parsed.title||'';
     document.getElementById('g_date').value=parsed.date||'';
     document.getElementById('g_time').value=parsed.time||'';
     document.getElementById('g_body').value=parsed.body||'';
     document.getElementById('btnGeminiSave').style.display='block';
-    showToast('✅ AI가 일정을 읽었어요! 확인 후 등록하세요');
+    showToast('✅ AI가 읽었어요! 확인 후 등록하세요');
   }catch(e){
     document.getElementById('geminiStatus').textContent='⚠️ 인식 실패. 직접 입력해주세요.';
-    document.getElementById('geminiFields').style.display='flex';
-    document.getElementById('btnGeminiSave').style.display='block';
+    document.getElementById('geminiFields').style.display='block';
     document.getElementById('g_date').value=new Date().toISOString().slice(0,10);
+    document.getElementById('btnGeminiSave').style.display='block';
   }
 }
 
@@ -770,11 +748,10 @@ window.openAdd=function(dateStr,eid){
   openModal('editModal');
 }
 
-window.setFilter=function(f,btn){
-  filter=f;
-  document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  renderAll();
+window.toggleWho=function(btn){
+  const w=btn.dataset.w;
+  if(btn.classList.contains('on')){btn.classList.remove('on');selWho=selWho.filter(x=>x!==w);}
+  else{btn.classList.add('on');selWho.push(w);}
 }
 
 window.changeMonth=function(d){curMonth.setMonth(curMonth.getMonth()+d);renderCal();}
@@ -785,13 +762,9 @@ window.switchTab=function(tab,btn){
   document.getElementById('calTab').style.display=tab==='cal'?'':'none';
   document.getElementById('listTab').style.display=tab==='list'?'':'none';
   document.getElementById('searchTab').style.display=tab==='search'?'':'none';
-  if(tab==='search') document.getElementById('searchInput').focus();
-}
-
-window.toggleWho=function(btn){
-  const w=btn.dataset.w;
-  if(btn.classList.contains('on')){btn.classList.remove('on');selWho=selWho.filter(x=>x!==w);}
-  else{btn.classList.add('on');selWho.push(w);}
+  // 검색탭이면 상단 필터 숨김
+  document.getElementById('filterWrap').style.display=tab==='search'?'none':'';
+  if(tab==='search') setTimeout(()=>document.getElementById('searchInput').focus(),300);
 }
 
 window.openModal=function(id){document.getElementById(id).classList.add('open');}
