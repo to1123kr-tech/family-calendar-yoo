@@ -5,47 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="가족 일정">
-<title>가족 일정 🏠</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<title>가족 일정 v3 🏠</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:#f7f5f0; --card:#fff; --border:#e5e0d5; --text:#1a1614; --muted:#8a8078;
-  --shadow:0 2px 16px rgba(0,0,0,0.08);
-  --c영대:#2563eb; --l영대:#dbeafe;
-  --c현희:#e91e8c; --l현희:#fce4f3;
-  --c제하:#16a34a; --l제하:#dcfce7;
-  --c가율:#ea580c; --l가율:#ffedd5;
-  --c가은:#7c3aed; --l가은:#ede9fe;
+  --bg:#faf8f5; --card:#fff; --border:#ede8e0; --text:#2d2520; --muted:#9e9488;
+  --shadow:0 2px 16px rgba(0,0,0,0.07);
+  --radius:14px;
+  --c영대:#3b82f6; --l영대:#eff6ff;
+  --c현희:#f472b6; --l현희:#fdf2f8;
+  --c제하:#34d399; --l제하:#ecfdf5;
+  --c가율:#fb923c; --l가율:#fff7ed;
+  --c가은:#a78bfa; --l가은:#f5f3ff;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
 /* 헤더 */
 .app-header{background:var(--card);border-bottom:1px solid var(--border);padding:12px 14px 10px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);}
-.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:0;}
-.app-title{font-size:18px;font-weight:900;letter-spacing:-0.5px;}
-.header-actions{display:flex;gap:6px;align-items:center;}
-.btn-loc{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;transition:all 0.2s;color:var(--text);}
-.btn-loc:hover{background:#fff3cd;}
-.btn-loc.garate{border-color:var(--c가율);color:var(--c가율);}
-.btn-loc.garate:hover{background:var(--l가율);}
-.btn-loc.gaeun{border-color:var(--c가은);color:var(--c가은);}
-.btn-loc.gaeun:hover{background:var(--l가은);}
-.btn-cam{background:var(--bg);border:1.5px solid var(--border);border-radius:50%;width:34px;height:34px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.btn-add-main{background:var(--c영대);color:white;border:none;border-radius:50px;padding:7px 14px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;}
+.header-top{display:flex;align-items:center;justify-content:space-between;}
+.app-title{font-family:'Gaegu',cursive;font-size:22px;font-weight:700;letter-spacing:0px;color:var(--text);}
+.app-title span{color:var(--c영대);}
+.app-version{font-size:10px;color:var(--muted);font-weight:400;margin-left:4px;vertical-align:middle;}
+.header-actions{display:flex;gap:7px;align-items:center;}
+
+.btn-loc{background:linear-gradient(135deg,#667eea,#764ba2);color:white;border:none;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;font-family:inherit;box-shadow:0 2px 8px rgba(102,126,234,0.35);transition:all 0.2s;}
+.btn-loc:hover{transform:scale(1.04);}
+
+.btn-cam{background:linear-gradient(135deg,#f6d365,#fda085);color:white;border:none;border-radius:50%;width:40px;height:40px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(253,160,133,0.4);transition:all 0.2s;}
+.btn-cam:hover{transform:scale(1.08);}
+
+.btn-add-main{background:linear-gradient(135deg,var(--c영대),#6366f1);color:white;border:none;border-radius:20px;padding:7px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;box-shadow:0 2px 8px rgba(59,130,246,0.35);transition:all 0.2s;}
+.btn-add-main:hover{transform:scale(1.04);}
 
 /* 탭 */
 .tab-nav{display:flex;background:var(--card);border-bottom:1px solid var(--border);}
-.tab-btn{flex:1;padding:10px;border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;}
+.tab-btn{flex:1;padding:11px;border:none;background:transparent;font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;}
 .tab-btn.on{color:var(--c영대);border-bottom-color:var(--c영대);}
 
-/* 가족 필터 - 달력탭 안 */
-.family-filter-wrap{background:var(--card);padding:10px 14px 8px;border-bottom:1px solid var(--border);}
+/* 가족 필터 */
+.family-filter-wrap{background:var(--card);padding:9px 14px 8px;border-bottom:1px solid var(--border);}
 .family-filter{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;}
 .family-filter::-webkit-scrollbar{display:none;}
-
-/* 구성원 버튼 - 항상 색상 표시 */
-.f-btn{border:2.5px solid transparent;border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;transition:all 0.2s;opacity:0.45;}
+.f-btn{border:2px solid transparent;border-radius:10px;padding:5px 12px;font-size:12px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;white-space:nowrap;transition:all 0.2s;opacity:0.4;}
 .f-btn.all{border-color:#ccc;background:var(--bg);color:var(--muted);}
 .f-btn.all.on{opacity:1;background:var(--text);color:#fff;border-color:var(--text);}
 .f-btn[data-f="유영대"]{background:var(--l영대);color:var(--c영대);border-color:var(--c영대);}
@@ -53,63 +55,60 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .f-btn[data-f="유제하"]{background:var(--l제하);color:var(--c제하);border-color:var(--c제하);}
 .f-btn[data-f="유가율"]{background:var(--l가율);color:var(--c가율);border-color:var(--c가율);}
 .f-btn[data-f="유가은"]{background:var(--l가은);color:var(--c가은);border-color:var(--c가은);}
-.f-btn[data-f].on{opacity:1;box-shadow:0 0 0 2px rgba(0,0,0,0.15);}
-/* 선택 안된 전체 버튼은 흐리게 */
-.f-btn.all:not(.on){opacity:0.45;}
+.f-btn[data-f].on,.f-btn.all.on{opacity:1;box-shadow:0 2px 8px rgba(0,0,0,0.13);}
+.f-btn.all:not(.on){opacity:0.4;}
 
 .main{padding:12px 14px;max-width:760px;margin:0 auto;}
 
 /* 오늘 */
-.today-box{background:var(--card);border-radius:12px;padding:12px 14px;margin-bottom:12px;box-shadow:var(--shadow);border-left:4px solid var(--c영대);}
-.today-hd{display:flex;align-items:center;gap:7px;margin-bottom:8px;font-size:13px;font-weight:800;}
-.today-badge{background:var(--c영대);color:#fff;border-radius:50px;padding:2px 9px;font-size:11px;font-weight:700;}
+.today-box{background:var(--card);border-radius:var(--radius);padding:12px 14px;margin-bottom:12px;box-shadow:var(--shadow);border-left:4px solid var(--c영대);}
+.today-hd{display:flex;align-items:center;gap:7px;margin-bottom:8px;}
+.today-title{font-family:'Gaegu',cursive;font-size:16px;font-weight:700;}
+.today-badge{background:var(--c영대);color:#fff;border-radius:20px;padding:2px 9px;font-size:11px;font-weight:700;}
 .today-empty{color:var(--muted);font-size:12px;text-align:center;padding:8px 0;}
 
 /* 월 이동 */
 .month-nav{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:12px;}
-.mnav-btn{background:var(--card);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);}
-.month-lbl{font-size:18px;font-weight:900;letter-spacing:-0.5px;}
+.mnav-btn{background:var(--card);border:1.5px solid var(--border);border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all 0.2s;}
+.mnav-btn:hover{background:var(--l영대);}
+.month-lbl{font-family:'Gaegu',cursive;font-size:20px;font-weight:700;}
 
 /* 달력 */
-.cal-grid{background:var(--card);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);}
-.cal-wdays{display:grid;grid-template-columns:repeat(7,1fr);background:#f0ede8;}
+.cal-grid{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+.cal-wdays{display:grid;grid-template-columns:repeat(7,1fr);background:#f5f2ed;}
 .cal-wd{text-align:center;padding:7px 0;font-size:11px;font-weight:700;color:var(--muted);}
-.cal-wd:first-child{color:#dc2626;} .cal-wd:last-child{color:#2563eb;}
+.cal-wd:first-child{color:#f87171;} .cal-wd:last-child{color:#60a5fa;}
 .cal-days{display:grid;grid-template-columns:repeat(7,1fr);}
 .cal-day{min-height:66px;border-top:1px solid var(--border);border-right:1px solid var(--border);padding:4px 3px 3px;cursor:pointer;transition:background 0.15s;user-select:none;}
 .cal-day:nth-child(7n){border-right:none;}
 .cal-day:hover{background:#fafaf8;}
-.cal-day.other .dnum{color:#ccc;}
+.cal-day.other .dnum{color:#d1ccc5;}
 .cal-day.today .dnum{background:var(--c영대);color:#fff;border-radius:50%;}
-.cal-day.sun .dnum{color:#dc2626;} .cal-day.sat .dnum{color:#2563eb;}
+.cal-day.sun .dnum{color:#f87171;} .cal-day.sat .dnum{color:#60a5fa;}
 .cal-day.today.sun .dnum,.cal-day.today.sat .dnum{color:#fff;}
 .dnum{font-size:12px;font-weight:700;width:22px;height:22px;display:flex;align-items:center;justify-content:center;margin-bottom:2px;}
 .day-evs{display:flex;flex-direction:column;gap:2px;}
-.d-chip{border-radius:3px;padding:1px 4px;font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;}
+.d-chip{border-radius:5px;padding:2px 4px;font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;}
 .d-more{font-size:9px;color:var(--muted);padding-left:3px;}
 
 /* 이벤트 카드 */
-.ev-card{background:var(--card);border-radius:10px;padding:10px 12px;box-shadow:var(--shadow);border-left:4px solid var(--border);cursor:pointer;transition:all 0.2s;display:flex;align-items:flex-start;gap:8px;margin-bottom:5px;user-select:none;}
-.ev-card:hover{transform:translateX(2px);}
-.ev-card.copied{outline:2px solid #f59e0b;background:#fffbeb;}
+.ev-card{background:var(--card);border-radius:12px;padding:10px 12px;box-shadow:var(--shadow);border-left:4px solid var(--border);cursor:pointer;transition:all 0.2s;display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;user-select:none;}
+.ev-card:active{transform:scale(0.99);}
+.ev-card.copied{outline:2px solid #fbbf24;background:#fffbeb;}
 .ev-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0;}
 .ev-info{flex:1;min-width:0;}
-.ev-title{font-size:13px;font-weight:700;margin-bottom:2px;}
+.ev-title{font-size:13px;font-weight:700;margin-bottom:3px;}
 .ev-meta{display:flex;flex-wrap:wrap;gap:4px;align-items:center;}
 .ev-time{font-size:11px;color:var(--muted);}
-.who-tag{font-size:10px;font-weight:700;border-radius:4px;padding:1px 6px;}
-.ev-body{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.ev-date-lbl{font-size:11px;color:var(--muted);margin-top:2px;}
-.date-lbl{font-size:11px;font-weight:700;color:var(--muted);margin:10px 0 4px 2px;letter-spacing:0.5px;}
+.who-tag{font-size:10px;font-weight:700;border-radius:6px;padding:1px 7px;}
+.ev-body{font-size:11px;color:var(--muted);margin-top:3px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.ev-date-lbl{font-size:11px;color:var(--muted);margin-top:2px;font-weight:600;}
+.date-lbl{font-size:11px;font-weight:700;color:var(--muted);margin:12px 0 5px 2px;letter-spacing:0.3px;}
 
-/* 검색 */
-.search-area{background:var(--card);border-radius:12px;padding:12px;margin-bottom:0;box-shadow:var(--shadow);}
-.search-input-wrap{position:relative;margin-bottom:10px;}
-.search-input{width:100%;border:1.5px solid var(--border);border-radius:9px;padding:9px 36px 9px 11px;font-size:13px;font-family:inherit;background:var(--bg);outline:none;transition:border-color 0.2s;}
-.search-input:focus{border-color:var(--c영대);background:#fff;}
-.search-icon{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:15px;color:var(--muted);}
-.search-filter{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
-.sf-btn{border:2.5px solid transparent;border-radius:8px;padding:4px 11px;font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;transition:all 0.2s;opacity:0.45;}
+/* 검색탭 */
+.search-area{display:flex;flex-direction:column;gap:10px;}
+.search-filter{display:flex;gap:6px;flex-wrap:wrap;}
+.sf-btn{border:2px solid transparent;border-radius:10px;padding:5px 12px;font-size:12px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;white-space:nowrap;transition:all 0.2s;opacity:0.4;}
 .sf-btn.all{border-color:#ccc;background:var(--bg);color:var(--muted);}
 .sf-btn.all.on{opacity:1;background:var(--text);color:#fff;border-color:var(--text);}
 .sf-btn[data-sf="유영대"]{background:var(--l영대);color:var(--c영대);border-color:var(--c영대);}
@@ -117,71 +116,77 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .sf-btn[data-sf="유제하"]{background:var(--l제하);color:var(--c제하);border-color:var(--c제하);}
 .sf-btn[data-sf="유가율"]{background:var(--l가율);color:var(--c가율);border-color:var(--c가율);}
 .sf-btn[data-sf="유가은"]{background:var(--l가은);color:var(--c가은);border-color:var(--c가은);}
-.sf-btn[data-sf].on{opacity:1;box-shadow:0 0 0 2px rgba(0,0,0,0.12);}
-.sf-btn.all:not(.on){opacity:0.45;}
+.sf-btn[data-sf].on,.sf-btn.all.on{opacity:1;box-shadow:0 2px 8px rgba(0,0,0,0.12);}
+.sf-btn.all:not(.on){opacity:0.4;}
+.search-input-wrap{position:relative;}
+.search-input{width:100%;border:1.5px solid var(--border);border-radius:12px;padding:10px 38px 10px 12px;font-size:13px;font-family:inherit;background:var(--card);outline:none;transition:border-color 0.2s;box-shadow:var(--shadow);}
+.search-input:focus{border-color:var(--c영대);background:#fff;}
+.search-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--muted);}
 .search-results{display:flex;flex-direction:column;gap:0;}
-.search-empty{text-align:center;padding:24px;color:var(--muted);font-size:13px;}
+.search-empty{text-align:center;padding:28px;color:var(--muted);font-size:13px;}
 
 /* 모달 */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;}
 .modal-overlay.open{opacity:1;pointer-events:all;}
-.modal-sheet{background:var(--card);border-radius:20px 20px 0 0;width:100%;max-width:600px;max-height:92vh;overflow-y:auto;padding:16px 16px 40px;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.34,1.2,0.64,1);}
+.modal-sheet{background:var(--card);border-radius:22px 22px 0 0;width:100%;max-width:600px;max-height:92vh;overflow-y:auto;padding:16px 16px 44px;transform:translateY(100%);transition:transform 0.32s cubic-bezier(0.34,1.2,0.64,1);}
 .modal-overlay.open .modal-sheet{transform:translateY(0);}
-.modal-handle{width:34px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
-.modal-title{font-size:16px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
-.modal-close{background:var(--bg);border:none;border-radius:50%;width:28px;height:28px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
+.modal-title{font-family:'Gaegu',cursive;font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+.modal-close{background:var(--bg);border:none;border-radius:50%;width:28px;height:28px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);}
 
+/* 폼 */
 .fg{margin-bottom:13px;}
-.fl{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;display:block;letter-spacing:0.5px;}
-.fi,.ft{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:9px 10px;font-size:13px;font-family:inherit;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.2s;}
+.fl{font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;display:block;letter-spacing:0.3px;}
+.fi,.ft{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:9px 11px;font-size:13px;font-family:inherit;background:var(--bg);color:var(--text);outline:none;transition:border-color 0.2s;}
 .fi:focus,.ft:focus{border-color:var(--c영대);background:#fff;}
 .ft{resize:vertical;min-height:85px;}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
 
-/* 구성원 선택 - 폼 안 */
+/* 구성원 선택 */
 .who-sel{display:flex;flex-wrap:wrap;gap:6px;}
-.who-btn{border:2.5px solid transparent;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;transition:all 0.2s;opacity:0.5;}
+.who-btn{border:2px solid transparent;border-radius:10px;padding:6px 12px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;transition:all 0.2s;opacity:0.45;}
 .who-btn[data-w="유영대"]{background:var(--l영대);color:var(--c영대);border-color:var(--c영대);}
 .who-btn[data-w="이현희"]{background:var(--l현희);color:var(--c현희);border-color:var(--c현희);}
 .who-btn[data-w="유제하"]{background:var(--l제하);color:var(--c제하);border-color:var(--c제하);}
 .who-btn[data-w="유가율"]{background:var(--l가율);color:var(--c가율);border-color:var(--c가율);}
 .who-btn[data-w="유가은"]{background:var(--l가은);color:var(--c가은);border-color:var(--c가은);}
-.who-btn.on{opacity:1;box-shadow:0 0 0 2px rgba(0,0,0,0.15);}
+.who-btn.on{opacity:1;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
 
-.btn-save{background:var(--c영대);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:6px;}
-.btn-del{background:#fee2e2;color:#dc2626;border:none;border-radius:10px;padding:10px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:7px;}
+.btn-save{background:linear-gradient(135deg,var(--c영대),#6366f1);color:#fff;border:none;border-radius:12px;padding:13px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:6px;box-shadow:0 3px 10px rgba(59,130,246,0.3);}
+.btn-del{background:#fef2f2;color:#ef4444;border:none;border-radius:12px;padding:11px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:8px;}
 
 /* 상세 */
-.det-badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px;}
-.det-badge{border-radius:6px;padding:3px 10px;font-size:12px;font-weight:700;}
-.det-title{font-size:19px;font-weight:900;margin-bottom:12px;}
+.det-badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
+.det-badge{border-radius:8px;padding:3px 11px;font-size:12px;font-weight:700;}
+.det-title{font-family:'Gaegu',cursive;font-size:22px;font-weight:700;margin-bottom:13px;}
 .det-field{margin-bottom:9px;}
-.det-lbl{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.5px;margin-bottom:3px;}
+.det-lbl{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.3px;margin-bottom:3px;}
 .det-val{font-size:13px;font-weight:500;}
-.btn-edit-det{background:var(--bg);color:var(--text);border:none;border-radius:10px;padding:10px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:10px;}
+.btn-edit-det{background:var(--bg);color:var(--text);border:1.5px solid var(--border);border-radius:12px;padding:11px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:10px;}
 
 /* 복사 바 */
-.copy-bar{position:fixed;bottom:0;left:0;right:0;background:#1a1614;color:#fff;padding:13px 16px;z-index:150;display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform 0.3s;font-size:12px;font-weight:600;}
+.copy-bar{position:fixed;bottom:0;left:0;right:0;background:#2d2520;color:#fff;padding:13px 16px;z-index:150;display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform 0.3s;font-size:12px;font-weight:600;}
 .copy-bar.show{transform:translateY(0);}
-.copy-cancel{background:rgba(255,255,255,0.15);border:none;color:#fff;border-radius:7px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;}
+.copy-cancel{background:rgba(255,255,255,0.15);border:none;color:#fff;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;}
 
 /* Gemini */
-.img-preview-wrap{background:#000;border-radius:10px;overflow:hidden;height:220px;display:flex;align-items:center;justify-content:center;}
+.img-preview-wrap{background:#111;border-radius:12px;overflow:hidden;height:220px;display:flex;align-items:center;justify-content:center;}
 .img-preview{max-width:100%;max-height:100%;object-fit:contain;touch-action:pinch-zoom;}
-.img-placeholder{color:#666;font-size:13px;text-align:center;}
-.gemini-result-box{background:var(--bg);border-radius:10px;padding:11px;margin-top:10px;}
+.img-placeholder{color:#666;font-size:13px;text-align:center;line-height:2;}
+.gemini-result-box{background:var(--bg);border-radius:12px;padding:12px;margin-top:10px;}
 .gemini-status{font-size:12px;color:var(--muted);text-align:center;padding:16px 0;}
-.btn-gemini-file{background:var(--bg);border:1.5px dashed var(--border);border-radius:8px;padding:10px;width:100%;font-size:12px;font-family:inherit;color:var(--muted);cursor:pointer;text-align:center;transition:all 0.2s;flex:1;}
+.btn-gemini-file{background:var(--card);border:1.5px dashed var(--border);border-radius:10px;padding:10px;font-size:12px;font-family:inherit;color:var(--muted);cursor:pointer;text-align:center;transition:all 0.2s;flex:1;}
 .btn-gemini-file:hover{border-color:var(--c영대);color:var(--c영대);}
-.btn-gemini-add{background:var(--c영대);color:#fff;border:none;border-radius:10px;padding:11px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:8px;}
+.btn-gemini-add{background:linear-gradient(135deg,var(--c영대),#6366f1);color:#fff;border:none;border-radius:12px;padding:12px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:8px;}
 
 /* 로딩/토스트 */
-.loading-overlay{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:12px;}
+.loading-overlay{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:14px;}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--c영대);border-radius:50%;animation:spin 0.8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.toast{position:fixed;bottom:65px;left:50%;transform:translateX(-50%) translateY(10px);background:#1a1614;color:#fff;border-radius:50px;padding:8px 16px;font-size:12px;font-weight:600;opacity:0;transition:all 0.3s;z-index:999;white-space:nowrap;pointer-events:none;}
+.loading-txt{font-family:'Gaegu',cursive;font-size:16px;color:var(--muted);}
+.toast{position:fixed;bottom:65px;left:50%;transform:translateX(-50%) translateY(10px);background:#2d2520;color:#fff;border-radius:20px;padding:8px 16px;font-size:12px;font-weight:600;opacity:0;transition:all 0.3s;z-index:999;white-space:nowrap;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.empty-msg{text-align:center;padding:32px 16px;color:var(--muted);font-size:13px;}
+.empty-msg{text-align:center;padding:36px 16px;color:var(--muted);font-size:13px;}
 @media(min-width:600px){.main{padding:16px;}.cal-day{min-height:80px;}.d-chip{font-size:11px;}}
 </style>
 </head>
@@ -189,22 +194,21 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
-  <div style="font-size:12px;color:#8a8078;font-weight:600;">가족 일정 불러오는 중...</div>
+  <div class="loading-txt">가족 일정 불러오는 중... 🏠</div>
 </div>
 <div class="toast" id="toast"></div>
 
 <div class="copy-bar" id="copyBar">
-  <span id="copyBarTxt">📋 복사됨 — 붙여넣을 날짜를 길게 누르세요</span>
+  <span>📋 복사됨 — 붙여넣을 날짜를 길게 누르세요</span>
   <button class="copy-cancel" onclick="cancelCopy()">취소</button>
 </div>
 
 <!-- 헤더 -->
 <header class="app-header">
   <div class="header-top">
-    <div class="app-title">🏠 가족 일정</div>
+    <div class="app-title">🏠 가족 일정 <span class="app-version">v3</span></div>
     <div class="header-actions">
-      <button class="btn-loc garate" onclick="window.open('https://family-tracker-yoo.web.app','_blank')" title="가율 위치확인">📍 가율</button>
-      <button class="btn-loc gaeun" onclick="window.open('https://family-tracker-yoo.web.app','_blank')" title="가은 위치확인">📍 가은</button>
+      <button class="btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치 조회</button>
       <button class="btn-cam" onclick="openGemini()">📸</button>
       <button class="btn-add-main" onclick="openAdd()">＋ 추가</button>
     </div>
@@ -218,7 +222,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   <button class="tab-btn" onclick="switchTab('search',this)">🔍 검색</button>
 </div>
 
-<!-- 가족 필터 (달력/목록 탭 공통, 검색탭에선 숨김) -->
+<!-- 가족 필터 (달력·목록탭 공용) -->
 <div class="family-filter-wrap" id="filterWrap">
   <div class="family-filter">
     <button class="f-btn all on" onclick="setFilter('all',this)">전체</button>
@@ -231,9 +235,12 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 </div>
 
 <main class="main">
-  <!-- 오늘 -->
-  <div class="today-box">
-    <div class="today-hd">☀️ 오늘 <span class="today-badge" id="todayBadge"></span></div>
+  <!-- 오늘 (달력·목록탭에만 표시) -->
+  <div class="today-box" id="todayBox">
+    <div class="today-hd">
+      <span class="today-title">☀️ 오늘</span>
+      <span class="today-badge" id="todayBadge"></span>
+    </div>
     <div id="todayEvs"><div class="today-empty">오늘 일정 없음 🎉</div></div>
   </div>
 
@@ -261,10 +268,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   <!-- 검색 탭 -->
   <div id="searchTab" style="display:none;">
     <div class="search-area">
-      <div class="search-input-wrap">
-        <input type="text" class="search-input" id="searchInput" placeholder="일정 검색..." oninput="doSearch()">
-        <span class="search-icon">🔍</span>
-      </div>
       <div class="search-filter">
         <button class="sf-btn all on" onclick="setSFilter('all',this)">전체</button>
         <button class="sf-btn" data-sf="유영대" onclick="setSFilter('유영대',this)">👨 영대</button>
@@ -272,6 +275,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
         <button class="sf-btn" data-sf="유제하" onclick="setSFilter('유제하',this)">🧑 제하</button>
         <button class="sf-btn" data-sf="유가율" onclick="setSFilter('유가율',this)">👧 가율</button>
         <button class="sf-btn" data-sf="유가은" onclick="setSFilter('유가은',this)">👶 가은</button>
+      </div>
+      <div class="search-input-wrap">
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 일정 검색..." oninput="doSearch()">
       </div>
       <div class="search-results" id="searchResults"></div>
     </div>
@@ -283,7 +289,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">
-      <span id="editModalTxt">일정 추가</span>
+      <span id="editModalTxt">일정 추가 ✏️</span>
       <button class="modal-close" onclick="closeModal('editModal')">✕</button>
     </div>
     <div class="fg">
@@ -300,9 +306,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       <div class="fg"><label class="fl">📅 날짜 *</label><input type="date" class="fi" id="f_date"></div>
       <div class="fg"><label class="fl">⏰ 시간</label><input type="time" class="fi" id="f_time"></div>
     </div>
-    <div class="fg"><label class="fl">📌 제목 *</label><input type="text" class="fi" id="f_title" placeholder="일정 제목"></div>
+    <div class="fg"><label class="fl">📌 제목 *</label><input type="text" class="fi" id="f_title" placeholder="일정 제목을 입력하세요"></div>
     <div class="fg"><label class="fl">📝 내용</label><textarea class="ft" id="f_body" placeholder="내용을 자유롭게 적어주세요..."></textarea></div>
-    <button class="btn-save" onclick="saveEvent()">💾 저장</button>
+    <button class="btn-save" onclick="saveEvent()">💾 저장하기</button>
     <button class="btn-del" id="btnDel" style="display:none" onclick="deleteEvent()">🗑️ 삭제</button>
   </div>
 </div>
@@ -311,7 +317,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <div class="modal-overlay" id="detailModal" onclick="bgClose(event,'detailModal')">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
-    <div class="modal-title"><span>일정 상세</span><button class="modal-close" onclick="closeModal('detailModal')">✕</button></div>
+    <div class="modal-title"><span>일정 상세 📋</span><button class="modal-close" onclick="closeModal('detailModal')">✕</button></div>
     <div id="detailContent"></div>
     <button class="btn-edit-det" onclick="editFromDetail()">✏️ 수정하기</button>
   </div>
@@ -323,7 +329,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     <div class="modal-handle"></div>
     <div class="modal-title"><span>📸 사진으로 일정 추가</span><button class="modal-close" onclick="closeModal('geminiModal')">✕</button></div>
     <div class="img-preview-wrap" id="imgPreviewWrap">
-      <div class="img-placeholder">📷 아래 버튼으로 사진을 선택하세요</div>
+      <div class="img-placeholder">📷<br>아래 버튼으로<br>사진을 선택하세요</div>
     </div>
     <div style="display:flex;gap:8px;margin-top:8px;">
       <button class="btn-gemini-file" onclick="document.getElementById('camInput').click()">📷 카메라</button>
@@ -332,7 +338,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     <input type="file" id="camInput" accept="image/*" capture="environment" style="display:none" onchange="handleImg(this)">
     <input type="file" id="gallInput" accept="image/*" style="display:none" onchange="handleImg(this)">
     <div class="gemini-result-box">
-      <div class="gemini-status" id="geminiStatus">사진을 선택하면 AI가 일정을 읽어드려요</div>
+      <div id="geminiStatus" class="gemini-status">사진을 선택하면 AI가 일정을 읽어드려요 🤖</div>
       <div id="geminiFields" style="display:none">
         <div class="fg" style="margin-bottom:10px">
           <label class="fl">👥 구성원 선택</label>
@@ -351,7 +357,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
         <div class="fg" style="margin-bottom:8px"><label class="fl">📌 제목</label><input type="text" class="fi" id="g_title"></div>
         <div class="fg" style="margin-bottom:0"><label class="fl">📝 내용</label><textarea class="ft" id="g_body" style="min-height:65px"></textarea></div>
       </div>
-      <button class="btn-gemini-add" id="btnGeminiSave" style="display:none" onclick="saveGeminiEvent()">📅 일정으로 등록</button>
+      <button class="btn-gemini-add" id="btnGeminiSave" style="display:none" onclick="saveGeminiEvent()">📅 일정으로 등록하기</button>
     </div>
   </div>
 </div>
@@ -362,18 +368,15 @@ import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot
 
 const FB={apiKey:"AIzaSyBk1bMw7zutUQXxCWs_fY8Jh5XAYd-M7Zs",authDomain:"family-calendar-yoo.firebaseapp.com",projectId:"family-calendar-yoo",storageBucket:"family-calendar-yoo.firebasestorage.app",messagingSenderId:"29463720385",appId:"1:29463720385:web:995328e6ee09e81daaff40"};
 const GEMINI_KEY="AIzaSyDaWqZCQfYSmgLPK52vOyd7RtB0x0s6sA8";
-const app=initializeApp(FB);
-const db=getFirestore(app);
+const app=initializeApp(FB); const db=getFirestore(app);
 
-const CC={'유영대':'#2563eb','이현희':'#e91e8c','유제하':'#16a34a','유가율':'#ea580c','유가은':'#7c3aed'};
-const CL={'유영대':'#dbeafe','이현희':'#fce4f3','유제하':'#dcfce7','유가율':'#ffedd5','유가은':'#ede9fe'};
+const CC={'유영대':'#3b82f6','이현희':'#f472b6','유제하':'#34d399','유가율':'#fb923c','유가은':'#a78bfa'};
+const CL={'유영대':'#eff6ff','이현희':'#fdf2f8','유제하':'#ecfdf5','유가율':'#fff7ed','유가은':'#f5f3ff'};
 
-// 복수 필터 (배열)
-let events=[], curMonth=new Date(), filters=[], editId=null;
-let selWho=[], gSelWho=[], copiedEvent=null, sFilter='all', detailEv=null;
+let events=[],curMonth=new Date(),filters=[],editId=null;
+let selWho=[],gSelWho=[],copiedEvent=null,sFilter='all',detailEv=null;
 let longPressTimer=null;
 
-// Firestore
 const q=query(collection(db,"events"),orderBy("date","asc"));
 onSnapshot(q,snap=>{
   events=[];
@@ -405,18 +408,13 @@ function expand(evs){
   return res;
 }
 
-// 복수 필터 적용
 function applyFilter(evs){
   if(!filters.length) return evs;
-  return evs.filter(ev=>{
-    const w=Array.isArray(ev.who)?ev.who:[ev.who];
-    return filters.some(f=>w.includes(f));
-  });
+  return evs.filter(ev=>{const w=Array.isArray(ev.who)?ev.who:[ev.who];return filters.some(f=>w.includes(f));});
 }
 
 function renderAll(){renderToday();renderCal();renderList();doSearch();}
 
-// 오늘
 function renderToday(){
   const ts=new Date().toISOString().slice(0,10);
   const d=new Date();
@@ -428,14 +426,11 @@ function renderToday(){
   bindCardLongPress();
 }
 
-// 이벤트 카드 HTML - 복수 구성원 모두 색 표시
-function evCardHtml(ev, showDate=false){
+function evCardHtml(ev,showDate=false){
   const who=Array.isArray(ev.who)?ev.who:[ev.who];
-  // 첫번째 사람 색으로 카드 왼쪽 border
   const color=CC[who[0]]||'#888';
   const id=ev._v?ev._oid:ev.id;
-  const isCopied=copiedEvent&&(copiedEvent.id===id);
-  const dateStr=showDate?`<div class="ev-date-lbl">📅 ${ev.date}${ev.time?' '+ev.time:''}</div>`:'';
+  const isCopied=copiedEvent&&copiedEvent.id===id;
   return `<div class="ev-card${isCopied?' copied':''}" style="border-left-color:${color}" data-id="${id}" data-date="${ev.date}" onclick="openDetail('${id}','${ev.date}')">
     <div class="ev-dot" style="background:${color}"></div>
     <div class="ev-info">
@@ -445,12 +440,11 @@ function evCardHtml(ev, showDate=false){
         ${who.map(w=>`<span class="who-tag" style="background:${CL[w]||'#eee'};color:${CC[w]||'#333'}">${w.slice(1)}</span>`).join('')}
       </div>
       ${ev.body?`<div class="ev-body">📝 ${ev.body}</div>`:''}
-      ${dateStr}
+      ${showDate?`<div class="ev-date-lbl">📅 ${ev.date}${ev.time?' · '+ev.time:''}</div>`:''}
     </div>
   </div>`;
 }
 
-// 달력
 function renderCal(){
   const yr=curMonth.getFullYear(),mo=curMonth.getMonth();
   document.getElementById('monthLbl').textContent=`${yr}년 ${mo+1}월`;
@@ -469,14 +463,10 @@ function renderCal(){
     if(ds===today) cls+=' today';
     if(dow===0) cls+=' sun'; if(dow===6) cls+=' sat';
     const dayEvs=expanded.filter(ev=>ev.date===ds).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
-    // 달력 칩: 구성원 여러명이면 여러 색 표시
     const chips=dayEvs.slice(0,3).map(ev=>{
       const who=Array.isArray(ev.who)?ev.who:[ev.who];
-      // 첫번째 사람 색
       const c=CC[who[0]]||'#888',l=CL[who[0]]||'#eee';
       const id=ev._v?ev._oid:ev.id;
-      // 복수 구성원이면 이름 태그 표시
-      const whoStr=who.length>1?who.map(w=>w.slice(1)).join('·'):who[0].slice(1);
       return `<div class="d-chip" style="background:${l};color:${c}" onclick="event.stopPropagation();openDetail('${id}','${ds}')">${ev.time?ev.time.slice(0,5)+' ':''}${ev.title}</div>`;
     }).join('');
     const more=dayEvs.length>3?`<div class="d-more">+${dayEvs.length-3}</div>`:'';
@@ -494,11 +484,11 @@ function renderCal(){
   bindCardLongPress();
 }
 
-// 목록
+// 목록 - 최신순(날짜 내림차순)
 function renderList(){
   const evs=applyFilter(expand(events)).sort((a,b)=>{
-    if(a.date!==b.date) return a.date.localeCompare(b.date);
-    return (a.time||'').localeCompare(b.time||'');
+    if(a.date!==b.date) return b.date.localeCompare(a.date); // ← 최신순
+    return (b.time||'').localeCompare(a.time||'');
   });
   const groups={};
   evs.forEach(ev=>{if(!groups[ev.date])groups[ev.date]=[];groups[ev.date].push(ev);});
@@ -513,7 +503,6 @@ function renderList(){
   bindCardLongPress();
 }
 
-// 검색
 window.doSearch=function(){
   const q=document.getElementById('searchInput').value.trim().toLowerCase();
   const el=document.getElementById('searchResults');
@@ -521,8 +510,8 @@ window.doSearch=function(){
   let evs=expand(events);
   if(sFilter!=='all') evs=evs.filter(ev=>{const w=Array.isArray(ev.who)?ev.who:[ev.who];return w.includes(sFilter);});
   if(q) evs=evs.filter(ev=>(ev.title||'').toLowerCase().includes(q)||(ev.body||'').toLowerCase().includes(q));
-  evs.sort((a,b)=>a.date.localeCompare(b.date));
-  if(!evs.length){el.innerHTML='<div class="search-empty">검색 결과 없음</div>';return;}
+  evs.sort((a,b)=>b.date.localeCompare(a.date)); // 최신순
+  if(!evs.length){el.innerHTML='<div class="search-empty">검색 결과가 없어요 🔍</div>';return;}
   el.innerHTML=evs.map(ev=>evCardHtml(ev,true)).join('');
   bindCardLongPress();
 }
@@ -534,21 +523,18 @@ window.setSFilter=function(f,btn){
   doSearch();
 }
 
-// 필터 - 복수 선택
+// 필터 복수선택
 window.setFilter=function(f,btn){
   if(f==='all'){
     filters=[];
     document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('on'));
     btn.classList.add('on');
   } else {
-    // 전체 버튼 off
     document.querySelector('.f-btn.all').classList.remove('on');
     if(btn.classList.contains('on')){
       btn.classList.remove('on');
       filters=filters.filter(x=>x!==f);
-      if(!filters.length){
-        document.querySelector('.f-btn.all').classList.add('on');
-      }
+      if(!filters.length) document.querySelector('.f-btn.all').classList.add('on');
     } else {
       btn.classList.add('on');
       filters.push(f);
@@ -561,17 +547,10 @@ window.setFilter=function(f,btn){
 function bindCardLongPress(){
   document.querySelectorAll('.ev-card').forEach(card=>{
     card.addEventListener('touchstart',e=>{
-      const id=card.dataset.id;
-      if(!id) return;
+      const id=card.dataset.id; if(!id) return;
       longPressTimer=setTimeout(()=>{
         const ev=events.find(e=>e.id===id);
-        if(ev){
-          copiedEvent={...ev};
-          showCopyBar();
-          navigator.vibrate&&navigator.vibrate(60);
-          showToast('📋 복사됨! 붙여넣을 날짜를 길게 누르세요');
-          renderAll();
-        }
+        if(ev){copiedEvent={...ev};showCopyBar();navigator.vibrate&&navigator.vibrate(60);showToast('📋 복사됨! 붙여넣을 날짜를 길게 누르세요');renderAll();}
       },600);
     },{passive:true});
     card.addEventListener('touchend',()=>clearTimeout(longPressTimer),{passive:true});
@@ -600,7 +579,6 @@ async function pasteEvent(ds){
   try{await addDoc(collection(db,"events"),data);showToast(`✅ ${ds}에 붙여넣기 완료!`);cancelCopy();}
   catch(e){showToast('⚠️ 붙여넣기 실패');}
 }
-
 function showCopyBar(){document.getElementById('copyBar').classList.add('show');}
 window.cancelCopy=function(){copiedEvent=null;document.getElementById('copyBar').classList.remove('show');renderAll();}
 window.handleDayClick=function(ds){if(copiedEvent)pasteEvent(ds);else openAdd(ds);}
@@ -623,7 +601,7 @@ window.saveEvent=async function(){
 }
 
 window.deleteEvent=async function(){
-  if(!editId||!confirm('삭제할까요?')) return;
+  if(!editId||!confirm('이 일정을 삭제할까요?')) return;
   try{await deleteDoc(doc(db,"events",editId));showToast('🗑️ 삭제됐어요');closeModal('editModal');}
   catch(e){showToast('⚠️ 삭제 실패');}
 }
@@ -636,7 +614,7 @@ window.openDetail=function(id,dateStr){
   document.getElementById('detailContent').innerHTML=`
     <div class="det-badges">${who.map(w=>`<span class="det-badge" style="background:${CL[w]||'#eee'};color:${CC[w]||'#333'}">${w}</span>`).join('')}</div>
     <div class="det-title">${ev.title}</div>
-    <div class="det-field"><div class="det-lbl">📅 날짜 · 시간</div><div class="det-val">${dateStr}${ev.time?' '+ev.time:''}</div></div>
+    <div class="det-field"><div class="det-lbl">📅 날짜 · 시간</div><div class="det-val">${dateStr}${ev.time?' · '+ev.time:''}</div></div>
     ${ev.body?`<div class="det-field"><div class="det-lbl">📝 내용</div><div class="det-val" style="white-space:pre-wrap">${ev.body}</div></div>`:''}
   `;
   openModal('detailModal');
@@ -650,8 +628,8 @@ window.editFromDetail=function(){
 
 // Gemini
 window.openGemini=function(){
-  document.getElementById('imgPreviewWrap').innerHTML='<div class="img-placeholder">📷 아래 버튼으로 사진을 선택하세요</div>';
-  document.getElementById('geminiStatus').textContent='사진을 선택하면 AI가 일정을 읽어드려요';
+  document.getElementById('imgPreviewWrap').innerHTML='<div class="img-placeholder">📷<br>아래 버튼으로<br>사진을 선택하세요</div>';
+  document.getElementById('geminiStatus').textContent='사진을 선택하면 AI가 일정을 읽어드려요 🤖';
   document.getElementById('geminiStatus').style.display='block';
   document.getElementById('geminiFields').style.display='none';
   document.getElementById('btnGeminiSave').style.display='none';
@@ -661,12 +639,11 @@ window.openGemini=function(){
 }
 
 window.handleImg=function(input){
-  const file=input.files[0];
-  if(!file) return;
+  const file=input.files[0]; if(!file) return;
   const reader=new FileReader();
   reader.onload=e=>{
     document.getElementById('imgPreviewWrap').innerHTML=`<img class="img-preview" src="${e.target.result}">`;
-    document.getElementById('geminiStatus').innerHTML='<div class="spinner" style="margin:0 auto 6px"></div>AI가 읽는 중...';
+    document.getElementById('geminiStatus').innerHTML='<div class="spinner" style="margin:0 auto 6px"></div>AI가 읽는 중... 🤖';
     document.getElementById('geminiStatus').style.display='block';
     analyzeWithGemini(e.target.result);
   };
@@ -722,7 +699,6 @@ window.saveGeminiEvent=async function(){
   }catch(e){showToast('⚠️ 저장 실패');}
 }
 
-// 공통
 window.openAdd=function(dateStr,eid){
   editId=eid||null; selWho=[];
   document.getElementById('f_title').value='';
@@ -731,11 +707,11 @@ window.openAdd=function(dateStr,eid){
   document.getElementById('f_body').value='';
   document.querySelectorAll('.who-btn').forEach(b=>b.classList.remove('on'));
   document.getElementById('btnDel').style.display='none';
-  document.getElementById('editModalTxt').textContent='일정 추가';
+  document.getElementById('editModalTxt').textContent='일정 추가 ✏️';
   if(eid){
     const ev=events.find(e=>e.id===eid);
     if(ev){
-      document.getElementById('editModalTxt').textContent='일정 수정';
+      document.getElementById('editModalTxt').textContent='일정 수정 ✏️';
       document.getElementById('f_title').value=ev.title||'';
       document.getElementById('f_date').value=ev.date||'';
       document.getElementById('f_time').value=ev.time||'';
@@ -762,8 +738,8 @@ window.switchTab=function(tab,btn){
   document.getElementById('calTab').style.display=tab==='cal'?'':'none';
   document.getElementById('listTab').style.display=tab==='list'?'':'none';
   document.getElementById('searchTab').style.display=tab==='search'?'':'none';
-  // 검색탭이면 상단 필터 숨김
   document.getElementById('filterWrap').style.display=tab==='search'?'none':'';
+  document.getElementById('todayBox').style.display=tab==='search'?'none':'';
   if(tab==='search') setTimeout(()=>document.getElementById('searchInput').focus(),300);
 }
 
