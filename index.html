@@ -74,22 +74,23 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 /* 달력 */
 .cal-grid{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
 .cal-wdays{display:grid;grid-template-columns:repeat(7,1fr);background:#f5f2ed;}
-.cal-wd{text-align:center;padding:7px 0;font-size:11px;font-weight:700;color:var(--muted);}
+.cal-wd{text-align:center;padding:8px 0;font-size:12px;font-weight:700;color:var(--muted);}
 .cal-wd:first-child{color:#f87171;}.cal-wd:last-child{color:#60a5fa;}
 .cal-days{display:grid;grid-template-columns:repeat(7,1fr);}
-.cal-day{min-height:70px;border-top:1px solid var(--border);border-right:1px solid var(--border);padding:4px 3px 3px;cursor:pointer;transition:background 0.15s;user-select:none;position:relative;}
+.cal-day{min-height:72px;border-top:1px solid var(--border);border-right:1px solid var(--border);padding:4px 2px 2px;cursor:pointer;transition:background 0.15s;user-select:none;position:relative;overflow:hidden;}
 .cal-day:nth-child(7n){border-right:none;}
 .cal-day:hover{background:#fafaf8;}
+.cal-day.other{pointer-events:none;}
 .cal-day.other .dnum{color:#d1ccc5;}
 .cal-day.today .dnum{background:var(--c영대);color:#fff;border-radius:50%;}
 .cal-day.sun .dnum{color:#f87171;}.cal-day.sat .dnum{color:#60a5fa;}
 .cal-day.today.sun .dnum,.cal-day.today.sat .dnum{color:#fff;}
 .cal-day.holiday-day{background:#fff8f8;}
-.dnum{font-size:12px;font-weight:700;width:22px;height:22px;display:flex;align-items:center;justify-content:center;margin-bottom:1px;}
-.holiday-name{font-size:9px;color:#ef4444;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;line-height:1.2;}
-.day-evs{display:flex;flex-direction:column;gap:2px;}
-.d-chip{border-radius:4px;padding:2px 4px;font-size:10px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.3;}
-.d-more{font-size:9px;color:var(--muted);padding-left:3px;}
+.dnum{font-size:12px;font-weight:700;width:22px;height:22px;display:flex;align-items:center;justify-content:center;margin:0 auto 1px;}
+.holiday-name{font-size:8.5px;color:#ef4444;font-weight:700;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;line-height:1.3;padding:0 2px;}
+.day-evs{display:flex;flex-direction:column;gap:1px;}
+.d-chip{border-radius:3px;padding:1px 3px;font-size:9.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.4;}
+.d-more{font-size:9px;color:var(--muted);padding-left:2px;}
 
 /* 이벤트 카드 */
 .ev-card{background:var(--card);border-radius:11px;padding:10px 12px;box-shadow:var(--shadow);border-left:4px solid var(--border);cursor:pointer;transition:all 0.2s;display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;user-select:none;}
@@ -515,7 +516,7 @@ async function renderCal(){
 
     html+=`<div class="${cls}" data-date="${ds}" onclick="handleDayClick('${ds}')" oncontextmenu="event.preventDefault()">
       <div class="dnum" ${dnumStyle}>${d}</div>
-      ${holidayName?`<div class="holiday-name">🎌 ${holidayName}</div>`:''}
+      ${holidayName?`<div class="holiday-name">${holidayName}</div>`:''}
       <div class="day-evs">${chips}${more}</div>
     </div>`;
   }
