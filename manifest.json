@@ -1,0 +1,22 @@
+{
+  "name": "가족 일정",
+  "short_name": "가족일정",
+  "description": "우리 가족 공유 일정 관리",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#faf8f5",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f3e0.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/twitter/twemoji/master/assets/72x72/1f3e0.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

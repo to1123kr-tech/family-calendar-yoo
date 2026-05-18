@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="가족 일정">
-<title>가족 일정 v3 🏠</title>
+<title>가족 일정</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3b82f6">
+<meta name="mobile-web-app-capable" content="yes">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -21,12 +24,12 @@
 body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
 /* 헤더 */
-.app-header{background:var(--card);border-bottom:1px solid var(--border);padding:12px 14px 10px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);}
-.header-top{display:flex;align-items:center;justify-content:space-between;}
-.app-title{font-size:18px;font-weight:900;letter-spacing:-0.5px;}
-.app-version{font-size:10px;color:var(--muted);font-weight:400;margin-left:3px;}
+.app-header{background:var(--card);border-bottom:1px solid var(--border);padding:10px 14px 8px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);}
+.header-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.app-title{font-size:18px;font-weight:900;letter-spacing:-0.5px;display:flex;align-items:center;gap:4px;}
+.app-version{font-size:10px;color:var(--muted);font-weight:400;background:var(--bg);border-radius:4px;padding:1px 5px;}
 .header-actions{display:flex;gap:6px;align-items:center;}
-.hdr-btn{height:34px;border:none;border-radius:10px;padding:0 12px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:all 0.2s;white-space:nowrap;}
+.hdr-btn{height:32px;border:none;border-radius:9px;padding:0 11px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:all 0.2s;white-space:nowrap;}
 .btn-loc{background:#ede9fe;color:#7c3aed;}
 .btn-loc:hover{background:#ddd6fe;}
 .btn-cam{background:#fff3e0;color:#e65100;}
@@ -197,10 +200,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
 <!-- 헤더 -->
 <header class="app-header">
-  <div class="header-top">
+  <div class="header-row1">
     <div class="app-title">🏠 가족 일정 <span class="app-version">v3</span></div>
     <div class="header-actions">
-      <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치 조회</button>
+      <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치조회</button>
       <button class="hdr-btn btn-cam" onclick="openGemini()">📸 사진</button>
       <button class="hdr-btn btn-add-main" onclick="openAdd()">＋ 일정추가</button>
     </div>
