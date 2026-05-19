@@ -284,7 +284,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v4.2</span>
+    <span class="app-version">v4.3</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치</button>
@@ -400,8 +400,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 
       <div class="ai-input-wrap">
         <textarea class="ai-input" id="aiInput" placeholder="질문을 입력하거나 🎤 를 눌러 말하세요..." rows="1" onkeydown="aiInputKey(event)" oninput="autoResize(this)"></textarea>
-        <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleVoice()">🎤</button>
-        <button class="ai-send-btn" onclick="sendAI()">➤</button>
+        <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleVoice()" title="🎤 음성으로 질문 (답변도 읽어줘요)">🎤</button>
+        <button class="ai-send-btn" onclick="sendAI(false)">➤</button>
       </div>
     </div>
   </div>
@@ -659,7 +659,7 @@ let longPressTimer=null,copiedEvent=null,pendingCopyEv=null;
 let pasteTargetDate=null,multiPasteMode=false,multiPasteDates=new Set();
 const holidayCache={};
 let aiChatHistory=[];
-let recognition=null,isListening=false;
+let recognition=null,isListening=false,voiceMode=false;
 // 다중 선택 삭제
 let multiSelectMode=false, selectedIds=new Set();
 
@@ -1068,7 +1068,7 @@ window.askAI=function(text){
   sendAI();
 }
 
-window.sendAI=async function(){
+window.sendAI=async function(isVoice=false){
   const input=document.getElementById('aiInput');
   const text=input.value.trim();
   if(!text) return;
@@ -1125,10 +1125,10 @@ ${getEventsSummaryWithIds()}
     if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
     let reply=data.candidates?.[0]?.content?.parts?.[0]?.text||'답변을 생성하지 못했어요.';
     hideTyping();
-    // 일정 명령 처리
     reply=await processAICommand(reply);
     addChatMsg('bot',reply);
-    // TTS는 버튼 누를때만 (자동재생 제거)
+    // 마이크로 질문했을 때만 TTS 읽기
+    if(isVoice) speakText(reply);
     // 히스토리 저장
     aiChatHistory.push({role:'user',content:text});
     aiChatHistory.push({role:'assistant',content:reply});
@@ -1168,7 +1168,7 @@ function showTyping(){
 function hideTyping(){if(typingEl){typingEl.remove();typingEl=null;}}
 
 window.aiInputKey=function(e){
-  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAI();}
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAI(false);}
 }
 window.autoResize=function(el){
   el.style.height='auto';
@@ -1194,7 +1194,7 @@ window.toggleVoice=function(){
   recognition.onend=()=>{
     isListening=false;document.getElementById('aiMicBtn').classList.remove('listening');
     const text=document.getElementById('aiInput').value.trim();
-    if(text) sendAI();
+    if(text) sendAI(true); // 음성입력 플래그 true
   };
   recognition.onerror=()=>{isListening=false;document.getElementById('aiMicBtn').classList.remove('listening');showToast('⚠️ 음성 인식 실패');};
   recognition.start();
