@@ -284,7 +284,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v3.8</span>
+    <span class="app-version">v3.9</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-settings" onclick="openSettings()">⚙️</button>
@@ -407,18 +407,14 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     <!-- API 키 설정 -->
     <div class="settings-section">
       <div class="settings-title">🤖 GEMINI API 키</div>
-      <div class="api-status none" id="apiStatusBox">
-        <span id="apiStatusIcon">⚪</span>
-        <span id="apiStatusTxt">API 키가 설정되지 않았어요</span>
+      <div class="api-status ok" id="apiStatusBox">
+        <span id="apiStatusIcon">✅</span>
+        <span id="apiStatusTxt">Oracle 서버에서 안전하게 관리 중</span>
       </div>
-      <div class="settings-input-wrap">
-        <input type="password" class="settings-input" id="apiKeyInput" placeholder="AIzaSy... 키를 입력하세요">
-        <button class="btn-settings-save" onclick="saveApiKey()">저장</button>
-        <button class="btn-del-key" onclick="deleteApiKey()" title="키 삭제">🗑️</button>
-      </div>
-      <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;">
-        💡 키는 이 폰에만 저장돼요. GitHub에 올라가지 않아요.<br>
-        🔑 발급: aistudio.google.com → API keys → Create API key
+      <div style="font-size:12px;color:var(--muted);margin-top:6px;background:var(--bg);border-radius:10px;padding:10px 12px;line-height:1.7;">
+        🔒 API 키는 Oracle 서버에 저장되어 있어요<br>
+        🚀 앱 → Oracle서버 → Gemini API 순서로 안전하게 연결돼요<br>
+        🔑 키 변경 필요시 서버 환경변수 수정
       </div>
     </div>
 
@@ -572,10 +568,11 @@ import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot
 const FB={apiKey:"AIzaSyBk1bMw7zutUQXxCWs_fY8Jh5XAYd-M7Zs",authDomain:"family-calendar-yoo.firebaseapp.com",projectId:"family-calendar-yoo",storageBucket:"family-calendar-yoo.firebasestorage.app",messagingSenderId:"29463720385",appId:"1:29463720385:web:995328e6ee09e81daaff40"};
 const GEMINI_KEY="AIzaSyCcQTvtzkI3PUjSMPCjCSPRz04xHSUFPyM";
 const HOLIDAY_KEY="09b819905e0a70316749fb91c03a216633ad3e75196a6aa25e6a9f273d9116f8";
+const AI_PROXY="http://168.107.15.68:5050"; // Oracle 서버 프록시
 const app=initializeApp(FB),db=getFirestore(app);
 
-// Gemini 키 localStorage에서 관리
-function getGeminiKey(){return localStorage.getItem('gemini_api_key')||'';}
+// 설정창용 (사용 안하지만 UI 유지)
+function getGeminiKey(){return localStorage.getItem('gemini_api_key')||'(서버에서 관리 중)';}
 
 // 설정 모달
 window.openSettings=function(){
@@ -628,33 +625,20 @@ window.toggleKeyView=function(){
   btn.textContent=keyVisible?'🙈':'👁️';
 }
 window.testApiKey=async function(){
-  const key=getGeminiKey();
   const resultEl=document.getElementById('testResult');
   resultEl.style.display='block';
-  if(!key){
-    resultEl.innerHTML='<div style="color:#dc2626">⚠️ 먼저 API 키를 입력하고 저장해주세요</div>';
-    return;
-  }
   resultEl.innerHTML='<div style="color:var(--muted)"><span style="display:inline-block;width:16px;height:16px;border:2px solid #ccc;border-top-color:var(--c영대);border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:6px"></span>테스트 중...</div>';
   try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${key}`,{
+    const res=await fetch(`${AI_PROXY}/api/ai-chat`,{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({contents:[{role:'user',parts:[{text:'안녕! 한 줄로 짧게 대답해줘'}]}],generationConfig:{maxOutputTokens:50}})
     });
     const data=await res.json();
-    if(data.error) throw new Error(data.error.message);
+    if(data.error) throw new Error(JSON.stringify(data.error));
     const reply=data.candidates?.[0]?.content?.parts?.[0]?.text||'';
     resultEl.innerHTML=`<div style="background:#dcfce7;border-radius:10px;padding:10px 12px;color:#16a34a;font-weight:600">✅ 연결 성공!<br><span style="font-weight:400;font-size:12px">AI 응답: ${reply}</span></div>`;
-    // 상태 업데이트
-    const box=document.getElementById('apiStatusBox');
-    box.className='api-status ok';
-    document.getElementById('apiStatusIcon').textContent='✅';
-    document.getElementById('apiStatusTxt').textContent='API 키 정상 작동 중';
   }catch(e){
     resultEl.innerHTML=`<div style="background:#fee2e2;border-radius:10px;padding:10px 12px;color:#dc2626;font-weight:600">❌ 연결 실패<br><span style="font-weight:400;font-size:12px">${e.message}</span></div>`;
-    document.getElementById('apiStatusBox').className='api-status fail';
-    document.getElementById('apiStatusIcon').textContent='❌';
-    document.getElementById('apiStatusTxt').textContent='API 키 오류';
   }
 }
 const CC={'유영대':'#3b82f6','이현희':'#f472b6','유제하':'#34d399','유가율':'#fb923c','유가은':'#a78bfa'};
@@ -996,13 +980,7 @@ ${getEventsSummary()}
   }
 
   try{
-    const gKey=getGeminiKey();
-    if(!gKey){
-      hideTyping();
-      addChatMsg('bot','⚙️ Gemini API 키가 없어요!\n\n헤더의 ⚙️ 버튼 → API 키 입력 → 저장 → 테스트 순서로 해주세요.');
-      return;
-    }
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${gKey}`,{
+    const res=await fetch(`${AI_PROXY}/api/ai-chat`,{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({contents,generationConfig:{temperature:0.7,maxOutputTokens:800}})
     });
@@ -1163,21 +1141,13 @@ window.handleImg=function(input){
   reader.readAsDataURL(file);
 }
 async function analyzeWithGemini(base64){
-  const gKey=getGeminiKey();
-  if(!gKey){
-    document.getElementById('geminiStatus').textContent='⚙️ API 키가 없어요. 헤더의 ⚙️ 설정에서 키를 입력해주세요.';
-    document.getElementById('geminiFields').style.display='block';
-    document.getElementById('g_date').value=new Date().toISOString().slice(0,10);
-    document.getElementById('btnGeminiSave').style.display='block';
-    return;
-  }
   const b64=base64.split(',')[1],mime=base64.split(';')[0].split(':')[1];
   const prompt=`이 사진에서 일정/예약/치료 정보를 찾아주세요. 의료문서, 메모, 다이어리, 처방전 등 모두 가능합니다.
 JSON만 출력하세요 (다른 텍스트 금지):
 {"title":"핵심 일정명 (예: 방사선 치료, 병원 예약)","date":"YYYY-MM-DD","time":"HH:MM (24시간, 없으면 빈문자열)","body":"기타 메모 내용"}
 변환 규칙: '5월 22일'→2026-05-22, '10시 45분'→10:45, '오전 10시'→10:00, '오후 2시'→14:00`;
   try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${gKey}`,{
+    const res=await fetch(`${AI_PROXY}/api/ai-photo`,{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({contents:[{parts:[{inline_data:{mime_type:mime,data:b64}},{text:prompt}]}],generationConfig:{temperature:0}})
     });
