@@ -436,8 +436,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       </div>
       <div class="fg">
         <label class="fl">⏰ 시간</label>
-        <input type="text" class="fi" id="f_time" placeholder="10:30" maxlength="5" oninput="formatTime(this)">
-        <div class="time-hint">예: 09:00, 14:30</div>
+        <input type="text" class="fi" id="f_time" placeholder="10:30" maxlength="5" inputmode="numeric" pattern="[0-9:]*" oninput="formatTime(this)">
+        <div class="time-hint">예: 0930 → 09:30</div>
       </div>
     </div>
     <div class="fg"><label class="fl">📌 제목 *</label><input type="text" class="fi" id="f_title" placeholder="일정 제목"></div>
@@ -488,7 +488,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
         </div>
         <div class="frow" style="margin-bottom:10px">
           <div class="fg" style="margin:0"><label class="fl">📅 날짜</label><input type="date" class="fi" id="g_date"></div>
-          <div class="fg" style="margin:0"><label class="fl">⏰ 시간</label><input type="text" class="fi" id="g_time" placeholder="10:30" maxlength="5"></div>
+          <div class="fg" style="margin:0"><label class="fl">⏰ 시간</label><input type="text" class="fi" id="g_time" placeholder="10:30" maxlength="5" inputmode="numeric"></div>
         </div>
         <div class="fg" style="margin-bottom:8px"><label class="fl">📌 제목</label><input type="text" class="fi" id="g_title"></div>
         <div class="fg" style="margin-bottom:0"><label class="fl">📝 내용</label><textarea class="ft" id="g_body" style="min-height:65px"></textarea></div>
@@ -808,57 +808,61 @@ window.sendAI=async function(){
   const input=document.getElementById('aiInput');
   const text=input.value.trim();
   if(!text) return;
-  input.value='';
-  input.style.height='auto';
-
+  input.value='';input.style.height='auto';
   addChatMsg('user',text);
-  aiChatHistory.push({role:'user',content:text});
-
   showTyping();
 
   const today=new Date().toISOString().slice(0,10);
-  const systemPrompt=`당신은 유씨 가족의 일정 관리 AI 도우미입니다. 한국어로 친근하게 대화하세요.
-
+  const systemContext=`당신은 유씨 가족의 일정 관리 AI 도우미입니다. 한국어로 친근하게 답변하세요.
 오늘 날짜: ${today}
-가족 구성원: 유영대(아빠), 이현희(엄마), 유제하(장남), 유가율(딸), 유가은(막내딸)
+가족: 유영대(아빠), 이현희(엄마), 유제하(장남), 유가율(딸), 유가은(막내)
 거주지: 경기도 화성시
 
-현재 등록된 가족 일정:
+현재 가족 일정:
 ${getEventsSummary()}
 
-지침:
-- 일정 관련 질문은 위 데이터를 참고해서 정확하게 답변
-- 이동시간, 날씨, 일반 질문도 도움이 되게 답변
-- 답변은 간결하고 친근하게, 이모지 적절히 사용
-- 날짜 계산 시 오늘(${today}) 기준으로`;
+지침: 일정 질문은 위 데이터 참고, 이동시간/날씨 등 일반 질문도 답변, 간결하고 친근하게.`;
+
+  // Gemini 멀티턴: contents 배열 구성
+  // 첫 메시지에 시스템 컨텍스트 포함
+  const contents=[];
+
+  if(aiChatHistory.length===0){
+    // 첫 대화: 시스템 컨텍스트 + 질문
+    contents.push({role:'user',parts:[{text:systemContext+'\n\n질문: '+text}]});
+  } else {
+    // 이어지는 대화: 히스토리 포함
+    // 첫 번째는 항상 시스템컨텍스트+첫질문
+    contents.push({role:'user',parts:[{text:systemContext+'\n\n질문: '+aiChatHistory[0].content}]});
+    if(aiChatHistory.length>1) contents.push({role:'model',parts:[{text:aiChatHistory[1].content}]});
+    // 이후 대화 쌍 추가 (최근 6개만)
+    const recent=aiChatHistory.slice(2);
+    for(let i=0;i<recent.length;i++){
+      const m=recent[i];
+      contents.push({role:m.role==='user'?'user':'model',parts:[{text:m.content}]});
+    }
+    contents.push({role:'user',parts:[{text}]});
+  }
 
   try{
-    const messages=[
-      {role:'user',content:systemPrompt+'\n\n첫 번째 질문: '+text}
-    ];
-    if(aiChatHistory.length>2){
-      // 이전 대화 컨텍스트 추가
-      const prev=aiChatHistory.slice(-6,-1);
-      messages[0].content=systemPrompt;
-      prev.forEach(m=>messages.push(m));
-      messages.push({role:'user',content:text});
-    }
-
     const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        contents:messages.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]})),
-        generationConfig:{temperature:0.7,maxOutputTokens:800}
-      })
+      body:JSON.stringify({contents,generationConfig:{temperature:0.7,maxOutputTokens:800}})
     });
     const data=await res.json();
-    const reply=data.candidates?.[0]?.content?.parts?.[0]?.text||'죄송해요, 답변을 생성하지 못했어요.';
+    if(data.error) throw new Error(data.error.message);
+    const reply=data.candidates?.[0]?.content?.parts?.[0]?.text||'답변을 생성하지 못했어요.';
     hideTyping();
     addChatMsg('bot',reply);
+    // 히스토리 저장
+    aiChatHistory.push({role:'user',content:text});
     aiChatHistory.push({role:'assistant',content:reply});
+    // 히스토리 최대 20개 유지
+    if(aiChatHistory.length>20) aiChatHistory=aiChatHistory.slice(-20);
   }catch(e){
     hideTyping();
-    addChatMsg('bot','⚠️ 연결에 문제가 생겼어요. 잠시 후 다시 시도해주세요.');
+    console.error('AI Error:',e);
+    addChatMsg('bot','⚠️ 오류가 발생했어요: '+e.message);
   }
 }
 
