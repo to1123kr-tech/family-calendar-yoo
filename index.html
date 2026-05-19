@@ -19,6 +19,7 @@
   --c제하:#34d399;--l제하:#ecfdf5;
   --c가율:#fb923c;--l가율:#fff7ed;
   --c가은:#a78bfa;--l가은:#f5f3ff;
+  --ai:#6366f1;--lai:#eef2ff;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
@@ -29,16 +30,17 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .app-title{font-size:16px;font-weight:900;letter-spacing:-0.5px;white-space:nowrap;}
 .app-version{font-size:9px;color:var(--muted);font-weight:600;background:var(--bg);border-radius:4px;padding:1px 4px;flex-shrink:0;}
 .header-actions{display:flex;gap:5px;align-items:center;margin-left:auto;}
-.hdr-btn{height:30px;border:none;border-radius:8px;padding:0 9px;font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:3px;white-space:nowrap;flex-shrink:0;}
-.btn-loc{background:#ede9fe;color:#7c3aed;}
-.btn-cam{background:#fff3e0;color:#e65100;}
-.btn-add-main{background:var(--c영대);color:white;}
-.btn-refresh{background:var(--bg);border:1.5px solid var(--border) !important;color:var(--muted);border:none;}
+.hdr-btn{height:30px;border:1.5px solid var(--border);border-radius:8px;padding:0 9px;font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:3px;white-space:nowrap;flex-shrink:0;background:var(--bg);}
+.btn-loc{background:#ede9fe;color:#7c3aed;border-color:#ede9fe;}
+.btn-cam{background:#fff3e0;color:#e65100;border-color:#fff3e0;}
+.btn-add-main{background:var(--c영대);color:white;border-color:var(--c영대);}
+.btn-refresh{color:var(--muted);}
 
-/* 탭 */
+/* 탭 - 4개 */
 .tab-nav{display:flex;background:var(--card);border-bottom:1px solid var(--border);}
-.tab-btn{flex:1;padding:11px;border:none;background:transparent;font-family:inherit;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;}
+.tab-btn{flex:1;padding:10px 4px;border:none;background:transparent;font-family:inherit;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
 .tab-btn.on{color:var(--c영대);border-bottom-color:var(--c영대);}
+.tab-btn.ai-tab.on{color:var(--ai);border-bottom-color:var(--ai);}
 
 /* 필터 */
 .family-filter-wrap{background:var(--card);padding:7px 12px 6px;border-bottom:1px solid var(--border);}
@@ -96,7 +98,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .paste-cancel-btn{background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:8px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
 
 /* 이벤트 카드 */
-.ev-card{background:var(--card);border-radius:11px;padding:10px 12px;box-shadow:var(--shadow);border-left:4px solid var(--border);cursor:pointer;transition:all 0.2s;display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;user-select:none;position:relative;}
+.ev-card{background:var(--card);border-radius:11px;padding:10px 12px;box-shadow:var(--shadow);border-left:4px solid var(--border);cursor:pointer;transition:all 0.2s;display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;user-select:none;}
 .ev-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0;}
 .ev-info{flex:1;min-width:0;}
 .ev-title{font-size:13px;font-weight:700;margin-bottom:3px;}
@@ -128,6 +130,42 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .search-input:focus{border-color:var(--c영대);}
 .search-empty{text-align:center;padding:28px;color:var(--muted);font-size:13px;}
 
+/* ── AI 채팅 탭 ── */
+.ai-tab-wrap{display:flex;flex-direction:column;height:calc(100vh - 170px);position:relative;}
+.ai-chat-header{background:linear-gradient(135deg,var(--ai),#8b5cf6);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;color:#fff;display:flex;align-items:center;gap:10px;}
+.ai-chat-header-icon{width:40px;height:40px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.ai-chat-header-text{flex:1;}
+.ai-chat-header-title{font-size:15px;font-weight:900;}
+.ai-chat-header-sub{font-size:11px;opacity:0.85;margin-top:2px;}
+
+.ai-messages{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-bottom:10px;min-height:0;}
+.ai-msg{display:flex;gap:8px;align-items:flex-end;}
+.ai-msg.user{flex-direction:row-reverse;}
+.ai-bubble{max-width:80%;padding:10px 13px;border-radius:18px;font-size:13px;line-height:1.6;word-break:break-word;}
+.ai-msg.bot .ai-bubble{background:var(--card);box-shadow:var(--shadow);border-bottom-left-radius:4px;}
+.ai-msg.user .ai-bubble{background:var(--ai);color:#fff;border-bottom-right-radius:4px;}
+.ai-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:var(--lai);}
+.ai-time{font-size:10px;color:var(--muted);margin-bottom:2px;}
+.ai-msg.user .ai-time{text-align:right;}
+
+.ai-typing{display:flex;gap:4px;padding:10px 13px;background:var(--card);border-radius:18px;border-bottom-left-radius:4px;box-shadow:var(--shadow);width:fit-content;}
+.ai-typing span{width:7px;height:7px;background:var(--muted);border-radius:50%;animation:bounce 1.2s infinite;}
+.ai-typing span:nth-child(2){animation-delay:0.2s;}
+.ai-typing span:nth-child(3){animation-delay:0.4s;}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}
+
+.ai-input-wrap{position:sticky;bottom:0;background:var(--bg);padding:8px 0 4px;display:flex;gap:8px;align-items:flex-end;}
+.ai-input{flex:1;border:1.5px solid var(--border);border-radius:22px;padding:10px 16px;font-size:13px;font-family:inherit;background:var(--card);outline:none;resize:none;max-height:100px;line-height:1.5;box-shadow:var(--shadow);}
+.ai-input:focus{border-color:var(--ai);}
+.ai-send-btn{width:40px;height:40px;border:none;border-radius:50%;background:var(--ai);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(99,102,241,0.4);}
+.ai-mic-btn{width:40px;height:40px;border:1.5px solid var(--border);border-radius:50%;background:var(--card);color:var(--muted);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;}
+.ai-mic-btn.listening{background:#ef4444;border-color:#ef4444;color:#fff;animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+
+.ai-suggestions{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.ai-sug-btn{border:1.5px solid var(--border);border-radius:20px;padding:6px 12px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:var(--card);color:var(--text);white-space:nowrap;transition:all 0.2s;}
+.ai-sug-btn:hover{border-color:var(--ai);color:var(--ai);}
+
 /* 모달 공통 */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:400;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;}
 .modal-overlay.open{opacity:1;pointer-events:all;}
@@ -137,7 +175,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .modal-title{font-size:17px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
 .modal-close{background:var(--bg);border:none;border-radius:50%;width:28px;height:28px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);}
 
-/* 복사 확인 - 가장 위에 */
+/* 복사 확인 */
 .modal-overlay.confirm-layer{z-index:600;align-items:center;}
 .confirm-modal{background:var(--card);border-radius:18px;width:calc(100% - 40px);max-width:340px;padding:22px 20px;transform:scale(0.9);transition:transform 0.25s;}
 .modal-overlay.confirm-layer.open .confirm-modal{transform:scale(1);}
@@ -165,6 +203,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .fi:focus,.ft:focus{border-color:var(--c영대);background:#fff;}
 .ft{resize:vertical;min-height:85px;}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.time-hint{font-size:10px;color:var(--muted);margin-top:4px;}
 .who-sel{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;}
 .who-sel::-webkit-scrollbar{display:none;}
 .who-btn{border:2px solid transparent;border-radius:8px;padding:6px 11px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;transition:all 0.2s;opacity:0.45;white-space:nowrap;flex-shrink:0;}
@@ -186,7 +225,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .det-val{font-size:13px;font-weight:500;}
 .btn-edit-det{background:var(--bg);color:var(--text);border:1.5px solid var(--border);border-radius:12px;padding:11px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:10px;}
 
-/* Gemini 사진 핀치줌 전용 */
+/* Gemini 사진 */
 .img-preview-wrap{background:#111;border-radius:12px;overflow:hidden;height:240px;position:relative;touch-action:none;}
 .img-preview-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transform-origin:center center;will-change:transform;}
 .img-preview{max-width:100%;max-height:100%;object-fit:contain;display:block;pointer-events:none;}
@@ -199,12 +238,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 /* 공통 */
 .loading-overlay{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:14px;}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--c영대);border-radius:50%;animation:spin 0.8s linear infinite;}
-.spinner-sm{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--c영대);border-radius:50%;animation:spin 0.8s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .toast{position:fixed;bottom:65px;left:50%;transform:translateX(-50%) translateY(10px);background:#2d2520;color:#fff;border-radius:20px;padding:8px 16px;font-size:12px;font-weight:600;opacity:0;transition:all 0.3s;z-index:999;white-space:nowrap;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .empty-msg{text-align:center;padding:36px 16px;color:var(--muted);font-size:13px;}
-@media(min-width:600px){.main{padding:16px;}.cal-day{min-height:82px;}}
+@media(min-width:600px){.main{padding:16px;}.cal-day{min-height:82px;}.ai-tab-wrap{height:calc(100vh - 180px);}}
 </style>
 </head>
 <body>
@@ -215,7 +253,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 </div>
 <div class="toast" id="toast"></div>
 
-<!-- 붙여넣기 배너 -->
 <div class="paste-banner" id="pasteBanner">
   <span id="pasteBannerTxt">📋 날짜를 길게 눌러 붙여넣기</span>
   <div class="paste-banner-btns">
@@ -228,12 +265,12 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v3.3</span>
+    <span class="app-version">v3.4</span>
     <div class="header-actions">
-      <button class="hdr-btn btn-refresh" onclick="location.reload()" title="새로고침">🔄</button>
-      <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치조회</button>
-      <button class="hdr-btn btn-cam" onclick="openGemini()">📸 사진</button>
-      <button class="hdr-btn btn-add-main" onclick="openAdd()">＋ 일정추가</button>
+      <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
+      <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치</button>
+      <button class="hdr-btn btn-cam" onclick="openGemini()">📸</button>
+      <button class="hdr-btn btn-add-main" onclick="openAdd()">＋ 추가</button>
     </div>
   </div>
 </header>
@@ -242,6 +279,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   <button class="tab-btn on" onclick="switchTab('cal',this)">📅 달력</button>
   <button class="tab-btn" onclick="switchTab('list',this)">📋 목록</button>
   <button class="tab-btn" onclick="switchTab('search',this)">🔍 검색</button>
+  <button class="tab-btn ai-tab" onclick="switchTab('ai',this)">🤖 AI</button>
 </div>
 
 <div class="family-filter-wrap" id="filterWrap">
@@ -261,6 +299,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     <div id="todayEvs"><div class="today-empty">오늘 일정 없음 🎉</div></div>
   </div>
 
+  <!-- 달력 -->
   <div id="calTab">
     <div class="month-nav">
       <button class="mnav-btn" onclick="changeMonth(-1)">◀</button>
@@ -276,11 +315,12 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     </div>
   </div>
 
+  <!-- 목록 -->
   <div id="listTab" style="display:none;"><div id="schedList"></div></div>
 
+  <!-- 검색 -->
   <div id="searchTab" style="display:none;">
     <div class="search-area">
-      <!-- 이름 한 줄 가로스크롤 -->
       <div class="search-filter">
         <button class="sf-btn all on" onclick="setSFilter('all',this)">전체</button>
         <button class="sf-btn" data-sf="유영대" onclick="setSFilter('유영대',this)">👨 영대</button>
@@ -299,9 +339,46 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       <div id="searchResults"></div>
     </div>
   </div>
+
+  <!-- AI 탭 -->
+  <div id="aiTab" style="display:none;">
+    <div class="ai-tab-wrap">
+      <div class="ai-chat-header">
+        <div class="ai-chat-header-icon">🤖</div>
+        <div class="ai-chat-header-text">
+          <div class="ai-chat-header-title">가족 일정 AI 도우미</div>
+          <div class="ai-chat-header-sub">일정 검색, 질문 뭐든지 물어보세요</div>
+        </div>
+      </div>
+
+      <!-- 빠른 질문 버튼 -->
+      <div class="ai-suggestions">
+        <button class="ai-sug-btn" onclick="askAI('오늘 가족 일정 알려줘')">📅 오늘 일정</button>
+        <button class="ai-sug-btn" onclick="askAI('이번 달 전체 일정 요약해줘')">📋 이번 달 요약</button>
+        <button class="ai-sug-btn" onclick="askAI('영대 다음 일정이 뭐야?')">👨 영대 일정</button>
+        <button class="ai-sug-btn" onclick="askAI('화성시에서 서울 강남까지 얼마나 걸려?')">🚗 이동시간</button>
+      </div>
+
+      <div class="ai-messages" id="aiMessages">
+        <div class="ai-msg bot">
+          <div class="ai-avatar">🤖</div>
+          <div>
+            <div class="ai-time">방금</div>
+            <div class="ai-bubble">안녕하세요! 👋 가족 일정 AI 도우미예요.<br><br>일정을 찾거나, 궁금한 것 물어보세요. 음성으로도 말할 수 있어요! 🎤</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ai-input-wrap">
+        <textarea class="ai-input" id="aiInput" placeholder="질문을 입력하거나 🎤 를 눌러 말하세요..." rows="1" onkeydown="aiInputKey(event)" oninput="autoResize(this)"></textarea>
+        <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleVoice()">🎤</button>
+        <button class="ai-send-btn" onclick="sendAI()">➤</button>
+      </div>
+    </div>
+  </div>
 </main>
 
-<!-- 복사 확인 (z-index 가장 높게) -->
+<!-- 복사 확인 -->
 <div class="modal-overlay confirm-layer" id="copyConfirmModal" onclick="bgClose(event,'copyConfirmModal')">
   <div class="confirm-modal">
     <div class="modal-handle"></div>
@@ -353,8 +430,15 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       </div>
     </div>
     <div class="frow">
-      <div class="fg"><label class="fl">📅 날짜 *</label><input type="date" class="fi" id="f_date"></div>
-      <div class="fg"><label class="fl">⏰ 시간</label><input type="time" class="fi" id="f_time"></div>
+      <div class="fg">
+        <label class="fl">📅 날짜 *</label>
+        <input type="date" class="fi" id="f_date">
+      </div>
+      <div class="fg">
+        <label class="fl">⏰ 시간</label>
+        <input type="text" class="fi" id="f_time" placeholder="10:30" maxlength="5" oninput="formatTime(this)">
+        <div class="time-hint">예: 09:00, 14:30</div>
+      </div>
     </div>
     <div class="fg"><label class="fl">📌 제목 *</label><input type="text" class="fi" id="f_title" placeholder="일정 제목"></div>
     <div class="fg"><label class="fl">📝 내용</label><textarea class="ft" id="f_body" placeholder="내용을 자유롭게 적어주세요..."></textarea></div>
@@ -373,15 +457,14 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   </div>
 </div>
 
-<!-- Gemini -->
+<!-- Gemini 사진 -->
 <div class="modal-overlay" id="geminiModal" onclick="bgClose(event,'geminiModal')">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title"><span>📸 사진으로 일정 추가</span><button class="modal-close" onclick="closeModal('geminiModal')">✕</button></div>
-    <!-- 핀치줌 사진 미리보기 -->
     <div class="img-preview-wrap" id="imgPreviewWrap">
       <div class="img-preview-inner" id="imgPreviewInner">
-        <div class="img-placeholder">📷<br>아래 버튼으로<br>사진을 선택하세요</div>
+        <div class="img-placeholder">📷<br>아래 버튼으로 사진을 선택하세요</div>
       </div>
     </div>
     <div style="display:flex;gap:8px;margin-top:8px;">
@@ -405,7 +488,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
         </div>
         <div class="frow" style="margin-bottom:10px">
           <div class="fg" style="margin:0"><label class="fl">📅 날짜</label><input type="date" class="fi" id="g_date"></div>
-          <div class="fg" style="margin:0"><label class="fl">⏰ 시간</label><input type="time" class="fi" id="g_time"></div>
+          <div class="fg" style="margin:0"><label class="fl">⏰ 시간</label><input type="text" class="fi" id="g_time" placeholder="10:30" maxlength="5"></div>
         </div>
         <div class="fg" style="margin-bottom:8px"><label class="fl">📌 제목</label><input type="text" class="fi" id="g_title"></div>
         <div class="fg" style="margin-bottom:0"><label class="fl">📝 내용</label><textarea class="ft" id="g_body" style="min-height:65px"></textarea></div>
@@ -419,7 +502,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const FB={apiKey:"AIzaSyBk1bMw7zutUQXxCWs_fY8Jh5XAYd-M7Zs",authDomain:"family-calendar-yoo.firebaseapp.com",projectId:"family-calendar-yoo",storageBucket:"family-calendar-yoo.firebasestorage.app",messagingSenderId:"29463720385",appId:"1:29463720345:web:995328e6ee09e81daaff40"};
+const FB={apiKey:"AIzaSyBk1bMw7zutUQXxCWs_fY8Jh5XAYd-M7Zs",authDomain:"family-calendar-yoo.firebaseapp.com",projectId:"family-calendar-yoo",storageBucket:"family-calendar-yoo.firebasestorage.app",messagingSenderId:"29463720385",appId:"1:29463720385:web:995328e6ee09e81daaff40"};
 const GEMINI_KEY="AIzaSyDaWqZCQfYSmgLPK52vOyd7RtB0x0s6sA8";
 const HOLIDAY_KEY="09b819905e0a70316749fb91c03a216633ad3e75196a6aa25e6a9f273d9116f8";
 const app=initializeApp(FB),db=getFirestore(app);
@@ -431,12 +514,21 @@ let selWho=[],gSelWho=[],sFilter='all',detailEv=null,searchSort='date-desc';
 let longPressTimer=null,copiedEvent=null,pendingCopyEv=null;
 let pasteTargetDate=null,multiPasteMode=false,multiPasteDates=new Set();
 const holidayCache={};
+let aiChatHistory=[];
+let recognition=null,isListening=false;
 
 // 뒤로가기
 window.addEventListener('popstate',()=>{if(confirm('앱을 종료하시겠습니까?')){window.close();}else{history.pushState(null,'',location.href);}});
 history.pushState(null,'',location.href);
 
-// ── 공휴일 (백그라운드 로드) ──
+// 시간 포맷 자동 (숫자 입력시 : 자동 삽입)
+window.formatTime=function(input){
+  let v=input.value.replace(/[^0-9]/g,'');
+  if(v.length>=3) v=v.slice(0,2)+':'+v.slice(2,4);
+  input.value=v;
+}
+
+// 공휴일
 async function getHolidays(year){
   if(holidayCache[year]) return holidayCache[year];
   const map={};
@@ -453,21 +545,18 @@ async function getHolidays(year){
       });
     }));
   }catch(e){}
-  holidayCache[year]=map;
-  return map;
+  holidayCache[year]=map;return map;
 }
-// 백그라운드로 공휴일 로드 (달력 렌더 블락 안 함)
 function preloadHolidaysBg(year){
   Promise.all([getHolidays(year-1),getHolidays(year),getHolidays(year+1)]).then(()=>renderCal());
 }
 preloadHolidaysBg(new Date().getFullYear());
 
-// ── Firebase ──
+// Firebase
 const q=query(collection(db,"events"),orderBy("date","asc"));
 onSnapshot(q,snap=>{
   events=[];snap.forEach(d=>events.push({id:d.id,...d.data()}));
-  renderAll();
-  document.getElementById('loadingOverlay').style.display='none';
+  renderAll();document.getElementById('loadingOverlay').style.display='none';
 },err=>{document.getElementById('loadingOverlay').style.display='none';showToast('⚠️ 연결 실패');});
 
 function expand(evs){
@@ -495,7 +584,7 @@ function applyFilter(evs){
 }
 function renderAll(){renderToday();renderCal();renderList();doSearch();}
 
-// ── 오늘 ──
+// 오늘
 function renderToday(){
   const ts=new Date().toISOString().slice(0,10);
   const d=new Date();
@@ -503,12 +592,10 @@ function renderToday(){
   const evs=applyFilter(expand(events)).filter(ev=>ev.date===ts).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
   const el=document.getElementById('todayEvs');
   if(!evs.length){el.innerHTML='<div class="today-empty">오늘 일정 없음 🎉</div>';return;}
-  // 오늘섹션: 길게누르기 복사 가능
   el.innerHTML=evs.map(ev=>evCardHtml(ev,false,true)).join('');
   bindCardLongPress(el);
 }
 
-// evCardHtml - canCopy: 복사 가능 여부
 function evCardHtml(ev,showDate=false,canCopy=false){
   const who=Array.isArray(ev.who)?ev.who:[ev.who];
   const color=CC[who[0]]||'#888';
@@ -528,13 +615,13 @@ function evCardHtml(ev,showDate=false,canCopy=false){
   </div>`;
 }
 
-// ── 달력 (공휴일 캐시 있으면 즉시, 없으면 일단 표시 후 로드) ──
+// 달력
 function renderCal(){
   const yr=curMonth.getFullYear(),mo=curMonth.getMonth();
   document.getElementById('monthLbl').textContent=`${yr}년 ${mo+1}월`;
   const today=new Date().toISOString().slice(0,10);
   const expanded=applyFilter(expand(events));
-  const holidays=holidayCache[yr]||{}; // 캐시 없으면 빈 객체로 즉시 렌더
+  const holidays=holidayCache[yr]||{};
   const firstDow=new Date(yr,mo,1).getDay();
   const lastDate=new Date(yr,mo+1,0).getDate();
   const prevLast=new Date(yr,mo,0).getDate();
@@ -568,10 +655,8 @@ function renderCal(){
   for(let i=1;i<=next;i++) html+=`<div class="cal-day other"><div class="dnum">${i}</div></div>`;
   document.getElementById('calDays').innerHTML=html;
   bindCalLongPress();
-  // 달력 카드는 복사 안됨 (날짜 클릭으로만 열림)
 }
 
-// 날짜 탭
 window.handleDayTap=function(ds){
   if(multiPasteMode){
     if(multiPasteDates.has(ds)) multiPasteDates.delete(ds);
@@ -585,7 +670,6 @@ window.handleDayTap=function(ds){
   openDayModal(ds);
 }
 
-// 달력 날짜 길게 누르기 → 붙여넣기 옵션
 function bindCalLongPress(){
   document.querySelectorAll('.cal-day:not(.other)').forEach(day=>{
     day.addEventListener('touchstart',e=>{
@@ -606,8 +690,6 @@ function bindCalLongPress(){
   });
 }
 
-// 카드 길게 누르기 - 달력 날짜 팝업에서만 복사 가능 (목록/상세에서는 안됨)
-// container: 오늘섹션, 날짜팝업만 해당
 function bindCardLongPress(container){
   if(!container) return;
   container.querySelectorAll('.ev-card[data-id]').forEach(card=>{
@@ -637,42 +719,24 @@ window.confirmCopy=function(){
   document.getElementById('pasteBanner').classList.add('show');
   showToast('📋 복사됐어요! 날짜를 길게 누르세요');
 }
-
-window.pasteHere=async function(){
-  closeModal('pasteOptModal');
-  if(!copiedEvent||!pasteTargetDate) return;
-  await doPaste([pasteTargetDate]);
-}
+window.pasteHere=async function(){closeModal('pasteOptModal');if(!copiedEvent||!pasteTargetDate) return;await doPaste([pasteTargetDate]);}
 window.startMultiPaste=function(){
-  closeModal('pasteOptModal');
-  multiPasteMode=true;multiPasteDates=new Set();
+  closeModal('pasteOptModal');multiPasteMode=true;multiPasteDates=new Set();
   if(pasteTargetDate) multiPasteDates.add(pasteTargetDate);
-  document.getElementById('pasteBannerTxt').textContent=multiPasteDates.size>0?`📋 ${multiPasteDates.size}개 선택됨 — 완료를 누르세요`:'📋 날짜를 탭해서 선택하세요';
+  document.getElementById('pasteBannerTxt').textContent=multiPasteDates.size>0?`📋 ${multiPasteDates.size}개 선택됨 — 완료`:'📋 날짜를 탭해서 선택하세요';
   document.getElementById('pasteDoneBtn').style.display=multiPasteDates.size>0?'':'none';
-  document.getElementById('pasteBanner').classList.add('show');
-  renderCal();
+  document.getElementById('pasteBanner').classList.add('show');renderCal();
 }
-window.completePaste=async function(){
-  if(multiPasteDates.size===0){showToast('날짜를 선택해주세요');return;}
-  await doPaste([...multiPasteDates]);
-}
+window.completePaste=async function(){if(multiPasteDates.size===0){showToast('날짜를 선택해주세요');return;}await doPaste([...multiPasteDates]);}
 async function doPaste(dates){
   if(!copiedEvent) return;
   try{
-    await Promise.all(dates.map(ds=>{
-      const data={...copiedEvent,date:ds};
-      delete data.id;delete data._v;delete data._oid;
-      return addDoc(collection(db,"events"),data);
-    }));
+    await Promise.all(dates.map(ds=>{const data={...copiedEvent,date:ds};delete data.id;delete data._v;delete data._oid;return addDoc(collection(db,"events"),data);}));
     showToast(`✅ ${dates.length}개 날짜에 추가됐어요!`);cancelCopy();
   }catch(e){showToast('⚠️ 붙여넣기 실패');}
 }
-window.cancelCopy=function(){
-  copiedEvent=null;multiPasteMode=false;multiPasteDates=new Set();pasteTargetDate=null;
-  document.getElementById('pasteBanner').classList.remove('show');renderCal();
-}
+window.cancelCopy=function(){copiedEvent=null;multiPasteMode=false;multiPasteDates=new Set();pasteTargetDate=null;document.getElementById('pasteBanner').classList.remove('show');renderCal();}
 
-// 날짜 팝업 - 여기서만 복사 가능
 window.openDayModal=function(ds){
   const d=new Date(ds+'T00:00:00');
   const dow=['일','월','화','수','목','금','토'][d.getDay()];
@@ -681,22 +745,15 @@ window.openDayModal=function(ds){
   const el=document.getElementById('dayModalEvs');
   el.innerHTML=dayEvs.length?dayEvs.map(ev=>evCardHtml(ev,false,true)).join(''):'<div class="day-modal-empty">이 날 일정이 없어요 😊</div>';
   document.getElementById('btnDayAdd').onclick=()=>{closeModal('dayModal');openAdd(ds);};
-  openModal('dayModal');
-  bindCardLongPress(el);
+  openModal('dayModal');bindCardLongPress(el);
 }
 
-// 목록 - 복사 없음
 function renderList(){
-  const evs=applyFilter(expand(events)).sort((a,b)=>{
-    if(a.date!==b.date) return b.date.localeCompare(a.date);
-    return (b.time||'').localeCompare(a.time||'');
-  });
-  const groups={};
-  evs.forEach(ev=>{if(!groups[ev.date])groups[ev.date]=[];groups[ev.date].push(ev);});
+  const evs=applyFilter(expand(events)).sort((a,b)=>{if(a.date!==b.date) return b.date.localeCompare(a.date);return (b.time||'').localeCompare(a.time||'');});
+  const groups={};evs.forEach(ev=>{if(!groups[ev.date])groups[ev.date]=[];groups[ev.date].push(ev);});
   const today=new Date().toISOString().slice(0,10);
   const el=document.getElementById('schedList');
   if(!evs.length){el.innerHTML='<div class="empty-msg">📭 일정이 없어요</div>';return;}
-  // 목록: canCopy=false
   el.innerHTML=Object.entries(groups).map(([date,evs])=>{
     const d=new Date(date+'T00:00:00');
     const dow=['일','월','화','수','목','금','토'][d.getDay()];
@@ -704,7 +761,6 @@ function renderList(){
   }).join('');
 }
 
-// 검색 - 복사 없음
 window.doSearch=function(){
   const q=document.getElementById('searchInput').value.trim().toLowerCase();
   const el=document.getElementById('searchResults');
@@ -717,7 +773,6 @@ window.doSearch=function(){
   else if(searchSort==='date-asc') evs.sort((a,b)=>a.date.localeCompare(b.date));
   else evs.sort((a,b)=>{const wa=Array.isArray(a.who)?a.who[0]:a.who,wb=Array.isArray(b.who)?b.who[0]:b.who;return ORDER.indexOf(wa)-ORDER.indexOf(wb);});
   if(!evs.length){el.innerHTML='<div class="search-empty">검색 결과가 없어요 🔍</div>';return;}
-  // 검색: canCopy=false
   el.innerHTML=evs.map(ev=>evCardHtml(ev,true,false)).join('');
 }
 window.setSFilter=function(f,btn){sFilter=f;document.querySelectorAll('.sf-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');doSearch();}
@@ -733,16 +788,151 @@ window.setFilter=function(f,btn){
 }
 window.changeMonth=function(d){curMonth.setMonth(curMonth.getMonth()+d);preloadHolidaysBg(curMonth.getFullYear());renderCal();}
 
+// ── AI 채팅 ──
+function getEventsSummary(){
+  const allEvs=expand(events).sort((a,b)=>a.date.localeCompare(b.date));
+  if(!allEvs.length) return '현재 등록된 일정이 없습니다.';
+  const today=new Date().toISOString().slice(0,10);
+  return allEvs.map(ev=>{
+    const who=Array.isArray(ev.who)?ev.who.join(', '):ev.who;
+    return `[${ev.date}${ev.time?' '+ev.time:''}] ${ev.title} - ${who}${ev.body?' ('+ev.body+')':''}`;
+  }).join('\n');
+}
+
+window.askAI=function(text){
+  document.getElementById('aiInput').value=text;
+  sendAI();
+}
+
+window.sendAI=async function(){
+  const input=document.getElementById('aiInput');
+  const text=input.value.trim();
+  if(!text) return;
+  input.value='';
+  input.style.height='auto';
+
+  addChatMsg('user',text);
+  aiChatHistory.push({role:'user',content:text});
+
+  showTyping();
+
+  const today=new Date().toISOString().slice(0,10);
+  const systemPrompt=`당신은 유씨 가족의 일정 관리 AI 도우미입니다. 한국어로 친근하게 대화하세요.
+
+오늘 날짜: ${today}
+가족 구성원: 유영대(아빠), 이현희(엄마), 유제하(장남), 유가율(딸), 유가은(막내딸)
+거주지: 경기도 화성시
+
+현재 등록된 가족 일정:
+${getEventsSummary()}
+
+지침:
+- 일정 관련 질문은 위 데이터를 참고해서 정확하게 답변
+- 이동시간, 날씨, 일반 질문도 도움이 되게 답변
+- 답변은 간결하고 친근하게, 이모지 적절히 사용
+- 날짜 계산 시 오늘(${today}) 기준으로`;
+
+  try{
+    const messages=[
+      {role:'user',content:systemPrompt+'\n\n첫 번째 질문: '+text}
+    ];
+    if(aiChatHistory.length>2){
+      // 이전 대화 컨텍스트 추가
+      const prev=aiChatHistory.slice(-6,-1);
+      messages[0].content=systemPrompt;
+      prev.forEach(m=>messages.push(m));
+      messages.push({role:'user',content:text});
+    }
+
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        contents:messages.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]})),
+        generationConfig:{temperature:0.7,maxOutputTokens:800}
+      })
+    });
+    const data=await res.json();
+    const reply=data.candidates?.[0]?.content?.parts?.[0]?.text||'죄송해요, 답변을 생성하지 못했어요.';
+    hideTyping();
+    addChatMsg('bot',reply);
+    aiChatHistory.push({role:'assistant',content:reply});
+  }catch(e){
+    hideTyping();
+    addChatMsg('bot','⚠️ 연결에 문제가 생겼어요. 잠시 후 다시 시도해주세요.');
+  }
+}
+
+function addChatMsg(role,text){
+  const el=document.getElementById('aiMessages');
+  const now=new Date();
+  const timeStr=`${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const div=document.createElement('div');
+  div.className=`ai-msg ${role}`;
+  const formattedText=text.replace(/\n/g,'<br>');
+  if(role==='bot'){
+    div.innerHTML=`<div class="ai-avatar">🤖</div><div><div class="ai-time">${timeStr}</div><div class="ai-bubble">${formattedText}</div></div>`;
+  } else {
+    div.innerHTML=`<div><div class="ai-time">${timeStr}</div><div class="ai-bubble">${formattedText}</div></div><div class="ai-avatar">👤</div>`;
+  }
+  el.appendChild(div);
+  el.scrollTop=el.scrollHeight;
+}
+
+let typingEl=null;
+function showTyping(){
+  const el=document.getElementById('aiMessages');
+  typingEl=document.createElement('div');
+  typingEl.className='ai-msg bot';
+  typingEl.innerHTML=`<div class="ai-avatar">🤖</div><div><div class="ai-typing"><span></span><span></span><span></span></div></div>`;
+  el.appendChild(typingEl);el.scrollTop=el.scrollHeight;
+}
+function hideTyping(){if(typingEl){typingEl.remove();typingEl=null;}}
+
+window.aiInputKey=function(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAI();}
+}
+window.autoResize=function(el){
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,100)+'px';
+}
+
+// 음성 입력
+window.toggleVoice=function(){
+  if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){
+    showToast('⚠️ 이 브라우저는 음성 입력을 지원하지 않아요');return;
+  }
+  if(isListening){
+    recognition&&recognition.stop();return;
+  }
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  recognition=new SR();
+  recognition.lang='ko-KR';recognition.continuous=false;recognition.interimResults=true;
+  recognition.onstart=()=>{isListening=true;document.getElementById('aiMicBtn').classList.add('listening');showToast('🎤 말씀하세요...');};
+  recognition.onresult=e=>{
+    const transcript=Array.from(e.results).map(r=>r[0].transcript).join('');
+    document.getElementById('aiInput').value=transcript;
+  };
+  recognition.onend=()=>{
+    isListening=false;document.getElementById('aiMicBtn').classList.remove('listening');
+    const text=document.getElementById('aiInput').value.trim();
+    if(text) sendAI();
+  };
+  recognition.onerror=()=>{isListening=false;document.getElementById('aiMicBtn').classList.remove('listening');showToast('⚠️ 음성 인식 실패');};
+  recognition.start();
+}
+
 // CRUD
 window.saveEvent=async function(){
   const title=document.getElementById('f_title').value.trim();
   const date=document.getElementById('f_date').value;
-  const time=document.getElementById('f_time').value;
+  const time=document.getElementById('f_time').value.trim();
   const body=document.getElementById('f_body').value.trim();
   if(!title){showToast('제목을 입력해주세요');return;}
   if(!date){showToast('날짜를 선택해주세요');return;}
   if(!selWho.length){showToast('구성원을 선택해주세요');return;}
-  const data={title,date,time,body,who:selWho,repeat:'none'};
+  // 시간 유효성 검사
+  const timeVal=time&&/^\d{1,2}:\d{2}$/.test(time)?time:'';
+  const data={title,date,time:timeVal,body,who:selWho,repeat:'none'};
   try{
     if(editId){await updateDoc(doc(db,"events",editId),data);showToast('✅ 수정됐어요!');}
     else{await addDoc(collection(db,"events"),data);showToast('✅ 저장됐어요!');}
@@ -768,31 +958,19 @@ window.openDetail=function(id,dateStr){
 }
 window.editFromDetail=function(){if(!detailEv) return;closeModal('detailModal');setTimeout(()=>openAdd(null,detailEv.id),300);}
 
-// ── Gemini 핀치줌 ──
-let imgScale=1,imgStartDist=0,imgLastScale=1,imgOffX=0,imgOffY=0,imgStartX=0,imgStartY=0,imgTouches=0;
-
+// Gemini 사진 핀치줌
+let imgScale=1,imgStartDist=0,imgLastScale=1,imgOffX=0,imgOffY=0,imgStartX=0,imgStartY=0;
 function setupPinchZoom(){
   const wrap=document.getElementById('imgPreviewWrap');
   const inner=document.getElementById('imgPreviewInner');
   wrap.addEventListener('touchstart',e=>{
-    imgTouches=e.touches.length;
-    if(e.touches.length===2){
-      imgStartDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-      imgLastScale=imgScale;
-    } else if(e.touches.length===1){
-      imgStartX=e.touches[0].clientX-imgOffX;
-      imgStartY=e.touches[0].clientY-imgOffY;
-    }
+    if(e.touches.length===2){imgStartDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);imgLastScale=imgScale;}
+    else if(e.touches.length===1){imgStartX=e.touches[0].clientX-imgOffX;imgStartY=e.touches[0].clientY-imgOffY;}
   },{passive:true});
   wrap.addEventListener('touchmove',e=>{
     e.stopPropagation();
-    if(e.touches.length===2){
-      const dist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
-      imgScale=Math.min(5,Math.max(1,imgLastScale*(dist/imgStartDist)));
-    } else if(e.touches.length===1&&imgScale>1){
-      imgOffX=e.touches[0].clientX-imgStartX;
-      imgOffY=e.touches[0].clientY-imgStartY;
-    }
+    if(e.touches.length===2){const dist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);imgScale=Math.min(5,Math.max(1,imgLastScale*(dist/imgStartDist)));}
+    else if(e.touches.length===1&&imgScale>1){imgOffX=e.touches[0].clientX-imgStartX;imgOffY=e.touches[0].clientY-imgStartY;}
     inner.style.transform=`translate(${imgOffX}px,${imgOffY}px) scale(${imgScale})`;
   },{passive:true});
   wrap.addEventListener('touchend',()=>{if(imgScale<=1){imgOffX=0;imgOffY=0;inner.style.transform='scale(1)';}},{passive:true});
@@ -801,7 +979,7 @@ setupPinchZoom();
 
 window.openGemini=function(){
   const inner=document.getElementById('imgPreviewInner');
-  inner.innerHTML='<div class="img-placeholder">📷<br>아래 버튼으로<br>사진을 선택하세요</div>';
+  inner.innerHTML='<div class="img-placeholder">📷<br>아래 버튼으로 사진을 선택하세요</div>';
   inner.style.transform='scale(1)';imgScale=1;imgOffX=0;imgOffY=0;
   document.getElementById('geminiStatus').textContent='사진을 선택하면 AI가 일정을 읽어드려요 🤖';
   document.getElementById('geminiStatus').style.display='block';
@@ -825,14 +1003,14 @@ window.handleImg=function(input){
 }
 async function analyzeWithGemini(base64){
   const b64=base64.split(',')[1],mime=base64.split(';')[0].split(':')[1];
-  const prompt=`이 사진에서 일정 정보를 최대한 찾아주세요. 의료 문서, 메모, 다이어리 등 어떤 형태든 가능합니다.
-반드시 아래 JSON 형식으로만 응답하고 다른 말은 절대 하지 마세요. 마크다운 코드블록도 쓰지 마세요.
-{"title":"가장 중요한 일정 제목","date":"YYYY-MM-DD (날짜 없으면 오늘날짜, 연도 없으면 2026)","time":"HH:MM (없으면 빈 문자열)","body":"날짜/시간 외 나머지 내용 요약"}
-주의: '5월 22일'→2026-05-22, '10시 45분'→10:45`;
+  const prompt=`이 사진에서 일정/예약/치료 정보를 찾아주세요. 의료문서, 메모, 다이어리, 처방전 등 모두 가능합니다.
+JSON만 출력하세요 (다른 텍스트 금지):
+{"title":"핵심 일정명 (예: 방사선 치료, 병원 예약)","date":"YYYY-MM-DD","time":"HH:MM (24시간, 없으면 빈문자열)","body":"기타 메모 내용"}
+변환 규칙: '5월 22일'→2026-05-22, '10시 45분'→10:45, '오전 10시'→10:00, '오후 2시'→14:00`;
   try{
     const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({contents:[{parts:[{inline_data:{mime_type:mime,data:b64}},{text:prompt}]}],generationConfig:{temperature:0.1}})
+      body:JSON.stringify({contents:[{parts:[{inline_data:{mime_type:mime,data:b64}},{text:prompt}]}],generationConfig:{temperature:0}})
     });
     const data=await res.json();
     const text=data.candidates?.[0]?.content?.parts?.[0]?.text||'';
@@ -858,7 +1036,7 @@ window.toggleGWho=function(btn){const w=btn.dataset.w;if(btn.classList.contains(
 window.saveGeminiEvent=async function(){
   const title=document.getElementById('g_title').value.trim();
   const date=document.getElementById('g_date').value;
-  const time=document.getElementById('g_time').value;
+  const time=document.getElementById('g_time').value.trim();
   const body=document.getElementById('g_body').value.trim();
   if(!title){showToast('제목을 확인해주세요');return;}
   if(!date){showToast('날짜를 확인해주세요');return;}
@@ -874,8 +1052,7 @@ window.openAdd=function(dateStr,eid){
   document.getElementById('f_date').value=dateStr||new Date().toISOString().slice(0,10);
   document.getElementById('f_time').value='';document.getElementById('f_body').value='';
   document.querySelectorAll('.who-btn').forEach(b=>b.classList.remove('on'));
-  document.getElementById('btnDel').style.display='none';
-  document.getElementById('editModalTxt').textContent='일정 추가';
+  document.getElementById('btnDel').style.display='none';document.getElementById('editModalTxt').textContent='일정 추가';
   if(eid){
     const ev=events.find(e=>e.id===eid);
     if(ev){
@@ -897,9 +1074,11 @@ window.switchTab=function(tab,btn){
   document.getElementById('calTab').style.display=tab==='cal'?'':'none';
   document.getElementById('listTab').style.display=tab==='list'?'':'none';
   document.getElementById('searchTab').style.display=tab==='search'?'':'none';
-  document.getElementById('filterWrap').style.display=tab==='search'?'none':'';
-  document.getElementById('todayBox').style.display=tab==='search'?'none':'';
+  document.getElementById('aiTab').style.display=tab==='ai'?'':'none';
+  document.getElementById('filterWrap').style.display=(tab==='search'||tab==='ai')?'none':'';
+  document.getElementById('todayBox').style.display=(tab==='search'||tab==='ai')?'none':'';
   if(tab==='search') setTimeout(()=>document.getElementById('searchInput').focus(),300);
+  if(tab==='ai') setTimeout(()=>{const m=document.getElementById('aiMessages');m.scrollTop=m.scrollHeight;},100);
 }
 window.openModal=function(id){document.getElementById(id).classList.add('open');}
 window.closeModal=function(id){document.getElementById(id).classList.remove('open');}
