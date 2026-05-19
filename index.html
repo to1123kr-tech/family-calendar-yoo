@@ -284,7 +284,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v4.1</span>
+    <span class="app-version">v4.2</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치</button>
@@ -1128,8 +1128,7 @@ ${getEventsSummaryWithIds()}
     // 일정 명령 처리
     reply=await processAICommand(reply);
     addChatMsg('bot',reply);
-    // TTS 읽기
-    speakText(reply);
+    // TTS는 버튼 누를때만 (자동재생 제거)
     // 히스토리 저장
     aiChatHistory.push({role:'user',content:text});
     aiChatHistory.push({role:'assistant',content:reply});
@@ -1149,7 +1148,8 @@ function addChatMsg(role,text){
   div.className=`ai-msg ${role}`;
   const formattedText=text.replace(/\n/g,'<br>');
   if(role==='bot'){
-    div.innerHTML=`<div class="ai-avatar">🤖</div><div><div class="ai-time">${timeStr}</div><div class="ai-bubble">${formattedText}</div></div>`;
+    const msgId='msg_'+Date.now();
+    div.innerHTML=`<div class="ai-avatar">🤖</div><div><div class="ai-time">${timeStr}</div><div class="ai-bubble" id="${msgId}">${formattedText}</div><button onclick="speakText(document.getElementById('${msgId}').innerText)" style="background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;padding:2px 4px;margin-top:2px;">🔊</button></div>`;
   } else {
     div.innerHTML=`<div><div class="ai-time">${timeStr}</div><div class="ai-bubble">${formattedText}</div></div><div class="ai-avatar">👤</div>`;
   }
