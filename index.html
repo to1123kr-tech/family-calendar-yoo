@@ -284,7 +284,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v3.9.1</span>
+    <span class="app-version">v3.9.2</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-settings" onclick="openSettings()">⚙️</button>
@@ -948,15 +948,21 @@ window.sendAI=async function(){
   showTyping();
 
   const today=new Date().toISOString().slice(0,10);
-  const systemContext=`당신은 유씨 가족의 일정 관리 AI 도우미입니다. 한국어로 친근하게 답변하세요.
-오늘 날짜: ${today}
-가족: 유영대(아빠), 이현희(엄마), 유제하(장남), 유가율(딸), 유가은(막내)
-거주지: 경기도 화성시
+  const systemContext=`너는 가족 일정 도우미야. 한국어로 친근하고 자연스럽게 대화해. 절대 "유씨 가족"이라고 부르지 마.
 
-현재 가족 일정:
+오늘: ${today}
+가족: 영대(아빠), 현희(엄마), 제하(장남), 가율(딸), 가은(막내)
+사는 곳: 경기도 화성시
+
+등록된 일정:
 ${getEventsSummary()}
 
-지침: 일정 질문은 위 데이터 참고, 이동시간/날씨 등 일반 질문도 답변, 간결하고 친근하게.`;
+규칙:
+- 일정 질문 → 위 데이터 참고해서 정확히 답변
+- 이동시간/교통/날씨 등 일반 질문 → 아는 대로 구체적으로 답변
+- 답변은 짧고 명확하게, 이모지 적당히
+- "안녕하세요" 같은 인사 반복하지 말고 바로 답변
+- 질문에 대한 답을 끝까지 완성해서 말해줘`;
 
   // Gemini 멀티턴: contents 배열 구성
   // 첫 메시지에 시스템 컨텍스트 포함
@@ -982,7 +988,7 @@ ${getEventsSummary()}
   try{
     const res=await fetch(`${AI_PROXY}/api/ai-chat`,{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({contents,generationConfig:{temperature:0.7,maxOutputTokens:800}})
+      body:JSON.stringify({contents,generationConfig:{temperature:0.7,maxOutputTokens:1200}})
     });
     const data=await res.json();
     if(data.error) throw new Error(data.error.message);
