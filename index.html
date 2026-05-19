@@ -284,7 +284,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v3.9</span>
+    <span class="app-version">v3.9.1</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-settings" onclick="openSettings()">⚙️</button>
@@ -568,7 +568,7 @@ import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot
 const FB={apiKey:"AIzaSyBk1bMw7zutUQXxCWs_fY8Jh5XAYd-M7Zs",authDomain:"family-calendar-yoo.firebaseapp.com",projectId:"family-calendar-yoo",storageBucket:"family-calendar-yoo.firebasestorage.app",messagingSenderId:"29463720385",appId:"1:29463720385:web:995328e6ee09e81daaff40"};
 const GEMINI_KEY="AIzaSyCcQTvtzkI3PUjSMPCjCSPRz04xHSUFPyM";
 const HOLIDAY_KEY="09b819905e0a70316749fb91c03a216633ad3e75196a6aa25e6a9f273d9116f8";
-const AI_PROXY="http://168.107.15.68:5050"; // Oracle 서버 프록시
+const AI_PROXY="https://168-107-15-68.nip.io"; // Oracle 서버 프록시 (HTTPS)
 const app=initializeApp(FB),db=getFirestore(app);
 
 // 설정창용 (사용 안하지만 UI 유지)
