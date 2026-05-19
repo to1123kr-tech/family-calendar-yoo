@@ -34,7 +34,26 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .btn-loc{background:#ede9fe;color:#7c3aed;border-color:#ede9fe;}
 .btn-cam{background:#fff3e0;color:#e65100;border-color:#fff3e0;}
 .btn-add-main{background:var(--c영대);color:white;border-color:var(--c영대);}
+.btn-settings{background:#f0fdf4;color:#16a34a;border-color:#f0fdf4;}
 .btn-refresh{color:var(--muted);}
+
+/* 설정 모달 */
+.settings-section{margin-bottom:20px;}
+.settings-title{font-size:13px;font-weight:800;color:var(--muted);margin-bottom:10px;letter-spacing:0.3px;}
+.settings-row{display:flex;align-items:center;gap:10px;background:var(--bg);border-radius:10px;padding:10px 12px;margin-bottom:8px;}
+.settings-row-label{font-size:13px;font-weight:600;flex:1;}
+.settings-row-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.settings-input-wrap{display:flex;gap:8px;margin-top:8px;}
+.settings-input{flex:1;border:1.5px solid var(--border);border-radius:9px;padding:9px 11px;font-size:13px;font-family:inherit;background:var(--bg);outline:none;}
+.settings-input:focus{border-color:var(--c영대);}
+.btn-settings-save{background:var(--c영대);color:#fff;border:none;border-radius:9px;padding:9px 16px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;}
+.api-status{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:8px 12px;border-radius:9px;margin-bottom:8px;}
+.api-status.ok{background:#dcfce7;color:#16a34a;}
+.api-status.fail{background:#fee2e2;color:#dc2626;}
+.api-status.none{background:var(--bg);color:var(--muted);}
+.btn-test{background:var(--bg);border:1.5px solid var(--border);border-radius:9px;padding:9px 14px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:4px;transition:all 0.2s;}
+.btn-test:hover{border-color:var(--c영대);color:var(--c영대);}
+.btn-del-key{background:#fee2e2;color:#dc2626;border:none;border-radius:9px;padding:9px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;}
 
 /* 탭 - 4개 */
 .tab-nav{display:flex;background:var(--card);border-bottom:1px solid var(--border);}
@@ -265,9 +284,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v3.7</span>
+    <span class="app-version">v3.8</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
+      <button class="hdr-btn btn-settings" onclick="openSettings()">⚙️</button>
       <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치</button>
       <button class="hdr-btn btn-cam" onclick="openGemini()">📸</button>
       <button class="hdr-btn btn-add-main" onclick="openAdd()">＋ 추가</button>
@@ -377,6 +397,53 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     </div>
   </div>
 </main>
+
+<!-- 설정 모달 -->
+<div class="modal-overlay" id="settingsModal" onclick="bgClose(event,'settingsModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title"><span>⚙️ 설정</span><button class="modal-close" onclick="closeModal('settingsModal')">✕</button></div>
+
+    <!-- API 키 설정 -->
+    <div class="settings-section">
+      <div class="settings-title">🤖 GEMINI API 키</div>
+      <div class="api-status none" id="apiStatusBox">
+        <span id="apiStatusIcon">⚪</span>
+        <span id="apiStatusTxt">API 키가 설정되지 않았어요</span>
+      </div>
+      <div class="settings-input-wrap">
+        <input type="password" class="settings-input" id="apiKeyInput" placeholder="AIzaSy... 키를 입력하세요">
+        <button class="btn-settings-save" onclick="saveApiKey()">저장</button>
+        <button class="btn-del-key" onclick="deleteApiKey()" title="키 삭제">🗑️</button>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;">
+        💡 키는 이 폰에만 저장돼요. GitHub에 올라가지 않아요.<br>
+        🔑 발급: aistudio.google.com → API keys → Create API key
+      </div>
+    </div>
+
+    <!-- 테스트 버튼 -->
+    <div class="settings-section">
+      <div class="settings-title">🧪 API 테스트</div>
+      <button class="btn-test" onclick="testApiKey()">
+        🔍 API 키 연결 테스트
+      </button>
+      <div id="testResult" style="margin-top:10px;font-size:13px;display:none;"></div>
+    </div>
+
+    <!-- 키 보기/숨기기 -->
+    <div class="settings-section">
+      <div class="settings-title">📋 저장된 키 확인</div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-row-label">현재 키</div>
+          <div class="settings-row-sub" id="currentKeyPreview">설정된 키 없음</div>
+        </div>
+        <button class="btn-del-key" onclick="toggleKeyView()" id="keyViewBtn">👁️</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- 복사 확인 -->
 <div class="modal-overlay confirm-layer" id="copyConfirmModal" onclick="bgClose(event,'copyConfirmModal')">
@@ -506,6 +573,90 @@ const FB={apiKey:"AIzaSyBk1bMw7zutUQXxCWs_fY8Jh5XAYd-M7Zs",authDomain:"family-ca
 const GEMINI_KEY="AIzaSyCcQTvtzkI3PUjSMPCjCSPRz04xHSUFPyM";
 const HOLIDAY_KEY="09b819905e0a70316749fb91c03a216633ad3e75196a6aa25e6a9f273d9116f8";
 const app=initializeApp(FB),db=getFirestore(app);
+
+// Gemini 키 localStorage에서 관리
+function getGeminiKey(){return localStorage.getItem('gemini_api_key')||'';}
+
+// 설정 모달
+window.openSettings=function(){
+  updateApiStatusUI();
+  openModal('settingsModal');
+}
+function updateApiStatusUI(){
+  const key=getGeminiKey();
+  const box=document.getElementById('apiStatusBox');
+  const icon=document.getElementById('apiStatusIcon');
+  const txt=document.getElementById('apiStatusTxt');
+  const preview=document.getElementById('currentKeyPreview');
+  if(key){
+    box.className='api-status ok';
+    icon.textContent='✅';
+    txt.textContent='API 키가 설정되어 있어요';
+    preview.textContent=key.slice(0,8)+'••••••••••••••••'+key.slice(-4);
+    document.getElementById('apiKeyInput').value='';
+  } else {
+    box.className='api-status none';
+    icon.textContent='⚪';
+    txt.textContent='API 키가 설정되지 않았어요';
+    preview.textContent='설정된 키 없음';
+  }
+  document.getElementById('testResult').style.display='none';
+}
+window.saveApiKey=function(){
+  const key=document.getElementById('apiKeyInput').value.trim();
+  if(!key){showToast('키를 입력해주세요');return;}
+  if(!key.startsWith('AIza')){showToast('⚠️ 올바른 키 형식이 아니에요 (AIza로 시작)');return;}
+  localStorage.setItem('gemini_api_key',key);
+  document.getElementById('apiKeyInput').value='';
+  updateApiStatusUI();
+  showToast('✅ API 키가 저장됐어요!');
+}
+window.deleteApiKey=function(){
+  if(!confirm('API 키를 삭제할까요?')) return;
+  localStorage.removeItem('gemini_api_key');
+  updateApiStatusUI();
+  showToast('🗑️ API 키가 삭제됐어요');
+}
+let keyVisible=false;
+window.toggleKeyView=function(){
+  const key=getGeminiKey();
+  const preview=document.getElementById('currentKeyPreview');
+  const btn=document.getElementById('keyViewBtn');
+  if(!key){showToast('저장된 키가 없어요');return;}
+  keyVisible=!keyVisible;
+  preview.textContent=keyVisible?key:key.slice(0,8)+'••••••••••••••••'+key.slice(-4);
+  btn.textContent=keyVisible?'🙈':'👁️';
+}
+window.testApiKey=async function(){
+  const key=getGeminiKey();
+  const resultEl=document.getElementById('testResult');
+  resultEl.style.display='block';
+  if(!key){
+    resultEl.innerHTML='<div style="color:#dc2626">⚠️ 먼저 API 키를 입력하고 저장해주세요</div>';
+    return;
+  }
+  resultEl.innerHTML='<div style="color:var(--muted)"><span style="display:inline-block;width:16px;height:16px;border:2px solid #ccc;border-top-color:var(--c영대);border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:6px"></span>테스트 중...</div>';
+  try{
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${key}`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{role:'user',parts:[{text:'안녕! 한 줄로 짧게 대답해줘'}]}],generationConfig:{maxOutputTokens:50}})
+    });
+    const data=await res.json();
+    if(data.error) throw new Error(data.error.message);
+    const reply=data.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    resultEl.innerHTML=`<div style="background:#dcfce7;border-radius:10px;padding:10px 12px;color:#16a34a;font-weight:600">✅ 연결 성공!<br><span style="font-weight:400;font-size:12px">AI 응답: ${reply}</span></div>`;
+    // 상태 업데이트
+    const box=document.getElementById('apiStatusBox');
+    box.className='api-status ok';
+    document.getElementById('apiStatusIcon').textContent='✅';
+    document.getElementById('apiStatusTxt').textContent='API 키 정상 작동 중';
+  }catch(e){
+    resultEl.innerHTML=`<div style="background:#fee2e2;border-radius:10px;padding:10px 12px;color:#dc2626;font-weight:600">❌ 연결 실패<br><span style="font-weight:400;font-size:12px">${e.message}</span></div>`;
+    document.getElementById('apiStatusBox').className='api-status fail';
+    document.getElementById('apiStatusIcon').textContent='❌';
+    document.getElementById('apiStatusTxt').textContent='API 키 오류';
+  }
+}
 const CC={'유영대':'#3b82f6','이현희':'#f472b6','유제하':'#34d399','유가율':'#fb923c','유가은':'#a78bfa'};
 const CL={'유영대':'#eff6ff','이현희':'#fdf2f8','유제하':'#ecfdf5','유가율':'#fff7ed','유가은':'#f5f3ff'};
 
@@ -845,7 +996,13 @@ ${getEventsSummary()}
   }
 
   try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${GEMINI_KEY}`,{
+    const gKey=getGeminiKey();
+    if(!gKey){
+      hideTyping();
+      addChatMsg('bot','⚙️ Gemini API 키가 없어요!\n\n헤더의 ⚙️ 버튼 → API 키 입력 → 저장 → 테스트 순서로 해주세요.');
+      return;
+    }
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${gKey}`,{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({contents,generationConfig:{temperature:0.7,maxOutputTokens:800}})
     });
@@ -1006,13 +1163,21 @@ window.handleImg=function(input){
   reader.readAsDataURL(file);
 }
 async function analyzeWithGemini(base64){
+  const gKey=getGeminiKey();
+  if(!gKey){
+    document.getElementById('geminiStatus').textContent='⚙️ API 키가 없어요. 헤더의 ⚙️ 설정에서 키를 입력해주세요.';
+    document.getElementById('geminiFields').style.display='block';
+    document.getElementById('g_date').value=new Date().toISOString().slice(0,10);
+    document.getElementById('btnGeminiSave').style.display='block';
+    return;
+  }
   const b64=base64.split(',')[1],mime=base64.split(';')[0].split(':')[1];
   const prompt=`이 사진에서 일정/예약/치료 정보를 찾아주세요. 의료문서, 메모, 다이어리, 처방전 등 모두 가능합니다.
 JSON만 출력하세요 (다른 텍스트 금지):
 {"title":"핵심 일정명 (예: 방사선 치료, 병원 예약)","date":"YYYY-MM-DD","time":"HH:MM (24시간, 없으면 빈문자열)","body":"기타 메모 내용"}
 변환 규칙: '5월 22일'→2026-05-22, '10시 45분'→10:45, '오전 10시'→10:00, '오후 2시'→14:00`;
   try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${GEMINI_KEY}`,{
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${gKey}`,{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({contents:[{parts:[{inline_data:{mime_type:mime,data:b64}},{text:prompt}]}],generationConfig:{temperature:0}})
     });
