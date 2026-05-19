@@ -284,7 +284,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v4.3</span>
+    <span class="app-version">v4.4</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치</button>
@@ -1003,13 +1003,29 @@ window.changeMonth=function(d){curMonth.setMonth(curMonth.getMonth()+d);preloadH
 
 // ── AI 채팅 ──
 
-// TTS 음성 읽기
-function speakText(text){
+// TTS 음성 읽기 - 토글 방식
+let isSpeaking=false;
+function speakText(text,btnEl){
   if(!window.speechSynthesis) return;
+  // 읽는 중이면 중지
+  if(isSpeaking){
+    window.speechSynthesis.cancel();
+    isSpeaking=false;
+    document.querySelectorAll('.tts-btn').forEach(b=>{b.textContent='🔊';b.style.color='var(--muted)';});
+    return;
+  }
   window.speechSynthesis.cancel();
-  const clean=text.replace(/[*_#`~\[\]]/g,'').replace(/\n+/g,' ').slice(0,300);
+  const clean=text.replace(/[*_#`~\[\]]/g,'').replace(/\n+/g,' ').slice(0,500);
   const utt=new SpeechSynthesisUtterance(clean);
-  utt.lang='ko-KR';utt.rate=1.05;
+  utt.lang='ko-KR';utt.rate=1.0;
+  utt.onstart=()=>{
+    isSpeaking=true;
+    if(btnEl){btnEl.textContent='⏹️';btnEl.style.color='#ef4444';}
+  };
+  utt.onend=utt.onerror=()=>{
+    isSpeaking=false;
+    document.querySelectorAll('.tts-btn').forEach(b=>{b.textContent='🔊';b.style.color='var(--muted)';});
+  };
   window.speechSynthesis.speak(utt);
 }
 
@@ -1093,7 +1109,8 @@ ${getEventsSummaryWithIds()}
 - 일정 수정 요청시 → 답변 끝에 [CMD:{"action":"update","id":"해당ID","title":"새제목","date":"새날짜","time":"새시간"}]
 - 이름 변환: 영대→유영대, 현희→이현희, 제하→유제하, 가율→유가율, 가은→유가은
 - 인사말 반복 금지, 바로 답변
-- 이동시간/교통 등 일반 질문도 구체적으로 답변`;
+- 날씨/이동시간/교통/맛집/일반상식 등 모든 질문에 최대한 구체적으로 답변
+- 절대 "알려드리지 못해요" 같은 거절 금지, 뭐든 도움이 되게 답변`;
 
   // Gemini 멀티턴: contents 배열 구성
   // 첫 메시지에 시스템 컨텍스트 포함
@@ -1149,7 +1166,7 @@ function addChatMsg(role,text){
   const formattedText=text.replace(/\n/g,'<br>');
   if(role==='bot'){
     const msgId='msg_'+Date.now();
-    div.innerHTML=`<div class="ai-avatar">🤖</div><div><div class="ai-time">${timeStr}</div><div class="ai-bubble" id="${msgId}">${formattedText}</div><button onclick="speakText(document.getElementById('${msgId}').innerText)" style="background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;padding:2px 4px;margin-top:2px;">🔊</button></div>`;
+    div.innerHTML=`<div class="ai-avatar">🤖</div><div><div class="ai-time">${timeStr}</div><div class="ai-bubble" id="${msgId}">${formattedText}</div><button class="tts-btn" onclick="speakText(document.getElementById('${msgId}').innerText,this)" style="background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:3px 6px;margin-top:2px;border-radius:6px;" title="🔊 읽기 / ⏹️ 중지">🔊</button></div>`;
   } else {
     div.innerHTML=`<div><div class="ai-time">${timeStr}</div><div class="ai-bubble">${formattedText}</div></div><div class="ai-avatar">👤</div>`;
   }
@@ -1177,6 +1194,14 @@ window.autoResize=function(el){
 
 // 음성 입력
 window.toggleVoice=function(){
+  // TTS 읽는 중이면 중지
+  if(isSpeaking){
+    window.speechSynthesis&&window.speechSynthesis.cancel();
+    isSpeaking=false;
+    document.querySelectorAll('.tts-btn').forEach(b=>{b.textContent='🔊';b.style.color='var(--muted)';});
+    showToast('⏹️ 읽기 중지');
+    return;
+  }
   if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){
     showToast('⚠️ 이 브라우저는 음성 입력을 지원하지 않아요');return;
   }
