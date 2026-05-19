@@ -845,7 +845,7 @@ ${getEventsSummary()}
   }
 
   try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,{
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({contents,generationConfig:{temperature:0.7,maxOutputTokens:800}})
     });
@@ -1012,7 +1012,7 @@ JSON만 출력하세요 (다른 텍스트 금지):
 {"title":"핵심 일정명 (예: 방사선 치료, 병원 예약)","date":"YYYY-MM-DD","time":"HH:MM (24시간, 없으면 빈문자열)","body":"기타 메모 내용"}
 변환 규칙: '5월 22일'→2026-05-22, '10시 45분'→10:45, '오전 10시'→10:00, '오후 2시'→14:00`;
   try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,{
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({contents:[{parts:[{inline_data:{mime_type:mime,data:b64}},{text:prompt}]}],generationConfig:{temperature:0}})
     });
