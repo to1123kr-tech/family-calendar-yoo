@@ -284,7 +284,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v3.9.2</span>
+    <span class="app-version">v4.0</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-settings" onclick="openSettings()">⚙️</button>
@@ -336,7 +336,17 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   </div>
 
   <!-- 목록 -->
-  <div id="listTab" style="display:none;"><div id="schedList"></div></div>
+  <div id="listTab" style="display:none;">
+    <!-- 다중 선택 삭제 바 -->
+    <div id="multiDeleteBar" style="display:none;background:var(--card);border-radius:12px;padding:10px 14px;margin-bottom:10px;box-shadow:var(--shadow);display:none;align-items:center;justify-content:space-between;">
+      <span id="multiDeleteCount" style="font-size:13px;font-weight:700;">0개 선택됨</span>
+      <div style="display:flex;gap:8px;">
+        <button onclick="cancelMultiSelect()" style="background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;">취소</button>
+        <button onclick="deleteSelected()" style="background:#ef4444;color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;">🗑️ 삭제</button>
+      </div>
+    </div>
+    <div id="schedList"></div>
+  </div>
 
   <!-- 검색 -->
   <div id="searchTab" style="display:none;">
@@ -651,6 +661,8 @@ let pasteTargetDate=null,multiPasteMode=false,multiPasteDates=new Set();
 const holidayCache={};
 let aiChatHistory=[];
 let recognition=null,isListening=false;
+// 다중 선택 삭제
+let multiSelectMode=false, selectedIds=new Set();
 
 // 뒤로가기
 window.addEventListener('popstate',()=>{if(confirm('앱을 종료하시겠습니까?')){window.close();}else{history.pushState(null,'',location.href);}});
@@ -888,12 +900,79 @@ function renderList(){
   const groups={};evs.forEach(ev=>{if(!groups[ev.date])groups[ev.date]=[];groups[ev.date].push(ev);});
   const today=new Date().toISOString().slice(0,10);
   const el=document.getElementById('schedList');
-  if(!evs.length){el.innerHTML='<div class="empty-msg">📭 일정이 없어요</div>';return;}
-  el.innerHTML=Object.entries(groups).map(([date,evs])=>{
+  if(!evs.length){el.innerHTML='<div class="empty-msg">📭 일정이 없어요<br><small style="font-size:11px;color:var(--muted)">길게 눌러서 다중 선택 삭제 가능</small></div>';return;}
+
+  // 다중선택 힌트
+  const hint=multiSelectMode?'':`<div style="font-size:11px;color:var(--muted);text-align:center;padding:6px 0 8px;cursor:pointer" onclick="enterMultiSelect()">☑️ 길게 눌러서 여러 개 선택 삭제</div>`;
+
+  el.innerHTML=hint+Object.entries(groups).map(([date,evs])=>{
     const d=new Date(date+'T00:00:00');
     const dow=['일','월','화','수','목','금','토'][d.getDay()];
-    return `<div class="date-lbl">${d.getMonth()+1}월 ${d.getDate()}일 (${dow})${date===today?' ☀️':''}</div>${evs.map(ev=>evCardHtml(ev,false,false)).join('')}`;
+    return `<div class="date-lbl">${d.getMonth()+1}월 ${d.getDate()}일 (${dow})${date===today?' ☀️':''}</div>${evs.map(ev=>{
+      const id=ev._v?ev._oid:ev.id;
+      const isSelected=selectedIds.has(id);
+      const who=Array.isArray(ev.who)?ev.who:[ev.who];
+      const color=CC[who[0]]||'#888';
+      const selectStyle=isSelected?'outline:2px solid #ef4444;background:#fff5f5;':'';
+      return `<div class="ev-card" style="border-left-color:${color};${selectStyle}" data-id="${id}" data-date="${ev.date}"
+        onclick="${multiSelectMode?`toggleSelect('${id}')`:`openDetail('${id}','${ev.date}')`}">
+        ${multiSelectMode?`<div style="width:20px;height:20px;border-radius:50%;border:2px solid ${isSelected?'#ef4444':'#ccc'};background:${isSelected?'#ef4444':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;color:#fff">${isSelected?'✓':''}</div>`:`<div class="ev-dot" style="background:${color}"></div>`}
+        <div class="ev-info">
+          <div class="ev-title">${ev.title}</div>
+          <div class="ev-meta">
+            ${ev.time?`<span class="ev-time">⏰ ${ev.time}</span>`:''}
+            ${who.map(w=>`<span class="who-tag" style="background:${CL[w]||'#eee'};color:${CC[w]||'#333'}">${w.slice(1)}</span>`).join('')}
+          </div>
+          ${ev.body?`<div class="ev-body">📝 ${ev.body}</div>`:''}
+        </div>
+      </div>`;
+    }).join('')}`;
   }).join('');
+
+  // 다중선택 모드면 길게누르기로 선택
+  if(!multiSelectMode) bindListLongPress();
+}
+
+window.enterMultiSelect=function(){
+  multiSelectMode=true;selectedIds=new Set();
+  document.getElementById('multiDeleteBar').style.display='flex';
+  document.getElementById('multiDeleteCount').textContent='0개 선택됨';
+  renderList();
+  showToast('☑️ 삭제할 일정을 탭해서 선택하세요');
+}
+window.toggleSelect=function(id){
+  if(selectedIds.has(id)) selectedIds.delete(id);
+  else selectedIds.add(id);
+  document.getElementById('multiDeleteCount').textContent=`${selectedIds.size}개 선택됨`;
+  renderList();
+}
+window.cancelMultiSelect=function(){
+  multiSelectMode=false;selectedIds=new Set();
+  document.getElementById('multiDeleteBar').style.display='none';
+  renderList();
+}
+window.deleteSelected=async function(){
+  if(selectedIds.size===0){showToast('선택된 일정이 없어요');return;}
+  if(!confirm(`${selectedIds.size}개 일정을 삭제할까요?`)) return;
+  try{
+    await Promise.all([...selectedIds].map(id=>deleteDoc(doc(db,"events",id))));
+    showToast(`🗑️ ${selectedIds.size}개 삭제됐어요!`);
+    cancelMultiSelect();
+  }catch(e){showToast('⚠️ 삭제 실패');}
+}
+function bindListLongPress(){
+  document.querySelectorAll('#schedList .ev-card').forEach(card=>{
+    card.addEventListener('touchstart',e=>{
+      const id=card.dataset.id;if(!id) return;
+      longPressTimer=setTimeout(()=>{
+        navigator.vibrate&&navigator.vibrate(60);
+        enterMultiSelect();
+        toggleSelect(id);
+      },600);
+    },{passive:true});
+    card.addEventListener('touchend',()=>clearTimeout(longPressTimer),{passive:true});
+    card.addEventListener('touchmove',()=>clearTimeout(longPressTimer),{passive:true});
+  });
 }
 
 window.doSearch=function(){
@@ -924,6 +1003,57 @@ window.setFilter=function(f,btn){
 window.changeMonth=function(d){curMonth.setMonth(curMonth.getMonth()+d);preloadHolidaysBg(curMonth.getFullYear());renderCal();}
 
 // ── AI 채팅 ──
+
+// TTS 음성 읽기
+function speakText(text){
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const clean=text.replace(/[*_#`~\[\]]/g,'').replace(/\n+/g,' ').slice(0,300);
+  const utt=new SpeechSynthesisUtterance(clean);
+  utt.lang='ko-KR';utt.rate=1.05;
+  window.speechSynthesis.speak(utt);
+}
+
+// 일정 명령 처리 (AI가 [CMD:{...}] 형태로 반환)
+async function processAICommand(reply){
+  const cmdMatch=reply.match(/\[CMD:([\s\S]*?)\]/);
+  if(!cmdMatch) return reply;
+  try{
+    const cmd=JSON.parse(cmdMatch[1]);
+    if(cmd.action==='add'){
+      await addDoc(collection(db,"events"),{
+        title:cmd.title||'',date:cmd.date||new Date().toISOString().slice(0,10),
+        time:cmd.time||'',body:cmd.body||'',who:cmd.who||['유영대'],repeat:'none'
+      });
+      return reply.replace(/\[CMD:[\s\S]*?\]/,'')+'\n✅ 일정이 추가됐어요!';
+    } else if(cmd.action==='delete'&&cmd.id){
+      await deleteDoc(doc(db,"events",cmd.id));
+      return reply.replace(/\[CMD:[\s\S]*?\]/,'')+'\n🗑️ 일정이 삭제됐어요!';
+    } else if(cmd.action==='update'&&cmd.id){
+      const ev=events.find(e=>e.id===cmd.id);
+      if(ev){
+        await updateDoc(doc(db,"events",cmd.id),{
+          title:cmd.title||ev.title,date:cmd.date||ev.date,
+          time:cmd.time||ev.time||'',body:cmd.body||ev.body||'',who:cmd.who||ev.who
+        });
+        return reply.replace(/\[CMD:[\s\S]*?\]/,'')+'\n✅ 일정이 수정됐어요!';
+      }
+    }
+  }catch(e){console.warn('cmd err',e);}
+  return reply.replace(/\[CMD:[\s\S]*?\]/,'');
+}
+
+// ID 포함 일정 요약
+function getEventsSummaryWithIds(){
+  const allEvs=expand(events).sort((a,b)=>a.date.localeCompare(b.date));
+  if(!allEvs.length) return '등록된 일정 없음';
+  return allEvs.map(ev=>{
+    const who=Array.isArray(ev.who)?ev.who.join(','):ev.who;
+    const id=ev._v?ev._oid:ev.id;
+    return `[ID:${id}] [${ev.date}${ev.time?' '+ev.time:''}] ${ev.title} - ${who}${ev.body?' ('+ev.body+')':''}`;
+  }).join('\n');
+}
+
 function getEventsSummary(){
   const allEvs=expand(events).sort((a,b)=>a.date.localeCompare(b.date));
   if(!allEvs.length) return '현재 등록된 일정이 없습니다.';
@@ -948,21 +1078,23 @@ window.sendAI=async function(){
   showTyping();
 
   const today=new Date().toISOString().slice(0,10);
-  const systemContext=`너는 가족 일정 도우미야. 한국어로 친근하고 자연스럽게 대화해. 절대 "유씨 가족"이라고 부르지 마.
+  const systemContext=`너는 가족 일정 도우미야. 한국어로 친근하고 자연스럽게 대화해. "유씨 가족" 이라고 부르지 마.
 
 오늘: ${today}
 가족: 영대(아빠), 현희(엄마), 제하(장남), 가율(딸), 가은(막내)
 사는 곳: 경기도 화성시
 
-등록된 일정:
-${getEventsSummary()}
+등록된 전체 일정:
+${getEventsSummaryWithIds()}
 
-규칙:
-- 일정 질문 → 위 데이터 참고해서 정확히 답변
-- 이동시간/교통/날씨 등 일반 질문 → 아는 대로 구체적으로 답변
-- 답변은 짧고 명확하게, 이모지 적당히
-- "안녕하세요" 같은 인사 반복하지 말고 바로 답변
-- 질문에 대한 답을 끝까지 완성해서 말해줘`;
+중요 규칙:
+- 일정 조회 → 위 데이터 전체를 빠짐없이 나열
+- 일정 추가 요청시 → 답변 끝에 반드시 [CMD:{"action":"add","title":"제목","date":"YYYY-MM-DD","time":"HH:MM또는빈문자열","who":["유영대"],"body":"내용"}]
+- 일정 삭제 요청시 → 답변 끝에 [CMD:{"action":"delete","id":"해당ID"}]
+- 일정 수정 요청시 → 답변 끝에 [CMD:{"action":"update","id":"해당ID","title":"새제목","date":"새날짜","time":"새시간"}]
+- 이름 변환: 영대→유영대, 현희→이현희, 제하→유제하, 가율→유가율, 가은→유가은
+- 인사말 반복 금지, 바로 답변
+- 이동시간/교통 등 일반 질문도 구체적으로 답변`;
 
   // Gemini 멀티턴: contents 배열 구성
   // 첫 메시지에 시스템 컨텍스트 포함
@@ -991,14 +1123,17 @@ ${getEventsSummary()}
       body:JSON.stringify({contents,generationConfig:{temperature:0.7,maxOutputTokens:1200}})
     });
     const data=await res.json();
-    if(data.error) throw new Error(data.error.message);
-    const reply=data.candidates?.[0]?.content?.parts?.[0]?.text||'답변을 생성하지 못했어요.';
+    if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
+    let reply=data.candidates?.[0]?.content?.parts?.[0]?.text||'답변을 생성하지 못했어요.';
     hideTyping();
+    // 일정 명령 처리
+    reply=await processAICommand(reply);
     addChatMsg('bot',reply);
+    // TTS 읽기
+    speakText(reply);
     // 히스토리 저장
     aiChatHistory.push({role:'user',content:text});
     aiChatHistory.push({role:'assistant',content:reply});
-    // 히스토리 최대 20개 유지
     if(aiChatHistory.length>20) aiChatHistory=aiChatHistory.slice(-20);
   }catch(e){
     hideTyping();
