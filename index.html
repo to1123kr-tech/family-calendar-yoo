@@ -284,7 +284,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v4.8</span>
+    <span class="app-version">v4.9</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치</button>
@@ -1113,40 +1113,23 @@ window.sendAI=async function(isVoice=false){
 ${getEventsSummaryWithIds()}
 
 중요 규칙:
-- 일정 조회 → 위 데이터 전체를 빠짐없이 나열
-- 일정 추가 요청시 → 답변 끝에 반드시 [CMD:{"action":"add","title":"제목","date":"YYYY-MM-DD","time":"HH:MM또는빈문자열","who":["유영대"],"body":"내용"}]
+- 일정 조회 → 해당 기간 일정을 날짜순으로 빠짐없이 전부 나열 (절대 생략 금지)
+- "이번 달" → 이번 달 전체 일정 모두 나열
+- 일정 추가 요청시 → 답변 끝에 [CMD:{"action":"add","title":"제목","date":"YYYY-MM-DD","time":"HH:MM또는빈문자열","who":["유영대"],"body":"내용"}]
 - 일정 삭제 요청시 → 답변 끝에 [CMD:{"action":"delete","id":"해당ID"}]
 - 일정 수정 요청시 → 답변 끝에 [CMD:{"action":"update","id":"해당ID","title":"새제목","date":"새날짜","time":"새시간"}]
 - 이름 변환: 영대→유영대, 현희→이현희, 제하→유제하, 가율→유가율, 가은→유가은
 - 인사말 반복 금지, 바로 답변
-- 날씨/이동시간/교통/맛집/일반상식 등 모든 질문에 최대한 구체적으로 답변
-- 절대 "알려드리지 못해요" 같은 거절 금지, 뭐든 도움이 되게 답변`;
+- 날씨/이동시간/교통/맛집/일반상식 등 모든 질문 답변
+- 절대 거절 금지`;
 
-  // Gemini 멀티턴: contents 배열 구성
-  // 첫 메시지에 시스템 컨텍스트 포함
-  const contents=[];
-
-  if(aiChatHistory.length===0){
-    // 첫 대화: 시스템 컨텍스트 + 질문
-    contents.push({role:'user',parts:[{text:systemContext+'\n\n질문: '+text}]});
-  } else {
-    // 이어지는 대화: 히스토리 포함
-    // 첫 번째는 항상 시스템컨텍스트+첫질문
-    contents.push({role:'user',parts:[{text:systemContext+'\n\n질문: '+aiChatHistory[0].content}]});
-    if(aiChatHistory.length>1) contents.push({role:'model',parts:[{text:aiChatHistory[1].content}]});
-    // 이후 대화 쌍 추가 (최근 6개만)
-    const recent=aiChatHistory.slice(2);
-    for(let i=0;i<recent.length;i++){
-      const m=recent[i];
-      contents.push({role:m.role==='user'?'user':'model',parts:[{text:m.content}]});
-    }
-    contents.push({role:'user',parts:[{text}]});
-  }
+  // 매번 시스템 컨텍스트 + 현재 질문만 전송 (히스토리 혼동 방지)
+  const contents=[{role:'user',parts:[{text:systemContext+'\n\n질문: '+text}]}];
 
   try{
     const res=await fetch(`${AI_PROXY}/api/ai-chat`,{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({contents,generationConfig:{temperature:0.7,maxOutputTokens:1200}})
+      body:JSON.stringify({contents,generationConfig:{temperature:0.7,maxOutputTokens:2000}})
     });
     const data=await res.json();
     if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
