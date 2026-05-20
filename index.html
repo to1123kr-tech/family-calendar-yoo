@@ -284,7 +284,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v4.9</span>
+    <span class="app-version">v5.0</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치</button>
@@ -1282,6 +1282,13 @@ window.openGemini=function(){
   document.getElementById('geminiStatus').style.display='block';
   document.getElementById('geminiFields').style.display='none';
   document.getElementById('btnGeminiSave').style.display='none';
+  // 이전 입력값 초기화
+  document.getElementById('g_title').value='';
+  document.getElementById('g_date').value='';
+  document.getElementById('g_time').value='';
+  document.getElementById('g_body').value='';
+  document.getElementById('camInput').value='';
+  document.getElementById('gallInput').value='';
   document.querySelectorAll('#gWhoSel .who-btn').forEach(b=>b.classList.remove('on'));
   gSelWho=[];openModal('geminiModal');
 }
@@ -1330,12 +1337,22 @@ async function analyzeWithGemini(base64){
     const data=await res.json();
     console.log('ai-photo 응답:', JSON.stringify(data).slice(0,300));
     if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
-    const text=data.candidates?.[0]?.content?.parts?.[0]?.text||'';
-    // 코드블록 제거 후 JSON 추출
-    const clean=text.replace(/```json\n?/g,'').replace(/```\n?/g,'').trim();
-    const match=clean.match(/\{[\s\S]*\}/);
-    if(!match) throw new Error('JSON 없음: '+text.slice(0,50));
-    const parsed=JSON.parse(match[0]);
+    let text=data.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    // 코드블록 제거
+    text=text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
+    // JSON 추출
+    const match=text.match(/\{[\s\S]*?\}/);
+    if(!match) throw new Error('JSON 없음');
+    // 제어문자 제거 후 파싱 시도
+    const cleanJson=match[0].replace(/[\x00-\x1F\x7F]/g,' ').replace(/\s+/g,' ');
+    let parsed;
+    try{
+      parsed=JSON.parse(cleanJson);
+    }catch(e2){
+      // 파싱 실패시 정규식으로 각 필드 추출
+      const getField=(key)=>{const m=text.match(new RegExp('"'+key+'"\\s*:\\s*"([^"]*)"'));return m?m[1]:'';};
+      parsed={title:getField('title'),date:getField('date'),time:getField('time'),body:getField('body')};
+    }
     document.getElementById('geminiStatus').style.display='none';
     document.getElementById('geminiFields').style.display='block';
     document.getElementById('g_title').value=parsed.title||'';
@@ -1349,8 +1366,7 @@ async function analyzeWithGemini(base64){
       showToast('✅ AI가 읽었어요! 확인 후 등록하세요');
     }
   }catch(e){
-    const errMsg=e.message||'알 수 없는 오류';
-    document.getElementById('geminiStatus').textContent=`⚠️ 인식 실패: ${errMsg}`;
+    document.getElementById('geminiStatus').textContent=`⚠️ 인식 실패: ${e.message}`;
     document.getElementById('geminiFields').style.display='block';
     document.getElementById('g_date').value=getTodayKST();
     document.getElementById('btnGeminiSave').style.display='block';
