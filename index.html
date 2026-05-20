@@ -284,7 +284,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v4.5</span>
+    <span class="app-version">v4.6</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치</button>
@@ -698,6 +698,12 @@ function preloadHolidaysBg(year){
 }
 preloadHolidaysBg(new Date().getFullYear());
 
+// 한국 시간(KST) 기준 오늘 날짜
+function getTodayKST(){
+  const kst=new Date(Date.now()+9*60*60*1000);
+  return kst.toISOString().slice(0,10);
+}
+
 // Firebase
 const q=query(collection(db,"events"),orderBy("date","asc"));
 onSnapshot(q,snap=>{
@@ -732,7 +738,7 @@ function renderAll(){renderToday();renderCal();renderList();doSearch();}
 
 // 오늘
 function renderToday(){
-  const ts=new Date().toISOString().slice(0,10);
+  const ts=getTodayKST();
   const d=new Date();
   document.getElementById('todayBadge').textContent=`${d.getMonth()+1}월 ${d.getDate()}일`;
   const evs=applyFilter(expand(events)).filter(ev=>ev.date===ts).sort((a,b)=>(a.time||'').localeCompare(b.time||''));
@@ -765,7 +771,7 @@ function evCardHtml(ev,showDate=false,canCopy=false){
 function renderCal(){
   const yr=curMonth.getFullYear(),mo=curMonth.getMonth();
   document.getElementById('monthLbl').textContent=`${yr}년 ${mo+1}월`;
-  const today=new Date().toISOString().slice(0,10);
+  const today=getTodayKST();
   const expanded=applyFilter(expand(events));
   const holidays=holidayCache[yr]||{};
   const firstDow=new Date(yr,mo,1).getDay();
@@ -897,7 +903,7 @@ window.openDayModal=function(ds){
 function renderList(){
   const evs=applyFilter(expand(events)).sort((a,b)=>{if(a.date!==b.date) return b.date.localeCompare(a.date);return (b.time||'').localeCompare(a.time||'');});
   const groups={};evs.forEach(ev=>{if(!groups[ev.date])groups[ev.date]=[];groups[ev.date].push(ev);});
-  const today=new Date().toISOString().slice(0,10);
+  const today=getTodayKST();
   const el=document.getElementById('schedList');
   if(!evs.length){el.innerHTML='<div class="empty-msg">📭 일정이 없어요<br><small style="font-size:11px;color:var(--muted)">길게 눌러서 다중 선택 삭제 가능</small></div>';return;}
 
@@ -1037,7 +1043,7 @@ async function processAICommand(reply){
     const cmd=JSON.parse(cmdMatch[1]);
     if(cmd.action==='add'){
       await addDoc(collection(db,"events"),{
-        title:cmd.title||'',date:cmd.date||new Date().toISOString().slice(0,10),
+        title:cmd.title||'',date:cmd.date||getTodayKST(),
         time:cmd.time||'',body:cmd.body||'',who:cmd.who||['유영대'],repeat:'none'
       });
       return reply.replace(/\[CMD:[\s\S]*?\]/,'')+'\n✅ 일정이 추가됐어요!';
@@ -1076,7 +1082,7 @@ function getEventsSummaryWithIds(){
 function getEventsSummary(){
   const allEvs=expand(events).sort((a,b)=>a.date.localeCompare(b.date));
   if(!allEvs.length) return '현재 등록된 일정이 없습니다.';
-  const today=new Date().toISOString().slice(0,10);
+  const today=getTodayKST();
   return allEvs.map(ev=>{
     const who=Array.isArray(ev.who)?ev.who.join(', '):ev.who;
     return `[${ev.date}${ev.time?' '+ev.time:''}] ${ev.title} - ${who}${ev.body?' ('+ev.body+')':''}`;
@@ -1096,7 +1102,7 @@ window.sendAI=async function(isVoice=false){
   addChatMsg('user',text);
   showTyping();
 
-  const today=new Date().toISOString().slice(0,10);
+  const today=getTodayKST();
   const systemContext=`너는 가족 일정 도우미야. 한국어로 친근하고 자연스럽게 대화해. "유씨 가족" 이라고 부르지 마.
 
 오늘: ${today}
@@ -1305,7 +1311,22 @@ window.handleImg=function(input){
     inner.style.transform='scale(1)';imgScale=1;imgOffX=0;imgOffY=0;
     document.getElementById('geminiStatus').innerHTML='<div class="spinner" style="margin:0 auto 6px"></div>AI가 읽는 중...';
     document.getElementById('geminiStatus').style.display='block';
-    analyzeWithGemini(e.target.result);
+    // 이미지 압축 후 전송
+    const img=new Image();
+    img.onload=()=>{
+      const canvas=document.createElement('canvas');
+      const maxSize=1024;
+      let w=img.width,h=img.height;
+      if(w>maxSize||h>maxSize){
+        if(w>h){h=Math.round(h*maxSize/w);w=maxSize;}
+        else{w=Math.round(w*maxSize/h);h=maxSize;}
+      }
+      canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      const compressed=canvas.toDataURL('image/jpeg',0.8);
+      analyzeWithGemini(compressed);
+    };
+    img.src=e.target.result;
   };
   reader.readAsDataURL(file);
 }
@@ -1328,7 +1349,7 @@ JSON만 출력하세요 (다른 텍스트 금지):
     document.getElementById('geminiStatus').style.display='none';
     document.getElementById('geminiFields').style.display='block';
     document.getElementById('g_title').value=parsed.title||'';
-    document.getElementById('g_date').value=parsed.date||new Date().toISOString().slice(0,10);
+    document.getElementById('g_date').value=parsed.date||getTodayKST();
     document.getElementById('g_time').value=parsed.time||'';
     document.getElementById('g_body').value=parsed.body||'';
     document.getElementById('btnGeminiSave').style.display='block';
@@ -1336,7 +1357,7 @@ JSON만 출력하세요 (다른 텍스트 금지):
   }catch(e){
     document.getElementById('geminiStatus').textContent='⚠️ 인식 실패. 직접 입력해주세요.';
     document.getElementById('geminiFields').style.display='block';
-    document.getElementById('g_date').value=new Date().toISOString().slice(0,10);
+    document.getElementById('g_date').value=getTodayKST();
     document.getElementById('btnGeminiSave').style.display='block';
   }
 }
@@ -1357,7 +1378,7 @@ window.saveGeminiEvent=async function(){
 window.openAdd=function(dateStr,eid){
   editId=eid||null;selWho=[];
   document.getElementById('f_title').value='';
-  document.getElementById('f_date').value=dateStr||new Date().toISOString().slice(0,10);
+  document.getElementById('f_date').value=dateStr||getTodayKST();
   document.getElementById('f_time').value='';document.getElementById('f_body').value='';
   document.querySelectorAll('.who-btn').forEach(b=>b.classList.remove('on'));
   document.getElementById('btnDel').style.display='none';document.getElementById('editModalTxt').textContent='일정 추가';
