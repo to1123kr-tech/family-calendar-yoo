@@ -284,7 +284,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v4.4</span>
+    <span class="app-version">v4.5</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치</button>
@@ -1058,14 +1058,18 @@ async function processAICommand(reply){
   return reply.replace(/\[CMD:[\s\S]*?\]/,'');
 }
 
-// ID 포함 일정 요약
+// ID 포함 일정 요약 - 앞뒤 2개월만, 간결하게
 function getEventsSummaryWithIds(){
-  const allEvs=expand(events).sort((a,b)=>a.date.localeCompare(b.date));
+  const now=new Date();
+  const s=new Date(now.getFullYear(),now.getMonth()-1,1);
+  const e=new Date(now.getFullYear(),now.getMonth()+3,0);
+  const allEvs=events
+    .filter(ev=>ev.date>=s.toISOString().slice(0,10)&&ev.date<=e.toISOString().slice(0,10))
+    .sort((a,b)=>a.date.localeCompare(b.date));
   if(!allEvs.length) return '등록된 일정 없음';
   return allEvs.map(ev=>{
-    const who=Array.isArray(ev.who)?ev.who.join(','):ev.who;
-    const id=ev._v?ev._oid:ev.id;
-    return `[ID:${id}] [${ev.date}${ev.time?' '+ev.time:''}] ${ev.title} - ${who}${ev.body?' ('+ev.body+')':''}`;
+    const who=Array.isArray(ev.who)?ev.who.map(w=>w.slice(1)).join(','):ev.who.slice(1);
+    return `[${ev.date}${ev.time?' '+ev.time:''}] ${ev.title}(${who})${ev.body?' -'+ev.body:''}`;
   }).join('\n');
 }
 
