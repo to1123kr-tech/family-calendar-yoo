@@ -251,11 +251,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v5.2</span>
+    <span class="app-version">v5.3</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치</button>
-      <button class="hdr-btn btn-cam" onclick="openGemini()">📸</button>
       <button class="hdr-btn btn-add-main" onclick="openAdd()">＋ 추가</button>
     </div>
   </div>
@@ -743,35 +742,89 @@ window.openDayModal=function(ds){
 
 // 목록
 function renderList(){
-  const evs=applyFilter(expand(events)).sort((a,b)=>{if(a.date!==b.date) return b.date.localeCompare(a.date);return (b.time||'').localeCompare(a.time||'');});
-  const groups={};evs.forEach(ev=>{if(!groups[ev.date])groups[ev.date]=[];groups[ev.date].push(ev);});
   const today=getTodayKST();
+  const allEvs=applyFilter(expand(events));
+
+  // 다가오는 일정 (오늘 포함, 날짜 오름차순)
+  const upcoming=allEvs.filter(ev=>ev.date>=today).sort((a,b)=>{
+    if(a.date!==b.date) return a.date.localeCompare(b.date);
+    return (a.time||'').localeCompare(b.time||'');
+  });
+
+  // 지난 일정 (오늘 이전, 최신순)
+  const past=allEvs.filter(ev=>ev.date<today).sort((a,b)=>{
+    if(a.date!==b.date) return b.date.localeCompare(a.date);
+    return (b.time||'').localeCompare(a.time||'');
+  });
+
   const el=document.getElementById('schedList');
-  if(!evs.length){el.innerHTML='<div class="empty-msg">📭 일정이 없어요<br><small style="font-size:11px;color:var(--muted)">길게 눌러서 다중 선택 삭제 가능</small></div>';return;}
+  if(!allEvs.length){el.innerHTML='<div class="empty-msg">📭 일정이 없어요</div>';return;}
+
   const hint=multiSelectMode?'':`<div style="font-size:11px;color:var(--muted);text-align:center;padding:6px 0 8px;cursor:pointer" onclick="enterMultiSelect()">☑️ 길게 눌러서 여러 개 선택 삭제</div>`;
-  el.innerHTML=hint+Object.entries(groups).map(([date,evs])=>{
-    const d=new Date(date+'T00:00:00');
-    const dow=['일','월','화','수','목','금','토'][d.getDay()];
-    return `<div class="date-lbl">${d.getMonth()+1}월 ${d.getDate()}일 (${dow})${date===today?' ☀️':''}</div>`+evs.map(ev=>{
-      const id=ev._v?ev._oid:ev.id;
-      const isSelected=selectedIds.has(id);
-      const who=Array.isArray(ev.who)?ev.who:[ev.who];
-      const color=CC[who[0]]||'#888';
-      const selectStyle=isSelected?'outline:2px solid #ef4444;background:#fff5f5;':'';
-      const photoHtml=ev.photoUrl?`<img class="ev-photo" src="${ev.photoUrl}" onclick="event.stopPropagation();openPhotoViewer('${ev.photoUrl}','${id}')" loading="lazy">`:'';
-      return `<div class="ev-card" style="border-left-color:${color};${selectStyle}" data-id="${id}"
-        onclick="${multiSelectMode?`toggleSelect('${id}')`:`openDetail('${id}','${ev.date}')`}">
-        ${multiSelectMode?`<div style="width:20px;height:20px;border-radius:50%;border:2px solid ${isSelected?'#ef4444':'#ccc'};background:${isSelected?'#ef4444':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;color:#fff">${isSelected?'✓':''}</div>`:`<div class="ev-dot" style="background:${color}"></div>`}
-        <div class="ev-info">
-          <div class="ev-title">${ev.title}</div>
-          <div class="ev-meta">${ev.time?`<span class="ev-time">⏰ ${ev.time}</span>`:''}${who.map(w=>`<span class="who-tag" style="background:${CL[w]||'#eee'};color:${CC[w]||'#333'}">${w.slice(1)}</span>`).join('')}</div>
-          ${ev.body?`<div class="ev-body">📝 ${ev.body}</div>`:''}
-        </div>
-        ${photoHtml}
+
+  // 다가오는 일정 렌더
+  let html=hint;
+
+  if(upcoming.length){
+    html+=`<div style="font-size:12px;font-weight:800;color:var(--c영대);margin:8px 0 6px 2px;">📅 다가오는 일정</div>`;
+    const upGroups={};
+    upcoming.forEach(ev=>{if(!upGroups[ev.date])upGroups[ev.date]=[];upGroups[ev.date].push(ev);});
+    html+=Object.entries(upGroups).map(([date,evs])=>{
+      const d=new Date(date+'T00:00:00');
+      const dow=['일','월','화','수','목','금','토'][d.getDay()];
+      const isToday=date===today;
+      return `<div class="date-lbl">${d.getMonth()+1}월 ${d.getDate()}일 (${dow})${isToday?' ☀️':''}</div>`+evs.map(ev=>makeListCard(ev)).join('');
+    }).join('');
+  }
+
+  // 지난 일정 - 월별 그룹
+  if(past.length){
+    html+=`<div style="font-size:12px;font-weight:800;color:var(--muted);margin:16px 0 6px 2px;border-top:1px solid var(--border);padding-top:12px;">📂 지난 일정</div>`;
+    const monthGroups={};
+    past.forEach(ev=>{
+      const key=ev.date.slice(0,7); // YYYY-MM
+      if(!monthGroups[key]) monthGroups[key]=[];
+      monthGroups[key].push(ev);
+    });
+    // 월 그룹 - 최신월 먼저
+    html+=Object.entries(monthGroups).sort((a,b)=>b[0].localeCompare(a[0])).map(([ym,evs])=>{
+      const [y,m]=ym.split('-');
+      const isExpanded=true; // 항상 펼침
+      const dayGroups={};
+      evs.forEach(ev=>{if(!dayGroups[ev.date])dayGroups[ev.date]=[];dayGroups[ev.date].push(ev);});
+      const daysHtml=Object.entries(dayGroups).sort((a,b)=>b[0].localeCompare(a[0])).map(([date,evs])=>{
+        const d=new Date(date+'T00:00:00');
+        const dow=['일','월','화','수','목','금','토'][d.getDay()];
+        return `<div class="date-lbl" style="color:#bbb">${d.getDate()}일 (${dow})</div>`+evs.map(ev=>makeListCard(ev,'opacity:0.65')).join('');
+      }).join('');
+      return `<div style="background:var(--card);border-radius:10px;padding:10px 12px;margin-bottom:8px;box-shadow:var(--shadow);">
+        <div style="font-size:13px;font-weight:800;color:var(--muted);margin-bottom:8px;">📁 ${y}년 ${parseInt(m)}월 (${evs.length}개)</div>
+        ${daysHtml}
       </div>`;
     }).join('');
-  }).join('');
+  }
+
+  el.innerHTML=html;
   if(!multiSelectMode) bindListLongPress();
+}
+
+function makeListCard(ev,extraStyle=''){
+  const id=ev._v?ev._oid:ev.id;
+  const isSelected=selectedIds.has(id);
+  const who=Array.isArray(ev.who)?ev.who:[ev.who];
+  const color=CC[who[0]]||'#888';
+  const selectStyle=isSelected?'outline:2px solid #ef4444;background:#fff5f5;':'';
+  const photoHtml=ev.photoUrl?`<img class="ev-photo" src="${ev.photoUrl}" onclick="event.stopPropagation();openPhotoViewer('${ev.photoUrl}','${id}')" loading="lazy">`:'';
+  return `<div class="ev-card" style="border-left-color:${color};${selectStyle};${extraStyle}" data-id="${id}"
+    onclick="${multiSelectMode?`toggleSelect('${id}')`:`openDetail('${id}','${ev.date}')`}">
+    ${multiSelectMode?`<div style="width:20px;height:20px;border-radius:50%;border:2px solid ${isSelected?'#ef4444':'#ccc'};background:${isSelected?'#ef4444':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;color:#fff">${isSelected?'✓':''}</div>`:`<div class="ev-dot" style="background:${color}"></div>`}
+    <div class="ev-info">
+      <div class="ev-title">${ev.title}</div>
+      <div class="ev-meta">${ev.time?`<span class="ev-time">⏰ ${ev.time}</span>`:''}${who.map(w=>`<span class="who-tag" style="background:${CL[w]||'#eee'};color:${CC[w]||'#333'}">${w.slice(1)}</span>`).join('')}</div>
+      ${ev.body?`<div class="ev-body">📝 ${ev.body}</div>`:''}
+    </div>
+    ${photoHtml}
+  </div>`;
 }
 
 window.enterMultiSelect=function(){multiSelectMode=true;selectedIds=new Set();document.getElementById('multiDeleteBar').style.display='flex';document.getElementById('multiDeleteCount').textContent='0개 선택됨';renderList();showToast('☑️ 삭제할 일정을 탭해서 선택하세요');}
