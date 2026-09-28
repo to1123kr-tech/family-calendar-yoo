@@ -231,7 +231,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v5.4</span>
+    <span class="app-version">v5.5</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치</button>
@@ -1117,6 +1117,72 @@ window.openModal=function(id){document.getElementById(id).classList.add('open');
 window.closeModal=function(id){document.getElementById(id).classList.remove('open');}
 window.bgClose=function(e,id){if(e.target===document.getElementById(id))closeModal(id);}
 window.showToast=function(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+
+// ── 서비스 워커: 항상 최신 버전 불러오기 ──
+if('serviceWorker' in navigator){
+  // 이미 워커가 일하고 있었는지 기억해둔다 (첫 설치 때는 새로고침하지 않기 위해)
+  const hadController=!!navigator.serviceWorker.controller;
+  let reloaded=false;
+
+  // 새 워커가 일을 넘겨받으면 = 새 버전이 준비됨 → 한 번만 새로고침
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+    if(!hadController||reloaded) return;
+    reloaded=true;
+    showToast('🆕 새 버전으로 바꾸는 중...');
+    setTimeout(()=>location.reload(),600);
+  });
+
+  window.addEventListener('load',()=>{
+    // updateViaCache:'none' — sw.js 자체는 절대 캐시에서 읽지 않는다.
+    // 이게 없으면 새 워커를 최대 10분 늦게 발견한다.
+    navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(reg=>{
+      // 앱을 다시 볼 때마다 새 버전이 있는지 확인
+      document.addEventListener('visibilitychange',()=>{
+        if(document.visibilityState==='visible') reg.update().catch(()=>{});
+      });
+      // 대기 중인 새 워커가 있으면 바로 교체 요청
+      if(reg.waiting) reg.waiting.postMessage('skipWaiting');
+      reg.addEventListener('updatefound',()=>{
+        const nw=reg.installing;
+        if(!nw) return;
+        nw.addEventListener('statechange',()=>{
+          if(nw.state==='installed'&&navigator.serviceWorker.controller) nw.postMessage('skipWaiting');
+        });
+      });
+    }).catch(()=>{ /* 등록 실패해도 앱은 그대로 동작한다 */ });
+  });
+}
+
+// ── 비상 탈출구 ──
+// 버전 숫자(v5.5)를 3초간 꾹 누르면 서비스 워커와 캐시를 전부 지우고 새로 받는다.
+// 업데이트가 꼬였을 때 앱을 지우고 재설치하지 않아도 되도록 넣어둔 장치.
+(function(){
+  const badge=document.querySelector('.app-version');
+  if(!badge) return;
+  let t=null;
+  const start=()=>{t=setTimeout(async()=>{
+    if(!confirm('앱 캐시를 전부 비우고 새로 받을까요?\n일정 데이터는 서버에 있으니 지워지지 않습니다.')) return;
+    try{
+      if('serviceWorker' in navigator){
+        const regs=await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map(r=>r.unregister()));
+      }
+      if(window.caches){
+        const keys=await caches.keys();
+        await Promise.all(keys.map(k=>caches.delete(k)));
+      }
+    }catch(e){}
+    location.replace(location.pathname+'?fresh='+Date.now());
+  },3000);};
+  const stop=()=>{if(t){clearTimeout(t);t=null;}};
+  badge.style.cursor='pointer';
+  badge.addEventListener('touchstart',start,{passive:true});
+  badge.addEventListener('touchend',stop,{passive:true});
+  badge.addEventListener('touchmove',stop,{passive:true});
+  badge.addEventListener('mousedown',start);
+  badge.addEventListener('mouseup',stop);
+  badge.addEventListener('mouseleave',stop);
+})();
 </script>
 </body>
 </html>
