@@ -19,7 +19,6 @@
   --c제하:#34d399;--l제하:#ecfdf5;
   --c가율:#fb923c;--l가율:#fff7ed;
   --c가은:#a78bfa;--l가은:#f5f3ff;
-  --ai:#6366f1;--lai:#eef2ff;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
@@ -30,13 +29,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .header-actions{display:flex;gap:5px;align-items:center;margin-left:auto;}
 .hdr-btn{height:30px;border:1.5px solid var(--border);border-radius:8px;padding:0 9px;font-size:11px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:3px;white-space:nowrap;flex-shrink:0;background:var(--bg);}
 .btn-loc{background:#ede9fe;color:#7c3aed;border-color:#ede9fe;}
-.btn-cam{background:#fff3e0;color:#e65100;border-color:#fff3e0;}
 .btn-add-main{background:var(--c영대);color:white;border-color:var(--c영대);}
 .btn-refresh{color:var(--muted);}
 .tab-nav{display:flex;background:var(--card);border-bottom:1px solid var(--border);}
 .tab-btn{flex:1;padding:10px 2px;border:none;background:transparent;font-family:inherit;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
 .tab-btn.on{color:var(--c영대);border-bottom-color:var(--c영대);}
-.tab-btn.ai-tab.on{color:var(--ai);border-bottom-color:var(--ai);}
 .family-filter-wrap{background:var(--card);padding:7px 12px 6px;border-bottom:1px solid var(--border);}
 .family-filter{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;}
 .family-filter::-webkit-scrollbar{display:none;}
@@ -128,36 +125,24 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .photo-viewer-img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:100%;max-height:100%;object-fit:contain;will-change:transform;}
 .photo-viewer-close{position:absolute;top:16px;right:16px;background:rgba(0,0,0,0.6);color:#fff;border:none;border-radius:50%;width:40px;height:40px;font-size:18px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;}
 .photo-viewer-del{position:absolute;bottom:40px;right:16px;background:#ef4444;color:#fff;border:none;border-radius:20px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;z-index:10;}
-/* AI 탭 */
-.ai-tab-wrap{display:flex;flex-direction:column;height:calc(100vh - 200px);}
-.ai-chat-header{background:linear-gradient(135deg,var(--ai),#8b5cf6);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;color:#fff;display:flex;align-items:center;gap:10px;}
-.ai-chat-header-icon{width:40px;height:40px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
-.ai-chat-header-text{flex:1;}
-.ai-chat-header-title{font-size:15px;font-weight:900;}
-.ai-chat-header-sub{font-size:11px;opacity:0.85;margin-top:2px;}
-.ai-messages{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-bottom:10px;min-height:0;}
-.ai-msg{display:flex;gap:8px;align-items:flex-end;}
-.ai-msg.user{flex-direction:row-reverse;}
-.ai-bubble{max-width:80%;padding:10px 13px;border-radius:18px;font-size:13px;line-height:1.6;word-break:break-word;}
-.ai-msg.bot .ai-bubble{background:var(--card);box-shadow:var(--shadow);border-bottom-left-radius:4px;}
-.ai-msg.user .ai-bubble{background:var(--ai);color:#fff;border-bottom-right-radius:4px;}
-.ai-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:var(--lai);}
-.ai-time{font-size:10px;color:var(--muted);margin-bottom:2px;}
-.ai-msg.user .ai-time{text-align:right;}
-.ai-typing{display:flex;gap:4px;padding:10px 13px;background:var(--card);border-radius:18px;border-bottom-left-radius:4px;box-shadow:var(--shadow);width:fit-content;}
-.ai-typing span{width:7px;height:7px;background:var(--muted);border-radius:50%;animation:bounce 1.2s infinite;}
-.ai-typing span:nth-child(2){animation-delay:0.2s;}
-.ai-typing span:nth-child(3){animation-delay:0.4s;}
-@keyframes bounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-6px);}}
-.ai-input-wrap{position:sticky;bottom:0;background:var(--bg);padding:8px 0 4px;display:flex;gap:8px;align-items:flex-end;}
-.ai-input{flex:1;border:1.5px solid var(--border);border-radius:22px;padding:10px 16px;font-size:13px;font-family:inherit;background:var(--card);outline:none;resize:none;max-height:100px;line-height:1.5;box-shadow:var(--shadow);}
-.ai-input:focus{border-color:var(--ai);}
-.ai-send-btn{width:40px;height:40px;border:none;border-radius:50%;background:var(--ai);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.ai-mic-btn{width:40px;height:40px;border:1.5px solid var(--border);border-radius:50%;background:var(--card);color:var(--muted);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;}
-.ai-mic-btn.listening{background:#ef4444;border-color:#ef4444;color:#fff;animation:pulse 1s infinite;}
-@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
-.ai-suggestions{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
-.ai-sug-btn{border:1.5px solid var(--border);border-radius:20px;padding:6px 12px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;background:var(--card);color:var(--text);white-space:nowrap;}
+.photo-viewer-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.55);color:#fff;border:none;border-radius:50%;width:42px;height:42px;font-size:18px;cursor:pointer;z-index:10;display:none;align-items:center;justify-content:center;}
+.photo-viewer-nav.show{display:flex;}
+.photo-viewer-prev{left:12px;}
+.photo-viewer-next{right:12px;}
+.photo-viewer-count{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.6);color:#fff;border-radius:14px;padding:5px 14px;font-size:12px;font-weight:700;z-index:10;display:none;}
+.photo-viewer-count.show{display:block;}
+/* 일정 카드 썸네일 (여러 장일 때 개수 표시) */
+.ev-photo-wrap{position:relative;flex-shrink:0;}
+.ev-photo-more{position:absolute;right:-3px;bottom:-3px;background:var(--c영대);color:#fff;border-radius:10px;padding:1px 6px;font-size:9.5px;font-weight:800;border:1.5px solid #fff;pointer-events:none;}
+/* 수정 모달 사진 목록 */
+.edit-photo-item{position:relative;width:80px;height:80px;flex-shrink:0;}
+.edit-photo-item img{width:100%;height:100%;border-radius:8px;object-fit:cover;border:2px solid var(--border);}
+.edit-photo-x{position:absolute;top:-6px;right:-6px;background:#ef4444;color:#fff;border:2px solid #fff;border-radius:50%;width:22px;height:22px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;font-family:inherit;line-height:1;}
+.edit-photo-new{position:absolute;bottom:3px;left:3px;background:var(--c제하);color:#fff;border-radius:6px;padding:1px 5px;font-size:9px;font-weight:800;pointer-events:none;}
+.photo-hint{font-size:10px;color:var(--muted);margin-top:6px;}
+/* 상세 모달 사진 여러 장 */
+.det-photos{display:flex;flex-direction:column;gap:6px;margin-top:4px;}
+.det-photos img{width:100%;border-radius:10px;cursor:pointer;display:block;}
 /* 모달 */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:400;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.25s;}
 .modal-overlay.open{opacity:1;pointer-events:all;}
@@ -207,14 +192,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .det-lbl{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.3px;margin-bottom:3px;}
 .det-val{font-size:13px;font-weight:500;}
 .btn-edit-det{background:var(--bg);color:var(--text);border:1.5px solid var(--border);border-radius:12px;padding:11px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:10px;}
-.img-preview-wrap{background:#111;border-radius:12px;overflow:hidden;height:240px;position:relative;touch-action:none;}
-.img-preview-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transform-origin:center center;will-change:transform;}
-.img-preview{max-width:100%;max-height:100%;object-fit:contain;display:block;pointer-events:none;}
-.img-placeholder{color:#666;font-size:13px;text-align:center;line-height:2;}
-.gemini-result-box{background:var(--bg);border-radius:12px;padding:12px;margin-top:10px;}
-.gemini-status{font-size:12px;color:var(--muted);text-align:center;padding:16px 0;}
-.btn-gemini-file{background:var(--card);border:1.5px dashed var(--border);border-radius:10px;padding:10px;font-size:12px;font-family:inherit;color:var(--muted);cursor:pointer;text-align:center;flex:1;}
-.btn-gemini-add{background:var(--c영대);color:#fff;border:none;border-radius:12px;padding:12px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;width:100%;margin-top:8px;}
 .loading-overlay{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:14px;}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--c영대);border-radius:50%;animation:spin 0.8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
@@ -245,13 +222,16 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   <div class="photo-viewer-wrap" id="photoViewerWrap">
     <img class="photo-viewer-img" id="photoViewerImg" src="">
   </div>
+  <button class="photo-viewer-nav photo-viewer-prev" id="photoViewerPrev" onclick="viewerStep(-1)">◀</button>
+  <button class="photo-viewer-nav photo-viewer-next" id="photoViewerNext" onclick="viewerStep(1)">▶</button>
+  <div class="photo-viewer-count" id="photoViewerCount"></div>
   <button class="photo-viewer-del" id="photoViewerDel" onclick="deleteEventPhoto()">🗑️ 사진 삭제</button>
 </div>
 
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v5.3</span>
+    <span class="app-version">v5.4</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치</button>
@@ -265,7 +245,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   <button class="tab-btn" onclick="switchTab('list',this)">📋 목록</button>
   <button class="tab-btn" onclick="switchTab('search',this)">🔍 검색</button>
   <button class="tab-btn" onclick="switchTab('photo',this)">📷 사진</button>
-  <button class="tab-btn ai-tab" onclick="switchTab('ai',this)">🤖 AI</button>
 </div>
 
 <div class="family-filter-wrap" id="filterWrap">
@@ -349,38 +328,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     <div class="empty-msg" id="photoEmpty" style="display:none;">📷 아직 사진이 없어요<br><small style="font-size:11px">일정에 사진을 추가해보세요</small></div>
   </div>
 
-  <!-- AI 탭 -->
-  <div id="aiTab" style="display:none;">
-    <div class="ai-tab-wrap">
-      <div class="ai-chat-header">
-        <div class="ai-chat-header-icon">🤖</div>
-        <div class="ai-chat-header-text">
-          <div class="ai-chat-header-title">가족 일정 AI 도우미</div>
-          <div class="ai-chat-header-sub">일정 검색, 질문 뭐든지 물어보세요</div>
-        </div>
-      </div>
-      <div class="ai-suggestions">
-        <button class="ai-sug-btn" onclick="askAI('오늘 가족 일정 알려줘')">📅 오늘 일정</button>
-        <button class="ai-sug-btn" onclick="askAI('이번 달 전체 일정 요약해줘')">📋 이번 달 요약</button>
-        <button class="ai-sug-btn" onclick="askAI('영대 다음 일정이 뭐야?')">👨 영대 일정</button>
-        <button class="ai-sug-btn" onclick="askAI('화성시에서 서울 강남까지 얼마나 걸려?')">🚗 이동시간</button>
-      </div>
-      <div class="ai-messages" id="aiMessages">
-        <div class="ai-msg bot">
-          <div class="ai-avatar">🤖</div>
-          <div>
-            <div class="ai-time">방금</div>
-            <div class="ai-bubble">안녕하세요! 👋 가족 일정 AI 도우미예요.<br><br>일정을 찾거나, 궁금한 것 물어보세요. 음성으로도 말할 수 있어요! 🎤</div>
-          </div>
-        </div>
-      </div>
-      <div class="ai-input-wrap">
-        <textarea class="ai-input" id="aiInput" placeholder="질문을 입력하거나 🎤 를 눌러 말하세요..." rows="1" onkeydown="aiInputKey(event)" oninput="autoResize(this)"></textarea>
-        <button class="ai-mic-btn" id="aiMicBtn" onclick="toggleVoice()" title="🎤 음성으로 질문 (답변도 읽어줘요)">🎤</button>
-        <button class="ai-send-btn" onclick="sendAI(false)">➤</button>
-      </div>
-    </div>
-  </div>
 </main>
 
 <!-- 복사 확인 -->
@@ -445,11 +392,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
     <div class="fg"><label class="fl">📌 제목 *</label><input type="text" class="fi" id="f_title" placeholder="일정 제목"></div>
     <div class="fg"><label class="fl">📝 내용</label><textarea class="ft" id="f_body" placeholder="내용을 자유롭게 적어주세요..."></textarea></div>
     <div class="fg">
-      <label class="fl">📷 사진 첨부</label>
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;" id="editPhotoPreview">
-        <div class="photo-add-btn" onclick="document.getElementById('editPhotoInput').click()">📷</div>
-      </div>
-      <input type="file" id="editPhotoInput" accept="image/*" style="display:none" onchange="handleEditPhoto(this)">
+      <label class="fl">📷 사진 첨부 (여러 장 가능)</label>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;" id="editPhotoPreview"></div>
+      <div class="photo-hint">한 일정에 최대 <span id="maxPhotoHint">5</span>장까지 넣을 수 있어요 · 사진첩에서 여러 장 한번에 선택 가능</div>
+      <input type="file" id="editPhotoInput" accept="image/*" multiple style="display:none" onchange="handleEditPhoto(this)">
     </div>
     <button class="btn-save" onclick="saveEvent()">💾 저장하기</button>
     <button class="btn-del" id="btnDel" style="display:none" onclick="deleteEvent()">🗑️ 삭제</button>
@@ -466,47 +412,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
   </div>
 </div>
 
-<!-- Gemini 사진 -->
-<div class="modal-overlay" id="geminiModal" onclick="bgClose(event,'geminiModal')">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title"><span>📸 사진으로 일정 추가</span><button class="modal-close" onclick="closeModal('geminiModal')">✕</button></div>
-    <div class="img-preview-wrap" id="imgPreviewWrap">
-      <div class="img-preview-inner" id="imgPreviewInner">
-        <div class="img-placeholder">📷<br>아래 버튼으로 사진을 선택하세요</div>
-      </div>
-    </div>
-    <div style="display:flex;gap:8px;margin-top:8px;">
-      <button class="btn-gemini-file" onclick="document.getElementById('camInput').click()">📷 카메라</button>
-      <button class="btn-gemini-file" onclick="document.getElementById('gallInput').click()">🖼️ 사진첩</button>
-    </div>
-    <input type="file" id="camInput" accept="image/*" capture="environment" style="display:none" onchange="handleImg(this)">
-    <input type="file" id="gallInput" accept="image/*" style="display:none" onchange="handleImg(this)">
-    <div class="gemini-result-box">
-      <div id="geminiStatus" class="gemini-status">사진을 선택하면 AI가 일정을 읽어드려요 🤖</div>
-      <div id="geminiFields" style="display:none">
-        <div class="fg" style="margin-bottom:10px">
-          <label class="fl">👥 구성원 선택</label>
-          <div class="who-sel" id="gWhoSel">
-            <button class="who-btn" data-w="유영대" onclick="toggleGWho(this)">👨 영대</button>
-            <button class="who-btn" data-w="이현희" onclick="toggleGWho(this)">👩 현희</button>
-            <button class="who-btn" data-w="유제하" onclick="toggleGWho(this)">🧑 제하</button>
-            <button class="who-btn" data-w="유가율" onclick="toggleGWho(this)">👧 가율</button>
-            <button class="who-btn" data-w="유가은" onclick="toggleGWho(this)">👶 가은</button>
-          </div>
-        </div>
-        <div class="frow" style="margin-bottom:10px">
-          <div class="fg" style="margin:0"><label class="fl">📅 날짜</label><input type="date" class="fi" id="g_date"></div>
-          <div class="fg" style="margin:0"><label class="fl">⏰ 시간</label><input type="text" class="fi" id="g_time" placeholder="예) 1430" maxlength="5" inputmode="numeric"></div>
-        </div>
-        <div class="fg" style="margin-bottom:8px"><label class="fl">📌 제목</label><input type="text" class="fi" id="g_title"></div>
-        <div class="fg" style="margin-bottom:0"><label class="fl">📝 내용</label><textarea class="ft" id="g_body" style="min-height:65px"></textarea></div>
-      </div>
-      <button class="btn-gemini-add" id="btnGeminiSave" style="display:none" onclick="saveGeminiEvent()">📅 일정으로 등록하기</button>
-    </div>
-  </div>
-</div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -514,23 +419,25 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, listAll, ge
 
 const FB={apiKey:"AIzaSyBk1bMw7zutUQXxCWs_fY8Jh5XAYd-M7Zs",authDomain:"family-calendar-yoo.firebaseapp.com",projectId:"family-calendar-yoo",storageBucket:"family-calendar-yoo.firebasestorage.app",messagingSenderId:"29463720385",appId:"1:29463720385:web:995328e6ee09e81daaff40"};
 const HOLIDAY_KEY="09b819905e0a70316749fb91c03a216633ad3e75196a6aa25e6a9f273d9116f8";
-const AI_PROXY="https://168-107-15-68.nip.io";
 const app=initializeApp(FB),db=getFirestore(app),storage=getStorage(app);
 const CC={'유영대':'#3b82f6','이현희':'#f472b6','유제하':'#34d399','유가율':'#fb923c','유가은':'#a78bfa'};
 const CL={'유영대':'#eff6ff','이현희':'#fdf2f8','유제하':'#ecfdf5','유가율':'#fff7ed','유가은':'#f5f3ff'};
 
 let events=[],curMonth=new Date(),filters=[],editId=null;
-let selWho=[],gSelWho=[],sFilter='all',detailEv=null,searchSort='date-desc';
+let selWho=[],sFilter='all',detailEv=null,searchSort='date-desc';
 let longPressTimer=null,copiedEvent=null,pendingCopyEv=null;
 let pasteTargetDate=null,multiPasteMode=false,multiPasteDates=new Set();
 const holidayCache={};
-let aiChatHistory=[];
-let recognition=null,isListening=false;
 let multiSelectMode=false,selectedIds=new Set();
-let editPhotoFile=null;
 let viewerScale=1,viewerOffX=0,viewerOffY=0,viewerLastScale=1,viewerStartDist=0,viewerStartX=0,viewerStartY=0;
 let currentPhotoEventId=null;
-let isSpeaking=false;
+
+// 사진 여러 장 — 최대 장수
+const MAX_PHOTOS=5;
+// 수정 모달에서 새로 고른 파일들 / 기존 사진 중 남길 URL들
+let editNewFiles=[],editKeptUrls=[];
+// 뷰어가 현재 보고 있는 사진 목록과 위치
+let viewerUrls=[],viewerIdx=0;
 
 // 뒤로가기
 window.addEventListener('popstate',()=>{if(confirm('앱을 종료하시겠습니까?')){window.close();}else{history.pushState(null,'',location.href);}});
@@ -609,12 +516,22 @@ function renderToday(){
   bindCardLongPress(el);
 }
 
+// 카드 오른쪽 썸네일. 사진이 2장 이상이면 오른쪽 아래에 "+N" 표시
+function thumbHtml(ev,id){
+  const photos=getPhotos(ev);
+  if(!photos.length) return '';
+  const more=photos.length>1?`<span class="ev-photo-more">+${photos.length-1}</span>`:'';
+  return `<div class="ev-photo-wrap" onclick="event.stopPropagation();openEventPhotos('${id}',0)">
+    <img class="ev-photo" src="${photos[0]}" loading="lazy">${more}
+  </div>`;
+}
+
 function evCardHtml(ev,showDate=false,canCopy=false){
   const who=Array.isArray(ev.who)?ev.who:[ev.who];
   const color=CC[who[0]]||'#888';
   const id=ev._v?ev._oid:ev.id;
   const attr=canCopy?`data-id="${id}" data-date="${ev.date}"`:'';
-  const photoHtml=ev.photoUrl?`<img class="ev-photo" src="${ev.photoUrl}" onclick="event.stopPropagation();openPhotoViewer('${ev.photoUrl}','${id}')" loading="lazy">`:'';
+  const photoHtml=thumbHtml(ev,id);
   return `<div class="ev-card" style="border-left-color:${color}" ${attr} onclick="openDetail('${id}','${ev.date}')">
     <div class="ev-dot" style="background:${color}"></div>
     <div class="ev-info">
@@ -814,7 +731,7 @@ function makeListCard(ev,extraStyle=''){
   const who=Array.isArray(ev.who)?ev.who:[ev.who];
   const color=CC[who[0]]||'#888';
   const selectStyle=isSelected?'outline:2px solid #ef4444;background:#fff5f5;':'';
-  const photoHtml=ev.photoUrl?`<img class="ev-photo" src="${ev.photoUrl}" onclick="event.stopPropagation();openPhotoViewer('${ev.photoUrl}','${id}')" loading="lazy">`:'';
+  const photoHtml=multiSelectMode?'':thumbHtml(ev,id);
   return `<div class="ev-card" style="border-left-color:${color};${selectStyle};${extraStyle}" data-id="${id}"
     onclick="${multiSelectMode?`toggleSelect('${id}')`:`openDetail('${id}','${ev.date}')`}">
     ${multiSelectMode?`<div style="width:20px;height:20px;border-radius:50%;border:2px solid ${isSelected?'#ef4444':'#ccc'};background:${isSelected?'#ef4444':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;color:#fff">${isSelected?'✓':''}</div>`:`<div class="ev-dot" style="background:${color}"></div>`}
@@ -864,6 +781,20 @@ window.setFilter=function(f,btn){
 window.changeMonth=function(d){curMonth.setMonth(curMonth.getMonth()+d);preloadHolidaysBg(curMonth.getFullYear());renderCal();}
 
 // ── 사진 기능 ──
+// 일정의 사진 목록을 배열로 돌려준다.
+// 예전 일정은 photoUrl(한 장), 새 일정은 photoUrls(여러 장)를 쓰므로 둘 다 읽는다.
+function getPhotos(ev){
+  if(!ev) return [];
+  if(Array.isArray(ev.photoUrls)) return ev.photoUrls.filter(Boolean);
+  return ev.photoUrl?[ev.photoUrl]:[];
+}
+// 사진 목록을 저장할 때 쓰는 값. 예전 photoUrl은 비워서 중복을 막는다.
+function photoFields(urls){return{photoUrls:urls,photoUrl:''};}
+// Storage에서 사진 파일들을 지운다 (실패해도 넘어간다)
+async function deletePhotoFiles(urls){
+  await Promise.all(urls.map(async u=>{try{await deleteObject(ref(storage,u));}catch(e){}}));
+}
+
 function compressImage(file,maxSize=800,quality=0.65){
   return new Promise(resolve=>{
     const reader=new FileReader();
@@ -883,51 +814,86 @@ function compressImage(file,maxSize=800,quality=0.65){
   });
 }
 
-async function uploadPhoto(file,eventId){
+async function uploadPhoto(file,eventId,seq=0){
   const compressed=await compressImage(file);
-  const storageRef=ref(storage,`photos/${eventId}_${Date.now()}.jpg`);
+  const storageRef=ref(storage,`photos/${eventId}_${Date.now()}_${seq}.jpg`);
   await uploadBytes(storageRef,compressed);
   return await getDownloadURL(storageRef);
 }
 
-window.handleEditPhoto=async function(input){
-  const file=input.files[0];if(!file) return;
-  editPhotoFile=file;
-  const url=URL.createObjectURL(file);
+// 수정 모달의 사진 목록 다시 그리기 (기존 사진 + 새로 고른 파일)
+function renderEditPhotos(){
   const preview=document.getElementById('editPhotoPreview');
-  preview.innerHTML=`<img src="${url}" style="width:80px;height:80px;border-radius:8px;object-fit:cover;border:2px solid var(--border)">
-    <button onclick="removeEditPhoto()" style="background:#fee2e2;color:#ef4444;border:none;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">제거</button>
-    <div class="photo-add-btn" onclick="document.getElementById('editPhotoInput').click()">📷</div>`;
+  let html='';
+  editKeptUrls.forEach((url,i)=>{
+    html+=`<div class="edit-photo-item">
+      <img src="${url}" onclick="openPhotoViewerList(${i})">
+      <button class="edit-photo-x" onclick="removeEditPhoto('kept',${i})" title="이 사진 빼기">✕</button>
+    </div>`;
+  });
+  editNewFiles.forEach((f,i)=>{
+    html+=`<div class="edit-photo-item">
+      <img src="${f._previewUrl}">
+      <span class="edit-photo-new">NEW</span>
+      <button class="edit-photo-x" onclick="removeEditPhoto('new',${i})" title="이 사진 빼기">✕</button>
+    </div>`;
+  });
+  const total=editKeptUrls.length+editNewFiles.length;
+  if(total<MAX_PHOTOS) html+=`<div class="photo-add-btn" onclick="document.getElementById('editPhotoInput').click()">📷</div>`;
+  preview.innerHTML=html;
 }
-window.removeEditPhoto=function(){
-  editPhotoFile=null;
-  document.getElementById('editPhotoPreview').innerHTML=`<div class="photo-add-btn" onclick="document.getElementById('editPhotoInput').click()">📷</div>`;
-  document.getElementById('editPhotoInput').value='';
+
+// 수정 모달 안에서 기존 사진 크게 보기 (삭제 버튼 없이)
+window.openPhotoViewerList=function(idx){openViewer(editKeptUrls,idx,null);}
+
+window.handleEditPhoto=function(input){
+  const files=[...input.files];
+  input.value='';
+  if(!files.length) return;
+  const room=MAX_PHOTOS-(editKeptUrls.length+editNewFiles.length);
+  if(room<=0){showToast(`사진은 최대 ${MAX_PHOTOS}장까지예요`);return;}
+  const take=files.slice(0,room);
+  take.forEach(f=>{f._previewUrl=URL.createObjectURL(f);editNewFiles.push(f);});
+  if(files.length>room) showToast(`${take.length}장만 추가됐어요 (최대 ${MAX_PHOTOS}장)`);
+  renderEditPhotos();
+}
+
+window.removeEditPhoto=function(kind,i){
+  if(kind==='kept') editKeptUrls.splice(i,1);
+  else{
+    const f=editNewFiles[i];
+    if(f?._previewUrl) URL.revokeObjectURL(f._previewUrl);
+    editNewFiles.splice(i,1);
+  }
+  renderEditPhotos();
 }
 
 // 사진 탭
 function renderPhotoTab(){
-  const evs=events.filter(ev=>ev.photoUrl).sort((a,b)=>b.date.localeCompare(a.date));
+  const evs=events.filter(ev=>getPhotos(ev).length).sort((a,b)=>b.date.localeCompare(a.date));
   const grid=document.getElementById('photoGrid');
   const empty=document.getElementById('photoEmpty');
-  if(!evs.length){grid.innerHTML='';empty.style.display='block';return;}
+  if(!evs.length){grid.innerHTML='';empty.style.display='block';calcStorageSize();document.getElementById('cleanupBtn').style.display='none';return;}
   empty.style.display='none';
   const groups={};evs.forEach(ev=>{if(!groups[ev.date])groups[ev.date]=[];groups[ev.date].push(ev);});
   grid.innerHTML=Object.entries(groups).map(([date,evs])=>{
     const d=new Date(date+'T00:00:00');
     const dow=['일','월','화','수','목','금','토'][d.getDay()];
-    return `<div class="photo-grid-date">${d.getMonth()+1}월 ${d.getDate()}일 (${dow})</div>`+
-      evs.map(ev=>`<div class="photo-grid-item" onclick="openPhotoViewer('${ev.photoUrl}','${ev.id}')">
-        <img src="${ev.photoUrl}" loading="lazy">
-      </div>`).join('');
+    // 한 일정에 사진이 여러 장이면 각각 따로 칸을 만든다
+    const items=evs.flatMap(ev=>getPhotos(ev).map((u,i)=>
+      `<div class="photo-grid-item" onclick="openEventPhotos('${ev.id}',${i})">
+        <img src="${u}" loading="lazy">
+      </div>`)).join('');
+    return `<div class="photo-grid-date">${d.getMonth()+1}월 ${d.getDate()}일 (${dow})</div>`+items;
   }).join('');
   // 용량 계산
   calcStorageSize();
   // 1년 이상 정리 버튼
   const oneYearAgo=new Date();oneYearAgo.setFullYear(oneYearAgo.getFullYear()-1);
-  const oldEvs=events.filter(ev=>ev.photoUrl&&new Date(ev.date+'T00:00:00')<oneYearAgo);
+  const oldEvs=events.filter(ev=>getPhotos(ev).length&&new Date(ev.date+'T00:00:00')<oneYearAgo);
+  const oldCount=oldEvs.reduce((n,ev)=>n+getPhotos(ev).length,0);
   const cleanBtn=document.getElementById('cleanupBtn');
-  if(oldEvs.length>0){cleanBtn.style.display='block';cleanBtn.textContent=`🗑️ 1년 이상 된 사진 정리 (${oldEvs.length}장)`;}
+  if(oldCount>0){cleanBtn.style.display='block';cleanBtn.textContent=`🗑️ 1년 이상 된 사진 정리 (${oldCount}장)`;}
   else{cleanBtn.style.display='none';}
 }
 
@@ -956,30 +922,54 @@ async function calcStorageSize(){
 
 window.cleanupOldPhotos=async function(){
   const oneYearAgo=new Date();oneYearAgo.setFullYear(oneYearAgo.getFullYear()-1);
-  const oldEvs=events.filter(ev=>ev.photoUrl&&new Date(ev.date+'T00:00:00')<oneYearAgo);
-  if(!oldEvs.length){showToast('정리할 사진이 없어요');return;}
-  if(!confirm(`1년 이상 된 사진 ${oldEvs.length}장을 삭제할까요?\n일정은 유지되고 사진만 삭제돼요.`)) return;
+  const oldEvs=events.filter(ev=>getPhotos(ev).length&&new Date(ev.date+'T00:00:00')<oneYearAgo);
+  const oldCount=oldEvs.reduce((n,ev)=>n+getPhotos(ev).length,0);
+  if(!oldCount){showToast('정리할 사진이 없어요');return;}
+  if(!confirm(`1년 이상 된 사진 ${oldCount}장을 삭제할까요?\n일정은 유지되고 사진만 삭제돼요.`)) return;
   try{
     await Promise.all(oldEvs.map(async ev=>{
-      try{const storageRef=ref(storage,ev.photoUrl);await deleteObject(storageRef);}catch(e){}
-      await updateDoc(doc(db,"events",ev.id),{photoUrl:''});
+      const photos=getPhotos(ev);
+      await updateDoc(doc(db,"events",ev.id),photoFields([]));
+      await deletePhotoFiles(photos);
     }));
-    showToast(`✅ ${oldEvs.length}장 정리됐어요!`);
+    showToast(`✅ ${oldCount}장 정리됐어요!`);
     renderPhotoTab();
   }catch(e){showToast('⚠️ 정리 실패');}
 }
 
-// 사진 뷰어
-window.openPhotoViewer=function(url,evId){
+// 사진 뷰어 — 사진 목록을 받아서 좌우로 넘길 수 있다
+function openViewer(urls,idx,evId){
+  viewerUrls=urls.filter(Boolean);
+  if(!viewerUrls.length) return;
+  viewerIdx=Math.min(Math.max(idx||0,0),viewerUrls.length-1);
   currentPhotoEventId=evId||null;
-  document.getElementById('photoViewerImg').src=url;
   document.getElementById('photoViewerDel').style.display=evId?'block':'none';
-  viewerScale=1;viewerOffX=0;viewerOffY=0;
-  applyViewerTransform();
+  showViewerPhoto();
   document.getElementById('photoViewer').classList.add('open');
   setupViewerPinch();
 }
-window.closePhotoViewer=function(){document.getElementById('photoViewer').classList.remove('open');currentPhotoEventId=null;}
+function showViewerPhoto(){
+  document.getElementById('photoViewerImg').src=viewerUrls[viewerIdx];
+  const many=viewerUrls.length>1;
+  document.getElementById('photoViewerPrev').classList.toggle('show',many);
+  document.getElementById('photoViewerNext').classList.toggle('show',many);
+  const cnt=document.getElementById('photoViewerCount');
+  cnt.classList.toggle('show',many);
+  cnt.textContent=`${viewerIdx+1} / ${viewerUrls.length}`;
+  viewerScale=1;viewerOffX=0;viewerOffY=0;
+  applyViewerTransform();
+}
+window.viewerStep=function(d){
+  if(viewerUrls.length<2) return;
+  viewerIdx=(viewerIdx+d+viewerUrls.length)%viewerUrls.length;
+  showViewerPhoto();
+}
+// 일정 id로 그 일정의 사진들을 뷰어에 띄운다
+window.openEventPhotos=function(evId,idx){
+  const ev=events.find(e=>e.id===evId);
+  openViewer(getPhotos(ev),idx||0,evId);
+}
+window.closePhotoViewer=function(){document.getElementById('photoViewer').classList.remove('open');currentPhotoEventId=null;viewerUrls=[];viewerIdx=0;}
 function applyViewerTransform(){
   const img=document.getElementById('photoViewerImg');
   img.style.transform=`translate(calc(-50% + ${viewerOffX}px),calc(-50% + ${viewerOffY}px)) scale(${viewerScale})`;
@@ -998,13 +988,24 @@ function setupViewerPinch(){
   };
   wrap.ontouchend=()=>{if(viewerScale<=1){viewerOffX=0;viewerOffY=0;applyViewerTransform();}};
 }
+// 지금 보고 있는 사진 한 장만 삭제
 window.deleteEventPhoto=async function(){
-  if(!currentPhotoEventId||!confirm('사진을 삭제할까요?\n일정은 유지됩니다.')) return;
+  if(!currentPhotoEventId) return;
+  const target=viewerUrls[viewerIdx];
+  if(!target) return;
+  const many=viewerUrls.length>1;
+  if(!confirm(many?`이 사진(${viewerIdx+1}/${viewerUrls.length})만 삭제할까요?\n나머지 사진과 일정은 유지됩니다.`:'사진을 삭제할까요?\n일정은 유지됩니다.')) return;
   try{
     const ev=events.find(e=>e.id===currentPhotoEventId);
-    if(ev?.photoUrl){try{await deleteObject(ref(storage,ev.photoUrl));}catch(e){}}
-    await updateDoc(doc(db,"events",currentPhotoEventId),{photoUrl:''});
-    showToast('🗑️ 사진 삭제됐어요');closePhotoViewer();
+    const rest=getPhotos(ev).filter(u=>u!==target);
+    await updateDoc(doc(db,"events",currentPhotoEventId),photoFields(rest));
+    await deletePhotoFiles([target]);
+    showToast('🗑️ 사진 삭제됐어요');
+    if(!rest.length){closePhotoViewer();return;}
+    // 남은 사진으로 계속 보기
+    viewerUrls=rest;
+    if(viewerIdx>=viewerUrls.length) viewerIdx=viewerUrls.length-1;
+    showViewerPhoto();
   }catch(e){showToast('⚠️ 삭제 실패');}
 }
 
@@ -1021,23 +1022,42 @@ window.saveEvent=async function(){
   const data={title,date,time:timeVal,body,who:selWho,repeat:'none'};
   try{
     let savedId=editId;
+    // 수정 중이라면, 빼기(✕)한 기존 사진이 무엇인지 미리 계산
+    const before=editId?getPhotos(events.find(e=>e.id===editId)):[];
+    const dropped=before.filter(u=>!editKeptUrls.includes(u));
+
     if(editId){await updateDoc(doc(db,"events",editId),data);}
     else{const docRef=await addDoc(collection(db,"events"),data);savedId=docRef.id;}
-    if(editPhotoFile&&savedId){
-      showToast('📷 사진 업로드 중...');
-      const photoUrl=await uploadPhoto(editPhotoFile,savedId);
-      await updateDoc(doc(db,"events",savedId),{photoUrl});
+
+    if(savedId&&(editNewFiles.length||dropped.length)){
+      let urls=[...editKeptUrls];
+      if(editNewFiles.length){
+        showToast(`📷 사진 ${editNewFiles.length}장 업로드 중...`);
+        const uploaded=await Promise.all(editNewFiles.map((f,i)=>uploadPhoto(f,savedId,i)));
+        urls=urls.concat(uploaded);
+      }
+      await updateDoc(doc(db,"events",savedId),photoFields(urls));
+      // 문서를 먼저 고친 뒤에 실제 파일을 지운다 (중간에 끊겨도 깨진 링크가 남지 않게)
+      if(dropped.length) await deletePhotoFiles(dropped);
     }
     showToast(editId?'✅ 수정됐어요!':'✅ 저장됐어요!');
-    editPhotoFile=null;closeModal('editModal');
+    resetEditPhotos();closeModal('editModal');
   }catch(e){showToast('⚠️ 저장 실패: '+e.message);}
+}
+// 수정 모달 사진 상태 비우기
+function resetEditPhotos(){
+  editNewFiles.forEach(f=>{if(f._previewUrl) URL.revokeObjectURL(f._previewUrl);});
+  editNewFiles=[];editKeptUrls=[];
+  document.getElementById('editPhotoInput').value='';
 }
 window.deleteEvent=async function(){
   if(!editId||!confirm('이 일정을 삭제할까요?')) return;
   try{
     const ev=events.find(e=>e.id===editId);
-    if(ev?.photoUrl){try{await deleteObject(ref(storage,ev.photoUrl));}catch(e){}}
-    await deleteDoc(doc(db,"events",editId));showToast('🗑️ 삭제됐어요');closeModal('editModal');
+    const photos=getPhotos(ev);
+    await deleteDoc(doc(db,"events",editId));
+    if(photos.length) await deletePhotoFiles(photos);
+    showToast('🗑️ 삭제됐어요');closeModal('editModal');
   }catch(e){showToast('⚠️ 삭제 실패');}
 }
 window.openDetail=function(id,dateStr){
@@ -1049,191 +1069,19 @@ window.openDetail=function(id,dateStr){
     <div class="det-title">${ev.title}</div>
     <div class="det-field"><div class="det-lbl">📅 날짜 · 시간</div><div class="det-val">${dateStr}${ev.time?' · '+ev.time:''}</div></div>
     ${ev.body?`<div class="det-field"><div class="det-lbl">📝 내용</div><div class="det-val" style="white-space:pre-wrap">${ev.body}</div></div>`:''}
-    ${ev.photoUrl?`<div class="det-field"><div class="det-lbl">📷 사진</div><img src="${ev.photoUrl}" style="width:100%;border-radius:10px;cursor:pointer;margin-top:4px" onclick="openPhotoViewer('${ev.photoUrl}','${id}')"></div>`:''}
+    ${(()=>{const ps=getPhotos(ev);if(!ps.length) return '';
+      return `<div class="det-field"><div class="det-lbl">📷 사진 ${ps.length>1?`(${ps.length}장)`:''}</div>
+        <div class="det-photos">${ps.map((u,i)=>`<img src="${u}" loading="lazy" onclick="openEventPhotos('${id}',${i})">`).join('')}</div></div>`;})()}
   `;
   openModal('detailModal');
 }
 window.editFromDetail=function(){if(!detailEv) return;closeModal('detailModal');setTimeout(()=>openAdd(null,detailEv.id),300);}
 
-// Gemini 사진 핀치줌
-let imgScale=1,imgStartDist=0,imgLastScale=1,imgOffX=0,imgOffY=0,imgStartX=0,imgStartY=0;
-function setupPinchZoom(){
-  const wrap=document.getElementById('imgPreviewWrap');
-  const inner=document.getElementById('imgPreviewInner');
-  wrap.addEventListener('touchstart',e=>{if(e.touches.length===2){imgStartDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);imgLastScale=imgScale;}else if(e.touches.length===1){imgStartX=e.touches[0].clientX-imgOffX;imgStartY=e.touches[0].clientY-imgOffY;}},{passive:true});
-  wrap.addEventListener('touchmove',e=>{e.stopPropagation();if(e.touches.length===2){const dist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);imgScale=Math.min(5,Math.max(1,imgLastScale*(dist/imgStartDist)));}else if(e.touches.length===1&&imgScale>1){imgOffX=e.touches[0].clientX-imgStartX;imgOffY=e.touches[0].clientY-imgStartY;}inner.style.transform=`translate(${imgOffX}px,${imgOffY}px) scale(${imgScale})`;},{passive:true});
-  wrap.addEventListener('touchend',()=>{if(imgScale<=1){imgOffX=0;imgOffY=0;inner.style.transform='scale(1)';}},{passive:true});
-}
-setupPinchZoom();
-
-window.openGemini=function(){
-  const inner=document.getElementById('imgPreviewInner');
-  inner.innerHTML='<div class="img-placeholder">📷<br>아래 버튼으로 사진을 선택하세요</div>';
-  inner.style.transform='scale(1)';imgScale=1;imgOffX=0;imgOffY=0;
-  document.getElementById('geminiStatus').textContent='사진을 선택하면 AI가 일정을 읽어드려요 🤖';
-  document.getElementById('geminiStatus').style.display='block';
-  document.getElementById('geminiFields').style.display='none';
-  document.getElementById('btnGeminiSave').style.display='none';
-  document.getElementById('g_title').value='';document.getElementById('g_date').value='';
-  document.getElementById('g_time').value='';document.getElementById('g_body').value='';
-  document.getElementById('camInput').value='';document.getElementById('gallInput').value='';
-  document.querySelectorAll('#gWhoSel .who-btn').forEach(b=>b.classList.remove('on'));
-  gSelWho=[];openModal('geminiModal');
-}
-window.handleImg=function(input){
-  const file=input.files[0];if(!file) return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    const inner=document.getElementById('imgPreviewInner');
-    inner.innerHTML=`<img class="img-preview" src="${e.target.result}">`;
-    inner.style.transform='scale(1)';imgScale=1;imgOffX=0;imgOffY=0;
-    document.getElementById('geminiStatus').innerHTML='<div class="spinner" style="margin:0 auto 6px"></div>AI가 읽는 중...';
-    document.getElementById('geminiStatus').style.display='block';
-    const img=new Image();
-    img.onload=()=>{
-      const canvas=document.createElement('canvas');
-      const maxSize=1024;let w=img.width,h=img.height;
-      if(w>maxSize||h>maxSize){if(w>h){h=Math.round(h*maxSize/w);w=maxSize;}else{w=Math.round(w*maxSize/h);h=maxSize;}}
-      canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);
-      analyzeWithGemini(canvas.toDataURL('image/jpeg',0.8));
-    };
-    img.src=e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-async function analyzeWithGemini(base64){
-  const b64=base64.split(',')[1],mime=base64.split(';')[0].split(':')[1];
-  const prompt=`이 사진에서 일정 정보를 찾아주세요.
-반드시 아래 형식으로만 답하세요. 코드블록 없이 순수 JSON만:
-{"title":"일정제목","date":"YYYY-MM-DD","time":"HH:MM","body":"기타내용"}
-규칙: 날짜없으면 date는 "", 시간없으면 time은 "", 연도없으면 2026, 5월22일→2026-05-22, 10시45분→10:45`;
-  try{
-    const res=await fetch(`${AI_PROXY}/api/ai-photo`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{inline_data:{mime_type:mime,data:b64}},{text:prompt}]}],generationConfig:{temperature:0,maxOutputTokens:200}})});
-    const data=await res.json();
-    if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
-    let text=data.candidates?.[0]?.content?.parts?.[0]?.text||'';
-    text=text.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
-    const match=text.match(/\{[\s\S]*?\}/);
-    if(!match) throw new Error('인식 실패');
-    const cleanJson=match[0].replace(/[\x00-\x1F\x7F]/g,' ').replace(/\s+/g,' ');
-    let parsed;
-    try{parsed=JSON.parse(cleanJson);}
-    catch(e2){const getField=(key)=>{const m=text.match(new RegExp('"'+key+'"\\s*:\\s*"([^"]*)"'));return m?m[1]:'';};parsed={title:getField('title'),date:getField('date'),time:getField('time'),body:getField('body')};}
-    document.getElementById('geminiStatus').style.display='none';
-    document.getElementById('geminiFields').style.display='block';
-    document.getElementById('g_title').value=parsed.title||'';
-    document.getElementById('g_date').value=parsed.date||getTodayKST();
-    document.getElementById('g_time').value=parsed.time||'';
-    document.getElementById('g_body').value=parsed.body||'';
-    document.getElementById('btnGeminiSave').style.display='block';
-    showToast(parsed.title?'✅ AI가 읽었어요! 확인 후 등록하세요':'⚠️ 직접 입력해주세요');
-  }catch(e){
-    document.getElementById('geminiStatus').textContent=`⚠️ 인식 실패: ${e.message}`;
-    document.getElementById('geminiFields').style.display='block';
-    document.getElementById('g_date').value=getTodayKST();
-    document.getElementById('btnGeminiSave').style.display='block';
-  }
-}
-window.toggleGWho=function(btn){const w=btn.dataset.w;if(btn.classList.contains('on')){btn.classList.remove('on');gSelWho=gSelWho.filter(x=>x!==w);}else{btn.classList.add('on');gSelWho.push(w);}}
-window.saveGeminiEvent=async function(){
-  const title=document.getElementById('g_title').value.trim(),date=document.getElementById('g_date').value;
-  if(!title){showToast('제목을 확인해주세요');return;}if(!date){showToast('날짜를 확인해주세요');return;}if(!gSelWho.length){showToast('구성원을 선택해주세요');return;}
-  try{await addDoc(collection(db,"events"),{title,date,time:document.getElementById('g_time').value.trim(),body:document.getElementById('g_body').value.trim(),who:gSelWho,repeat:'none'});showToast('✅ 일정이 등록됐어요!');closeModal('geminiModal');}
-  catch(e){showToast('⚠️ 저장 실패');}
-}
-
-// ── AI 채팅 ──
-function speakText(text,btnEl){
-  if(!window.speechSynthesis) return;
-  if(isSpeaking){window.speechSynthesis.cancel();isSpeaking=false;document.querySelectorAll('.tts-btn').forEach(b=>{b.textContent='🔊';b.style.color='var(--muted)';});return;}
-  window.speechSynthesis.cancel();
-  const clean=text.replace(/[*_#`~\[\]]/g,'').replace(/\n+/g,' ').slice(0,500);
-  const utt=new SpeechSynthesisUtterance(clean);utt.lang='ko-KR';utt.rate=1.0;
-  utt.onstart=()=>{isSpeaking=true;if(btnEl){btnEl.textContent='⏹️';btnEl.style.color='#ef4444';}};
-  utt.onend=utt.onerror=()=>{isSpeaking=false;document.querySelectorAll('.tts-btn').forEach(b=>{b.textContent='🔊';b.style.color='var(--muted)';});};
-  window.speechSynthesis.speak(utt);
-}
-
-async function processAICommand(reply){
-  const cmdMatch=reply.match(/\[CMD:([\s\S]*?)\]/);if(!cmdMatch) return reply;
-  try{
-    const cmd=JSON.parse(cmdMatch[1]);
-    if(cmd.action==='add'){await addDoc(collection(db,"events"),{title:cmd.title||'',date:cmd.date||getTodayKST(),time:cmd.time||'',body:cmd.body||'',who:cmd.who||['유영대'],repeat:'none'});return reply.replace(/\[CMD:[\s\S]*?\]/,'')+'\n✅ 일정이 추가됐어요!';}
-    else if(cmd.action==='delete'&&cmd.id){await deleteDoc(doc(db,"events",cmd.id));return reply.replace(/\[CMD:[\s\S]*?\]/,'')+'\n🗑️ 일정이 삭제됐어요!';}
-    else if(cmd.action==='update'&&cmd.id){const ev=events.find(e=>e.id===cmd.id);if(ev){await updateDoc(doc(db,"events",cmd.id),{title:cmd.title||ev.title,date:cmd.date||ev.date,time:cmd.time||ev.time||'',body:cmd.body||ev.body||'',who:cmd.who||ev.who});return reply.replace(/\[CMD:[\s\S]*?\]/,'')+'\n✅ 일정이 수정됐어요!';}}
-  }catch(e){console.warn('cmd err',e);}
-  return reply.replace(/\[CMD:[\s\S]*?\]/,'');
-}
-
-function getEventsSummaryWithIds(){
-  const now=new Date();
-  const s=new Date(now.getFullYear(),now.getMonth()-1,1);
-  const e=new Date(now.getFullYear(),now.getMonth()+3,0);
-  const allEvs=events.filter(ev=>ev.date>=s.toISOString().slice(0,10)&&ev.date<=e.toISOString().slice(0,10)).sort((a,b)=>a.date.localeCompare(b.date));
-  if(!allEvs.length) return '등록된 일정 없음';
-  return allEvs.map(ev=>{const who=Array.isArray(ev.who)?ev.who.map(w=>w.slice(1)).join(','):ev.who.slice(1);return `[${ev.date}${ev.time?' '+ev.time:''}] ${ev.title}(${who})${ev.body?' -'+ev.body:''}`;}).join('\n');
-}
-
-window.askAI=function(text){document.getElementById('aiInput').value=text;sendAI(false);}
-window.sendAI=async function(isVoice=false){
-  const input=document.getElementById('aiInput');const text=input.value.trim();if(!text) return;
-  input.value='';input.style.height='auto';addChatMsg('user',text);showTyping();
-  const today=getTodayKST();
-  const systemContext=`너는 가족 일정 도우미야. 한국어로 친근하고 자연스럽게 대화해.
-오늘: ${today} / 가족: 영대(아빠),현희(엄마),제하(장남),가율(딸),가은(막내) / 화성시 거주
-등록된 일정:
-${getEventsSummaryWithIds()}
-규칙:
-- 일정 조회→해당 기간 전체 빠짐없이 나열
-- 추가요청→[CMD:{"action":"add","title":"제목","date":"YYYY-MM-DD","time":"","who":["유영대"],"body":""}]
-- 삭제요청→[CMD:{"action":"delete","id":"ID"}]
-- 수정요청→[CMD:{"action":"update","id":"ID","title":"","date":"","time":""}]
-- 이름변환: 영대→유영대,현희→이현희,제하→유제하,가율→유가율,가은→유가은
-- 인사말반복금지, 날씨/교통 등 모든질문 답변, 거절금지`;
-  const contents=[{role:'user',parts:[{text:systemContext+'\n\n질문: '+text}]}];
-  try{
-    const res=await fetch(`${AI_PROXY}/api/ai-chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents,generationConfig:{temperature:0.7,maxOutputTokens:2000}})});
-    const data=await res.json();
-    if(data.error) throw new Error(data.error.message||JSON.stringify(data.error));
-    let reply=data.candidates?.[0]?.content?.parts?.[0]?.text||'답변을 생성하지 못했어요.';
-    hideTyping();reply=await processAICommand(reply);addChatMsg('bot',reply);
-    if(isVoice) speakText(reply);
-  }catch(e){hideTyping();addChatMsg('bot','⚠️ 오류가 발생했어요: '+e.message);}
-}
-
-function addChatMsg(role,text){
-  const el=document.getElementById('aiMessages');
-  const now=new Date();const timeStr=`${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
-  const div=document.createElement('div');div.className=`ai-msg ${role}`;
-  const formattedText=text.replace(/\n/g,'<br>');
-  if(role==='bot'){const msgId='msg_'+Date.now();div.innerHTML=`<div class="ai-avatar">🤖</div><div><div class="ai-time">${timeStr}</div><div class="ai-bubble" id="${msgId}">${formattedText}</div><button class="tts-btn" onclick="speakText(document.getElementById('${msgId}').innerText,this)" style="background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:3px 6px;margin-top:2px;border-radius:6px;">🔊</button></div>`;}
-  else{div.innerHTML=`<div><div class="ai-time">${timeStr}</div><div class="ai-bubble">${formattedText}</div></div><div class="ai-avatar">👤</div>`;}
-  el.appendChild(div);el.scrollTop=el.scrollHeight;
-}
-let typingEl=null;
-function showTyping(){const el=document.getElementById('aiMessages');typingEl=document.createElement('div');typingEl.className='ai-msg bot';typingEl.innerHTML=`<div class="ai-avatar">🤖</div><div><div class="ai-typing"><span></span><span></span><span></span></div></div>`;el.appendChild(typingEl);el.scrollTop=el.scrollHeight;}
-function hideTyping(){if(typingEl){typingEl.remove();typingEl=null;}}
-window.aiInputKey=function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAI(false);}}
-window.autoResize=function(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
-
-window.toggleVoice=function(){
-  if(isSpeaking){window.speechSynthesis&&window.speechSynthesis.cancel();isSpeaking=false;document.querySelectorAll('.tts-btn').forEach(b=>{b.textContent='🔊';b.style.color='var(--muted)';});showToast('⏹️ 읽기 중지');return;}
-  if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){showToast('⚠️ 음성 입력을 지원하지 않아요');return;}
-  if(isListening){recognition&&recognition.stop();return;}
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  recognition=new SR();recognition.lang='ko-KR';recognition.continuous=false;recognition.interimResults=true;
-  recognition.onstart=()=>{isListening=true;document.getElementById('aiMicBtn').classList.add('listening');showToast('🎤 말씀하세요...');};
-  recognition.onresult=e=>{const transcript=Array.from(e.results).map(r=>r[0].transcript).join('');document.getElementById('aiInput').value=transcript;};
-  recognition.onend=()=>{isListening=false;document.getElementById('aiMicBtn').classList.remove('listening');const text=document.getElementById('aiInput').value.trim();if(text) sendAI(true);};
-  recognition.onerror=()=>{isListening=false;document.getElementById('aiMicBtn').classList.remove('listening');showToast('⚠️ 음성 인식 실패');};
-  recognition.start();
-}
-
 // 공통
 window.openAdd=function(dateStr,eid){
-  editId=eid||null;selWho=[];editPhotoFile=null;
-  document.getElementById('editPhotoPreview').innerHTML=`<div class="photo-add-btn" onclick="document.getElementById('editPhotoInput').click()">📷</div>`;
-  document.getElementById('editPhotoInput').value='';
+  editId=eid||null;selWho=[];
+  resetEditPhotos();
+  document.getElementById('maxPhotoHint').textContent=MAX_PHOTOS;
   document.getElementById('f_title').value='';document.getElementById('f_date').value=dateStr||getTodayKST();
   document.getElementById('f_time').value='';document.getElementById('f_body').value='';
   document.querySelectorAll('.who-btn').forEach(b=>b.classList.remove('on'));
@@ -1247,9 +1095,10 @@ window.openAdd=function(dateStr,eid){
       selWho=Array.isArray(ev.who)?[...ev.who]:[ev.who];
       selWho.forEach(w=>{const b=document.querySelector(`.who-btn[data-w="${w}"]`);if(b)b.classList.add('on');});
       document.getElementById('btnDel').style.display='block';
-      if(ev.photoUrl){document.getElementById('editPhotoPreview').innerHTML=`<img src="${ev.photoUrl}" style="width:80px;height:80px;border-radius:8px;object-fit:cover;border:2px solid var(--border);cursor:pointer" onclick="openPhotoViewer('${ev.photoUrl}','${ev.id}')"><button onclick="removeEditPhoto()" style="background:#fee2e2;color:#ef4444;border:none;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">제거</button><div class="photo-add-btn" onclick="document.getElementById('editPhotoInput').click()">📷</div>`;}
+      editKeptUrls=getPhotos(ev);
     }
   }
+  renderEditPhotos();
   openModal('editModal');
 }
 window.toggleWho=function(btn){const w=btn.dataset.w;if(btn.classList.contains('on')){btn.classList.remove('on');selWho=selWho.filter(x=>x!==w);}else{btn.classList.add('on');selWho.push(w);}}
@@ -1259,11 +1108,9 @@ window.switchTab=function(tab,btn){
   document.getElementById('listTab').style.display=tab==='list'?'':'none';
   document.getElementById('searchTab').style.display=tab==='search'?'':'none';
   document.getElementById('photoTab').style.display=tab==='photo'?'':'none';
-  document.getElementById('aiTab').style.display=tab==='ai'?'':'none';
-  document.getElementById('filterWrap').style.display=(tab==='search'||tab==='ai'||tab==='photo')?'none':'';
-  document.getElementById('todayBox').style.display=(tab==='search'||tab==='ai'||tab==='photo')?'none':'';
+  document.getElementById('filterWrap').style.display=(tab==='search'||tab==='photo')?'none':'';
+  document.getElementById('todayBox').style.display=(tab==='search'||tab==='photo')?'none':'';
   if(tab==='search') setTimeout(()=>document.getElementById('searchInput').focus(),300);
-  if(tab==='ai') setTimeout(()=>{const m=document.getElementById('aiMessages');m.scrollTop=m.scrollHeight;},100);
   if(tab==='photo') renderPhotoTab();
 }
 window.openModal=function(id){document.getElementById(id).classList.add('open');}
