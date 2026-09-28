@@ -6,8 +6,12 @@
 // 캐시 우선으로 만들면 예전 버전이 폰에 박혀서 재설치해야 하는 문제가 생긴다.
 // 캐시는 어디까지나 "인터넷이 안 될 때 쓰는 예비용"이다.
 
-const VERSION = '5.5';
-const CACHE = `fc-cache-v${VERSION}`;
+// 이 숫자는 앱 버전(v5.6 등)과 별개다.
+// sw.js의 "동작 방식"을 바꿨을 때만 올린다.
+// 앱 버전마다 올리면 켤 때마다 워커가 새로 설치되면서 새로고침이 한 번 더 일어난다.
+// (index.html은 어차피 아래에서 매번 새로 받으므로 여기를 올릴 필요가 없다)
+const SW_VERSION = 2;
+const CACHE = `fc-cache-v${SW_VERSION}`;
 
 // index.html의 정식 주소. '/family-calendar-yoo/' 로 들어와도 이 주소 하나로 모아서 저장한다.
 const INDEX = new URL('./index.html', self.location.href).href;

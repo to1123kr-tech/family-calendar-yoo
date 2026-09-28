@@ -56,6 +56,12 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .mnav-btn{background:var(--card);border:1.5px solid var(--border);border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);}
 .month-lbl{font-size:19px;font-weight:900;letter-spacing:-0.5px;}
 .cal-grid{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+/* 달 넘길 때 살짝 밀리는 효과 */
+.cal-days.slide-next{animation:slideNext 0.18s ease-out;}
+.cal-days.slide-prev{animation:slidePrev 0.18s ease-out;}
+@keyframes slideNext{from{opacity:0.3;transform:translateX(16px);}to{opacity:1;transform:none;}}
+@keyframes slidePrev{from{opacity:0.3;transform:translateX(-16px);}to{opacity:1;transform:none;}}
+.swipe-hint{font-size:10px;color:var(--muted);text-align:center;margin-top:6px;}
 .cal-wdays{display:grid;grid-template-columns:repeat(7,1fr);background:#f5f2ed;}
 .cal-wd{text-align:center;padding:7px 0;font-size:12px;font-weight:700;color:var(--muted);}
 .cal-wd:first-child{color:#f87171;}.cal-wd:last-child{color:#60a5fa;}
@@ -231,7 +237,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 <header class="app-header">
   <div class="header-row">
     <div class="app-title">🏠 가족 일정</div>
-    <span class="app-version">v5.5</span>
+    <span class="app-version">v5.6</span>
     <div class="header-actions">
       <button class="hdr-btn btn-refresh" onclick="location.reload()">🔄</button>
       <button class="hdr-btn btn-loc" onclick="window.open('https://family-tracker-yoo.web.app','_blank')">📍 위치</button>
@@ -277,6 +283,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
       </div>
       <div class="cal-days" id="calDays"></div>
     </div>
+    <div class="swipe-hint">◀ 좌우로 밀어서 달 넘기기 ▶</div>
   </div>
 
   <div id="listTab" style="display:none;">
@@ -427,8 +434,9 @@ let events=[],curMonth=new Date(),filters=[],editId=null;
 let selWho=[],sFilter='all',detailEv=null,searchSort='date-desc';
 let longPressTimer=null,copiedEvent=null,pendingCopyEv=null;
 let pasteTargetDate=null,multiPasteMode=false,multiPasteDates=new Set();
-const holidayCache={};
+const holidayCache={},holidayPending={};
 let multiSelectMode=false,selectedIds=new Set();
+let lastSwipeAt=0;   // 좌우로 민 직후 날짜가 눌리는 걸 막기 위한 시각
 let viewerScale=1,viewerOffX=0,viewerOffY=0,viewerLastScale=1,viewerStartDist=0,viewerStartX=0,viewerStartY=0;
 let currentPhotoEventId=null;
 
@@ -450,8 +458,17 @@ function getTodayKST(){const kst=new Date(Date.now()+9*60*60*1000);return kst.to
 window.formatTime=function(input){let v=input.value.replace(/[^0-9]/g,'');if(v.length>=3)v=v.slice(0,2)+':'+v.slice(2,4);input.value=v;}
 
 // 공휴일
+// holidayCache = 다 받아온 결과, holidayPending = 지금 받는 중인 요청
+// 진행 중인 요청도 기억해둬야 한다. 안 그러면 달을 빠르게 넘길 때
+// 같은 연도를 동시에 여러 번 요청해서 정부 API가 429(요청 과다)로 막아버린다.
 async function getHolidays(year){
   if(holidayCache[year]) return holidayCache[year];
+  if(holidayPending[year]) return holidayPending[year];
+  holidayPending[year]=fetchHolidays(year);
+  try{ return await holidayPending[year]; }
+  finally{ delete holidayPending[year]; }
+}
+async function fetchHolidays(year){
   const map={};
   try{
     await Promise.all(['01','02','03','04','05','06','07','08','09','10','11','12'].map(async mo=>{
@@ -589,6 +606,8 @@ function renderCal(){
 }
 
 window.handleDayTap=function(ds){
+  // 방금 좌우로 밀어서 달을 넘긴 거라면, 날짜를 누른 걸로 치지 않는다
+  if(Date.now()-lastSwipeAt<400) return;
   if(multiPasteMode){
     if(multiPasteDates.has(ds)) multiPasteDates.delete(ds);
     else multiPasteDates.add(ds);
@@ -778,7 +797,44 @@ window.setFilter=function(f,btn){
   else{document.querySelector('.f-btn.all').classList.remove('on');if(btn.classList.contains('on')){btn.classList.remove('on');filters=filters.filter(x=>x!==f);if(!filters.length)document.querySelector('.f-btn.all').classList.add('on');}else{btn.classList.add('on');filters.push(f);}}
   renderAll();
 }
-window.changeMonth=function(d){curMonth.setMonth(curMonth.getMonth()+d);preloadHolidaysBg(curMonth.getFullYear());renderCal();}
+window.changeMonth=function(d){
+  // 매달 1일을 기준으로 옮긴다.
+  // (오늘이 31일일 때 setMonth로 옮기면 2월 같은 짧은 달을 건너뛰는 문제가 있었다)
+  curMonth=new Date(curMonth.getFullYear(),curMonth.getMonth()+d,1);
+  preloadHolidaysBg(curMonth.getFullYear());
+  renderCal();
+  const el=document.getElementById('calDays');
+  el.classList.remove('slide-next','slide-prev');
+  void el.offsetWidth;                       // 애니메이션 다시 태우기
+  el.classList.add(d>0?'slide-next':'slide-prev');
+}
+
+// ── 달력 좌우로 밀어서 달 넘기기 ──
+// 손가락을 뗀 위치로 판단한다. 위아래로 스크롤하는 중에는 동작하지 않는다.
+function setupCalSwipe(){
+  const grid=document.querySelector('#calTab .cal-grid');
+  if(!grid) return;
+  const MIN_DIST=55;      // 이만큼은 밀어야 달이 넘어간다
+  const H_RATIO=1.4;      // 가로 움직임이 세로보다 이 배수 이상이어야 '좌우로 민 것'
+  let sx=0,sy=0,tracking=false;
+  grid.addEventListener('touchstart',e=>{
+    if(e.touches.length!==1){tracking=false;return;}
+    sx=e.touches[0].clientX;sy=e.touches[0].clientY;tracking=true;
+  },{passive:true});
+  grid.addEventListener('touchend',e=>{
+    if(!tracking) return;
+    tracking=false;
+    const t=e.changedTouches&&e.changedTouches[0];
+    if(!t) return;
+    const dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Math.abs(dx)<MIN_DIST||Math.abs(dx)<Math.abs(dy)*H_RATIO) return;
+    clearTimeout(longPressTimer);            // 길게 누르기로 오인되지 않게
+    lastSwipeAt=Date.now();                  // 날짜 탭으로도 오인되지 않게
+    changeMonth(dx<0?1:-1);                  // 왼쪽으로 밀면 다음 달
+  },{passive:true});
+  grid.addEventListener('touchcancel',()=>{tracking=false;},{passive:true});
+}
+setupCalSwipe();
 
 // ── 사진 기능 ──
 // 일정의 사진 목록을 배열로 돌려준다.
