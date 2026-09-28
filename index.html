@@ -434,7 +434,7 @@ let events=[],curMonth=new Date(),filters=[],editId=null;
 let selWho=[],sFilter='all',detailEv=null,searchSort='date-desc';
 let longPressTimer=null,copiedEvent=null,pendingCopyEv=null;
 let pasteTargetDate=null,multiPasteMode=false,multiPasteDates=new Set();
-const holidayCache={},holidayPending={};
+const holidayCache={},holidayPending={},holidayFailAt={};
 let multiSelectMode=false,selectedIds=new Set();
 let lastSwipeAt=0;   // 좌우로 민 직후 날짜가 눌리는 걸 막기 위한 시각
 let viewerScale=1,viewerOffX=0,viewerOffY=0,viewerLastScale=1,viewerStartDist=0,viewerStartX=0,viewerStartY=0;
@@ -461,28 +461,43 @@ window.formatTime=function(input){let v=input.value.replace(/[^0-9]/g,'');if(v.l
 // holidayCache = 다 받아온 결과, holidayPending = 지금 받는 중인 요청
 // 진행 중인 요청도 기억해둬야 한다. 안 그러면 달을 빠르게 넘길 때
 // 같은 연도를 동시에 여러 번 요청해서 정부 API가 429(요청 과다)로 막아버린다.
+const HOLIDAY_RETRY_MS=60000;   // 실패한 연도를 다시 받아보기까지 기다리는 시간
 async function getHolidays(year){
-  if(holidayCache[year]) return holidayCache[year];
+  const cached=holidayCache[year];
+  // 지난번에 전부 성공했으면 그대로 쓴다
+  if(cached&&!holidayFailAt[year]) return cached;
+  // 일부만 받아온 상태면, 1분 동안은 있는 걸로 버티고 그 뒤에 다시 시도한다
+  if(cached&&Date.now()-holidayFailAt[year]<HOLIDAY_RETRY_MS) return cached;
   if(holidayPending[year]) return holidayPending[year];
   holidayPending[year]=fetchHolidays(year);
   try{ return await holidayPending[year]; }
   finally{ delete holidayPending[year]; }
 }
+const MONTHS=['01','02','03','04','05','06','07','08','09','10','11','12'];
 async function fetchHolidays(year){
-  const map={};
-  try{
-    await Promise.all(['01','02','03','04','05','06','07','08','09','10','11','12'].map(async mo=>{
-      const url=`https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo?solYear=${year}&solMonth=${mo}&ServiceKey=${HOLIDAY_KEY}&numOfRows=30&_type=json`;
-      const res=await fetch(url);const data=await res.json();
-      const items=data?.response?.body?.items?.item;if(!items) return;
-      (Array.isArray(items)?items:[items]).forEach(item=>{
-        const ds=String(item.locdate);
-        const key=`${ds.slice(0,4)}-${ds.slice(4,6)}-${ds.slice(6,8)}`;
-        if(!map[key]) map[key]=item.dateName;
-      });
+  const map={};let failed=0;
+  // 12개월치를 한꺼번에 던지면 정부 API가 429(요청 과다)로 막는다. 4개씩 나눠서 받는다.
+  for(let i=0;i<MONTHS.length;i+=4){
+    await Promise.all(MONTHS.slice(i,i+4).map(async mo=>{
+      try{
+        const url=`https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo?solYear=${year}&solMonth=${mo}&ServiceKey=${HOLIDAY_KEY}&numOfRows=30&_type=json`;
+        const res=await fetch(url);
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        const data=await res.json();
+        const items=data?.response?.body?.items?.item;if(!items) return;
+        (Array.isArray(items)?items:[items]).forEach(item=>{
+          const ds=String(item.locdate);
+          const key=`${ds.slice(0,4)}-${ds.slice(4,6)}-${ds.slice(6,8)}`;
+          if(!map[key]) map[key]=item.dateName;
+        });
+      }catch(e){failed++;}
     }));
-  }catch(e){}
-  holidayCache[year]=map;return map;
+  }
+  // 받아온 만큼은 일단 보여준다. 실패한 달이 있으면 표시해두고 나중에 다시 받는다.
+  holidayCache[year]=map;
+  if(failed) holidayFailAt[year]=Date.now();
+  else delete holidayFailAt[year];
+  return map;
 }
 function preloadHolidaysBg(year){
   Promise.all([getHolidays(year-1),getHolidays(year),getHolidays(year+1)]).then(()=>renderCal());
